@@ -62,7 +62,12 @@ Route::prefix('admin')
     Route::get('admin', 'PlanController@index')->name('admin.index');
 });
 
-
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
