@@ -7,6 +7,36 @@ Route::prefix('admin')
     ->group(function() {
 
     /**
+     * Profile x permission
+     */
+    Route::get('plans/{id}/profiles/{idProfile}/detach', 'ACL\PlanProfileController@planProfilesDetach')->name('plans.profiles.detach');
+    Route::post('plans/{id}/profiles', 'ACL\PlanProfileController@planProfilesAttach')->name('plans.profiles.attach');
+    Route::any('plans/{id}/profiles/create', 'ACL\PlanProfileController@profilesAvailable')->name('plans.profiles.available');
+    Route::get('plans/{id}/profiles', 'ACL\PlanProfileController@profiles')->name('plans.profiles');
+    /**
+     * Permission x Profile
+     */
+    Route::get('profiles/{id}/permissions/{idPermission}/detach', 'ACL\ProfilePermissionController@profilePermissionsDetach')->name('profiles.permissions.detach');
+    Route::post('profiles/{id}/permissions', 'ACL\ProfilePermissionController@profilePermissionsAttach')->name('profiles.permissions.attach');
+    Route::any('profiles/{id}/permissions/create', 'ACL\ProfilePermissionController@permissionsAvailable')->name('profiles.permissions.available');
+    Route::get('profiles/{id}/permissions', 'ACL\ProfilePermissionController@permissions')->name('profiles.permissions');
+    Route::get('permissions/{id}/profile', 'ACL\ProfilePermissionController@profiles')->name('permissions.profiles');
+
+
+    /**
+     * Routes Permissions
+     */
+    Route::any('permissions/search', 'ACL\PermissionController@search')->name('permissions.search');
+    Route::resource('permissions', 'ACL\PermissionController');
+
+
+    /**
+     * Routes Profiles
+     */
+    Route::any('profiles/search', 'ACL\ProfileController@search')->name('profiles.search');
+    Route::resource('profiles', 'ACL\ProfileController');
+
+    /**
      * Routes Details Plans
      */
     Route::get('plans/{url}/details/create', 'DetailPlanController@create')->name('details.plan.create');
@@ -18,7 +48,7 @@ Route::prefix('admin')
     Route::get('plans/{url}/details', 'DetailPlanController@index')->name('details.plan.index');
 
     /**
-     * Routes Details Plans
+     * Routes Plans
      */
     Route::get('plans/create', 'PlanController@create')->name('plans.create');
     Route::put('plans/{url}', 'PlanController@update')->name('plans.update');

@@ -15,6 +15,9 @@
 
 @section('content')
     <div class="card">
+
+        @include('admin.includes.alerts')
+        
         <div class="div card-body">
             
             @include('admin.includes.alerts')

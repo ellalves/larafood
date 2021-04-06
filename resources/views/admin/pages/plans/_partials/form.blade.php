@@ -18,5 +18,5 @@
 </div>
 
 <div class="form-group">
-    <button type="submit" class="btn btn-dark"> Enviar </button>
+    <button type="submit" class="btn btn-dark"> Salvar </button>
 </div>

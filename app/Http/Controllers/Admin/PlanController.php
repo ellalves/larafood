@@ -32,12 +32,18 @@ class PlanController extends Controller
     public function store(StoreUpdatePlan $request)
     {
         $this->repository->create($request->all());
+        
         return redirect()->route('plans.index');
     }
 
     public function show($url)
     {
-        $plan = $this->repository->where('url', $url)->first();
+        if (!$plan = $this->repository->where('url', $url)->first()) {
+            return redirect()
+                            ->back()
+                            ->with('error', 'Nenhum registro encontrado');            
+        }
+
         return view('admin.pages.plans.show', [
             'plan' => $plan
         ]);
@@ -48,7 +54,7 @@ class PlanController extends Controller
         $plan = $this->repository->where('url', $url)->first();
 
         if (!$plan)
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Nenhum registro encontrado');
         
         return view('admin.pages.plans.edit', [
             'plan' => $plan
@@ -60,11 +66,11 @@ class PlanController extends Controller
         $plan = $this->repository->where('url', $url)->first();
 
         if (!$plan)
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Nenhum registro encontrado');
 
         $plan->update($request->all());
 
-        return redirect()->route('plans.index');
+        return redirect()->route('plans.index')->with('message', 'Registro alterado com sucesso!');
     }
 
     public function destroy($url)
@@ -85,7 +91,7 @@ class PlanController extends Controller
 
         $plan->delete();
 
-        return redirect()->route('plans.index');
+        return redirect()->route('plans.index')->with('message', 'Registro deletado com sucesso!');
     }
 
     public function search(Request $request) { 
