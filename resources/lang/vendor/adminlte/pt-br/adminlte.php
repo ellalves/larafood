@@ -2,10 +2,8 @@
 
 return [
 
-    'company_name'                => 'Nome da empresa',
-    'cnpj_cpf'                    => 'CPF ou CNPJ',
     'full_name'                   => 'Nome completo',
-    'email'                       => 'E-mail',
+    'email'                       => 'Email',
     'password'                    => 'Senha',
     'retype_password'             => 'Repita a senha',
     'remember_me'                 => 'Lembrar-me',

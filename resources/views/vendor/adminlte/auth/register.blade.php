@@ -21,7 +21,7 @@
         {{-- Company field --}}
         <div class="input-group mb-3">
             <input type="text" name="document" class="form-control {{ $errors->has('document') ? 'is-invalid' : '' }}"
-                   value="{{ old('document') }}" placeholder="{{ __('adminlte::adminlte.cnpj_cpf') }}" autofocus>
+                   value="{{ old('document') }}" placeholder="{{ __('adminlte::messages.cpf_cnpj') }}" autofocus>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-file-contract {{ config('adminlte.classes_auth_icon', '') }}"></span>
@@ -37,7 +37,7 @@
         {{-- Company field --}}
         <div class="input-group mb-3">
             <input type="text" name="company" class="form-control {{ $errors->has('company') ? 'is-invalid' : '' }}"
-                   value="{{ old('company') }}" placeholder="{{ __('adminlte::adminlte.company_name') }}" autofocus>
+                   value="{{ old('company') }}" placeholder="{{ __('adminlte::messages.company_name') }}" autofocus>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-building {{ config('adminlte.classes_auth_icon', '') }}"></span>
