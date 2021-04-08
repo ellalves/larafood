@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
+use App\Services\TenantService;
 
 class RegisteredUserController extends Controller
 {
@@ -19,6 +20,10 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
+        if (!$plan = session('plan')) {
+            return redirect()->route('site.home');
+        }
+
         return view('auth.register');
     }
 
@@ -32,17 +37,27 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$plan = session('plan')) {
+            return redirect()->route('site.home');
+        }
+
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name' => 'required|string|min:3, max:255',
+            'document' => 'required|unique:tenants',
+            'company' => 'required|unique:tenants,name',
+            'email' => 'required|string|email|min:3, max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
         ]);
 
-        Auth::login($user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]));
+        $tenantService = app(TenantService::class);
+        
+        $user = $tenantService->make($plan, $request->all());
+        
+        // Auth::login($user = User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        // ]));
 
         event(new Registered($user));
 

@@ -38,11 +38,7 @@ class PlanController extends Controller
 
     public function show($url)
     {
-        if (!$plan = $this->repository->where('url', $url)->first()) {
-            return redirect()
-                            ->back()
-                            ->with('error', 'Nenhum registro encontrado');            
-        }
+        $plan = $this->verifyPlan($url);
 
         return view('admin.pages.plans.show', [
             'plan' => $plan
@@ -51,10 +47,7 @@ class PlanController extends Controller
 
     public function edit($url)
     {
-        $plan = $this->repository->where('url', $url)->first();
-
-        if (!$plan)
-            return redirect()->back()->with('error', 'Nenhum registro encontrado');
+        $plan = $this->verifyPlan($url);
         
         return view('admin.pages.plans.edit', [
             'plan' => $plan
@@ -63,10 +56,7 @@ class PlanController extends Controller
 
     public function update(StoreUpdatePlan $request, $url)
     {
-        $plan = $this->repository->where('url', $url)->first();
-
-        if (!$plan)
-            return redirect()->back()->with('error', 'Nenhum registro encontrado');
+        $plan = $this->verifyPlan($url);
 
         $plan->update($request->all());
 
@@ -86,7 +76,7 @@ class PlanController extends Controller
         if ($plan->details->count() > 0) {
             return redirect()
                         ->back()
-                        ->with('error', 'Antes de deletar o plano, você deve deletar vos detalhes vinculados a ele!');
+                        ->with('error', 'Antes de deletar o plano, você deve deletar os detalhes vinculados a ele!');
         }
 
         $plan->delete();
@@ -102,5 +92,17 @@ class PlanController extends Controller
             'plans' => $plans,
             'filters' => $filters
         ]);
+    }
+
+    /**
+     * Verify Plan
+     */
+    public function verifyPlan($url)
+    {
+        if (!$plan = $this->repository->where('url', $url)->first()) {
+            return redirect()->back()->with('error', 'Nenhum registro encontrado');            
+        }
+
+        return $plan;
     }
 }

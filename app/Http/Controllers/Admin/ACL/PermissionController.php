@@ -59,9 +59,7 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        if (!$permission = $this->repository->find($id)) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
-        }
+        $permission = $this->verifyPermission($id);
 
         return view('admin.pages.permissions.show', compact('permission'));
     }
@@ -74,9 +72,7 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        if (!$permission = $this->repository->find($id)) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
-        }
+        $permission = $this->verifyPermission($id);
 
         return view('admin.pages.permissions.edit', compact('permission'));
     }
@@ -90,9 +86,7 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!$permission = $this->repository->find($id)) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
-        }
+        $permission = $this->verifyPermission($id);
 
         $permission->update($request->all());
 
@@ -107,9 +101,7 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        if (!$permission = $this->repository->find($id)) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
-        }
+        $permission = $this->verifyPermission($id);
 
         $permission->delete();
 
@@ -125,5 +117,14 @@ class PermissionController extends Controller
 
         return view('admin.pages.permissions.index', compact('permissions', 'filters'));
 
+    }
+
+    public function verifyPermission($id)
+    {
+        if (!$permission = $this->repository->find($id)) {
+            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
+        }
+
+        return $permission;
     }
 }

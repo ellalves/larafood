@@ -7,6 +7,24 @@ Route::prefix('admin')
     ->group(function() {
 
     /**
+     * Categories
+     */
+    Route::any('categories/index', 'CategoryController@index')->name('categories.index');
+    Route::resource('categories', 'CategoryController');
+
+    /**
+     * Users
+     */
+    Route::get('users/create', 'UserController@create')->name('users.create');
+    Route::delete('users/{id}', 'UserController@destroy')->name('users.destroy');
+    Route::post('users', 'UserController@store')->name('users.store');
+    Route::get('users/{id}/edit', 'UserController@edit')->name('users.edit');
+    Route::put('users/{id}', 'UserController@update')->name('users.update');
+    Route::any('users/search', 'UserController@search')->name('users.search');
+    Route::get('users/show/{id}', 'UserController@show')->name('users.show');
+    Route::get('users', 'UserController@index')->name('users.index');    
+
+    /**
      * Profile x permission
      */
     Route::get('plans/{id}/profiles/{idProfile}/detach', 'ACL\PlanProfileController@planProfilesDetach')->name('plans.profiles.detach');
@@ -62,9 +80,8 @@ Route::prefix('admin')
     Route::get('admin', 'PlanController@index')->name('admin.index');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/plan/{url}', 'Site\SiteController@plan')->name('plan.subscription');
+Route::get('/', 'Site\SiteController@index')->name('site.home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -22,7 +22,7 @@ class PlanFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->sentence(),
+            'name' => $this->faker->word(),
             'description' => $this->faker->sentence(3, true),
             'url' => $this->faker->slug(),
             'price' => $this->faker->randomFloat(2, 0, 200)
