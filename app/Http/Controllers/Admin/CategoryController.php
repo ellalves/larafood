@@ -21,12 +21,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $filters = $request->except('_token');
-        $categories = $this->repository->search($request->filter)->latest()->paginate();
+        $categories = $this->repository->latest()->paginate();
 
-        return view('admin.pages.categories.index', compact('categories', 'filters'));
+        return view('admin.pages.categories.index', compact('categories'));
     }
 
     /**
@@ -107,6 +106,19 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('categories.index')->with('message', 'Categoria deletada com sucesso!');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $filters = $request->except('_token');
+        $categories = $this->repository->search($request->filter)->latest()->paginate();
+
+        return view('admin.pages.categories.index', compact('categories', 'filters'));
     }
 
     public function verifyCategory($id)

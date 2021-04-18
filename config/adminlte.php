@@ -230,29 +230,89 @@ return [
             'topnav' => true,
         ],
         [
-            'text' => 'Planos',
-            'url'  => 'admin/plans',
-            'icon' => 'fas fa-list-alt'
+            'text' => 'Dashboard',
+            'route'  => 'admin.index',
+            'icon' => 'fas fa-tachometer-alt'
         ],
         [
-            'text' => 'Perfis',
-            'url'  => 'admin/profiles',
-            'icon' => 'fas fa-address-book'
-        ],        
-        [
-            'text' => 'Permissões',
-            'url'  => 'admin/permissions',
-            'icon' => 'fas fa-lock'
-        ],        
-        [
             'text' => 'Usuários',
-            'url'  => 'admin/users',
+            'route'  => 'users.index',
             'icon' => 'fas fa-user'
         ],
         [
-            'text' => 'Categorias',
-            'url'  => 'admin/categories',
-            'icon' => 'fas fa-layer-group'
+            'header' => 'PLANOS',
+        ],     
+        [
+            'text' => 'Planos',
+            'icon' => 'fas fa-list-alt',
+            'submenu' => [
+                [
+                    'text' => 'Novo',
+                    'route'=> 'plans.create',
+                    'icon' => 'fas fa-plus-square'
+                ],                
+                [
+                    'text' => 'Lista',
+                    'route'=> 'plans.index',
+                    'icon' => 'fas fa-fw fa-list-ol'
+                ],
+            ]
+        ],
+        [
+            'text' => 'Grupos',
+            'icon' => 'fas fa-layer-group',
+            'submenu'=> [
+                [
+                    'text' => 'Novo',
+                    'route'=> 'groups.create',
+                    'icon' => 'fas fa-plus-square',
+                ],                          
+                [
+                    'text' => 'Lista',
+                    'route'=> 'groups.index',
+                    'icon' => 'fas fa-list-alt',
+                ]  
+            ]
+        ],
+        [
+            'text' => 'Permissões',
+            'icon' => 'fas fa-lock',
+            'submenu' => [
+                [
+                    'text' => 'Novo',
+                    'route'=> 'permissions.create',
+                    'icon' => 'fas fa-plus-square',
+                ],                          
+                [
+                    'text' => 'Lista',
+                    'route'=> 'permissions.index',
+                    'icon' => 'fas fa-list-alt',
+                ]  
+            ]
+        ],
+        [
+            'header' => 'PRODUTOS',
+        ],
+        [
+            'text' => 'Produtos',
+            'icon' => 'fas fa-boxes',
+            'submenu' => [
+                [
+                    'text' => 'Novo',
+                    'route'=> 'products.create',
+                    'icon' => 'fas fa-plus-square'
+                ],                
+                [
+                    'text' => 'Lista',
+                    'route'=> 'products.index',
+                    'icon' => 'fas fa-fw fa-list-alt'
+                ],
+                [
+                    'text' => 'Categorias',
+                    'route'  => 'categories.index',
+                    'icon' => 'fas fa-archive'
+                ],
+            ]
         ],
         // [
         //     'text'        => 'pages',

@@ -3,20 +3,21 @@
 @section('title', 'Detalhes do plano { $plan->name }')
 
 @section('content_header')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('plans.index') }}"> Planos</a></li>
-        <li class="breadcrumb-item "><a href="{{ route('plans.show', $plan->url) }}"> {{ $plan->name }}</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('details.plan.index', $plan->url) }}" class="active"> Detalhes</a></li>
-    </ol>
-    <h1>Detalhes do plano {{ $plan->name }} <a href="{{ route('details.plan.create',$plan->url) }}" class="btn btn-success"> <i class="fas fa-plus-square"></i> NOVO</a> </h1>
-
+    {{ Breadcrumbs::render('details', $plan) }}
+    <h1>Detalhes do plano: <strong>{{ $plan->name }}</strong> 
 @stop
 
 @section('content')
     <div class="card">
 
         @include('admin.includes.alerts')
+
+        <div class="div card-header">
+            @include('admin.includes.search', [
+                'route' => null, 
+                'add' => route('details.plan.create', $plan->url)
+            ])
+        </div>
         
         <div class="div card-body">
             
@@ -32,10 +33,22 @@
                 <tbody>
                     @foreach($details as $detail)
                         <tr>
-                            <td>{{ $detail->name }}</td>
-                            <td>
-                                <a href="{{ route('details.plan.show', [$plan->url, $detail->id] ) }}" class="btn btn-warning">Ver</a>
-                                <a href="{{ route('details.plan.edit', [$plan->url, $detail->id] ) }}" class="btn btn-info">Editar</a>
+                            <td class="align-middle">{{ $detail->name }}</td>
+                            <td class="align-middle">
+                                @each('admin.includes.forms_actions', ['items' => 
+                                    [
+                                        'route' => route('details.plan.show', [$plan->url, $plan->id]), 
+                                        'color' => 'secondary',
+                                        'icon' => 'eye',
+                                        'label' => 'Ver'
+                                    ],
+                                    [
+                                        'route' => route('details.plan.edit', [$plan->url, $plan->id]), 
+                                        'color' => 'primary',
+                                        'icon' => 'edit',
+                                        'label' => 'Editar'
+                                    ]
+                                ], 'item', 'admin.includes.forms_actions')
                             </td>
                         </tr>
                     @endforeach

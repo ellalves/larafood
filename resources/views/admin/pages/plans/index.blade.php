@@ -3,26 +3,22 @@
 @section('title', 'Planos')
 
 @section('content_header')
-    <h1>Planos <a href="{{ route('plans.create') }}" class="btn btn-success"> <i class="fas fa-plus-square"></i> NOVO</a> </h1>
-
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('admin.index') }}" class="active"> Planos</a></li>
-    </ol>
+    {{ Breadcrumbs::render('plans') }}
+    <h1>Planos</h1>
 @stop
 
 @section('content')
     <div class="card">
-
+        
         @include('admin.includes.alerts')
         
         <div class="div card-header">
-            <form action="{{ route('plans.search') }}" method="post" class="form form-inline">
-                @csrf
-                <input type="text" name="filter" placeholder="Nome" value="{{ $filters['filter'] ?? '' }}" class="form-control">
-                <button type="submit" class="btn btn-dark">Filtrar</button>
-            </form>
+            @include('admin.includes.search', [
+                'route' => route('plans.search'), 
+                'add' => route('plans.create')
+            ])
         </div>
+        
         <div class="div card-body">
             <table class="table table-condensed">
                 <thead>
@@ -35,13 +31,35 @@
                 <tbody>
                     @foreach($plans as $plan)
                         <tr>
-                            <td>{{ $plan->name }}</td>
-                            <td>R$ {{ number_format($plan->price, 2, ',', '.') }}</td>
-                            <td>
-                                <a href="{{ route('details.plan.index', $plan->url ) }}" class="btn btn-primary">Detalhes</a>
-                                <a href="{{ route('plans.show', $plan->url ) }}" class="btn btn-warning">Ver</a>
-                                <a href="{{ route('plans.edit', $plan->url ) }}" class="btn btn-info">Editar</a>
-                                <a href="{{ route('plans.profiles', $plan->id ) }}" class="btn btn-info">Perfis</a>
+                            <td class="align-middle">{{ $plan->name }}</td>
+                            <td class="align-middle">R$ {{ number_format($plan->price, 2, ',', '.') }}</td>
+                            <td class="align-middle">
+                                @each('admin.includes.forms_actions', ['items' => 
+                                    [
+                                        'route' => route('details.plan.index', $plan->url), 
+                                        'color' => 'info',
+                                        'icon' => 'plus',
+                                        'label' => 'Detalhes'
+                                    ],                                
+                                    [
+                                        'route' => route('plans.groups', $plan->id), 
+                                        'color' => 'dark',
+                                        'icon' => 'layer-group',
+                                        'label' => 'Grupos'
+                                    ],
+                                    [
+                                        'route' => route('plans.show', $plan->url), 
+                                        'color' => 'secondary',
+                                        'icon' => 'eye',
+                                        'label' => 'Ver'
+                                    ],
+                                    [
+                                        'route' => route('plans.edit', $plan->url), 
+                                        'color' => 'primary',
+                                        'icon' => 'edit',
+                                        'label' => 'Editar'
+                                    ]
+                                ], 'item', 'admin.includes.forms_actions')
                             </td>
                         </tr>
                     @endforeach

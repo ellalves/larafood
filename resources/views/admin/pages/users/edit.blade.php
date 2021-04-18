@@ -1,13 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Editar o usuário {{ $user->name }}")
+@section('title', "Editar o usuário: $user->name ")
 
 @section('content_header')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('users.edit', $user->id) }}" class="active"> Editar</a></li>
-    </ol>
-    <h1> Editar o usuário {{ $user->name }} </h1>
+    {{ Breadcrumbs::render('usersEdit')}}
+    <h1> Editar o usuário </h1>
 @stop
 
 @section('content')

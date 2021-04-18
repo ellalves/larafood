@@ -1,13 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Perfis')
+@section('title', 'Usuários')
 
 @section('content_header')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('users.index') }}" class="active"> Usuários</a></li>
-    </ol>
-    <h1>Usuários <a href="{{ route('users.create') }}" class="btn btn-success"> <i class="fas fa-plus-square"></i> NOVO</a> </h1>
+    {{ Breadcrumbs::render('users') }}
+    <h1>Usuários</h1>
 @stop
 
 @section('content')
@@ -16,12 +13,12 @@
         @include('admin.includes.alerts')
 
         <div class="div card-header">
-            <form action="{{ route('users.search') }}" method="post" class="form form-inline">
-                @csrf
-                <input type="text" name="filter" placeholder="Nome" value="{{ $filters['filter'] ?? '' }}" class="form-control">
-                <button type="submit" class="btn btn-dark">Filtrar</button>
-            </form>
+            @include('admin.includes.search', [
+                'route' => route('users.search'), 
+                'add' => route('users.create')
+            ])
         </div>
+
         <div class="div card-body">
             <table class="table table-condensed">
                 <thead>
@@ -36,8 +33,20 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                <a href="{{ route('users.show', $user->id ) }}" class="btn btn-warning">Ver</a>
-                                <a href="{{ route('users.edit', $user->id ) }}" class="btn btn-info">Editar</a>
+                                @each('admin.includes.forms_actions', ['items' => 
+                                    [
+                                        'route' => route('users.show', $user->id ), 
+                                        'color' => 'secondary',
+                                        'icon' => 'eye',
+                                        'label' => 'Ver'
+                                    ],
+                                    [
+                                        'route' => route('users.edit', $user->id ), 
+                                        'color' => 'primary',
+                                        'icon' => 'edit',
+                                        'label' => 'Editar'
+                                    ]
+                                ], 'item', 'admin.includes.forms_actions')
                             </td>
                         </tr>
                     @endforeach

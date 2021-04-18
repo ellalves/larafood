@@ -8,9 +8,23 @@ Route::prefix('admin')
     ->group(function() {
 
     /**
+     * Products x Categories
+     */
+    Route::get('products/{idProduct}/categories/{idCategory}/detach', 'ProductController@productCategoriesDetach')->name('products.categories.detach');
+    Route::get('products/{idProduct}/categories/create', 'ProductController@categoriesAvailable')->name('products.categories.available');
+    Route::post('products/{idProduct}/categories', 'ProductController@productCategoriesAttach')->name('products.categories.attach');
+    Route::get('products/{idProduct}/categories', 'ProductController@categories')->name('products.categories');
+
+    /**
+     * Products
+     */
+    Route::any('products/search', 'ProductController@search')->name('products.search');
+    Route::resource('products', 'ProductController');    
+    
+    /**
      * Categories
      */
-    Route::any('categories/index', 'CategoryController@index')->name('categories.index');
+    Route::any('categories/search', 'CategoryController@search')->name('categories.search');
     Route::resource('categories', 'CategoryController');
 
     /**
@@ -26,20 +40,24 @@ Route::prefix('admin')
     Route::get('users', 'UserController@index')->name('users.index');    
 
     /**
-     * Profile x permission
+     * Group x permission
      */
-    Route::get('plans/{id}/profiles/{idProfile}/detach', 'ACL\PlanProfileController@planProfilesDetach')->name('plans.profiles.detach');
-    Route::post('plans/{id}/profiles', 'ACL\PlanProfileController@planProfilesAttach')->name('plans.profiles.attach');
-    Route::any('plans/{id}/profiles/create', 'ACL\PlanProfileController@profilesAvailable')->name('plans.profiles.available');
-    Route::get('plans/{id}/profiles', 'ACL\PlanProfileController@profiles')->name('plans.profiles');
+    Route::get('plans/{id}/groups/{idGroup}/detach', 'ACL\PlanGroupController@planGroupsDetach')->name('plans.groups.detach');
+    Route::post('plans/{id}/groups', 'ACL\PlanGroupController@planGroupsAttach')->name('plans.groups.attach');
+    Route::any('plans/{id}/groups/create', 'ACL\PlanGroupController@groupsAvailable')->name('plans.groups.available');
+    Route::get('plans/{id}/groups', 'ACL\PlanGroupController@groups')->name('plans.groups');
     /**
-     * Permission x Profile
+     * Permission x Group
      */
-    Route::get('profiles/{id}/permissions/{idPermission}/detach', 'ACL\ProfilePermissionController@profilePermissionsDetach')->name('profiles.permissions.detach');
-    Route::post('profiles/{id}/permissions', 'ACL\ProfilePermissionController@profilePermissionsAttach')->name('profiles.permissions.attach');
-    Route::any('profiles/{id}/permissions/create', 'ACL\ProfilePermissionController@permissionsAvailable')->name('profiles.permissions.available');
-    Route::get('profiles/{id}/permissions', 'ACL\ProfilePermissionController@permissions')->name('profiles.permissions');
-    Route::get('permissions/{id}/profile', 'ACL\ProfilePermissionController@profiles')->name('permissions.profiles');
+    Route::get('groups/{id}/permissions/{idPermission}/detach', 'ACL\GroupPermissionController@groupPermissionsDetach')->name('groups.permissions.detach');
+    Route::post('groups/{id}/permissions', 'ACL\GroupPermissionController@groupPermissionsAttach')->name('groups.permissions.attach');
+    Route::any('groups/{id}/permissions/create', 'ACL\GroupPermissionController@permissionsAvailable')->name('groups.permissions.available');
+    Route::get('groups/{id}/permissions', 'ACL\GroupPermissionController@permissions')->name('groups.permissions');
+    
+    Route::get('permissions/{id}/groups/{idGroup}/detach', 'ACL\GroupPermissionController@permissionGroupsDetach')->name('permissions.groups.detach');
+    Route::post('permissions/{id}/groups', 'ACL\GroupPermissionController@permissionsGroupAttach')->name('permissions.groups.attach');
+    Route::any('permissions/{id}/groups/create', 'ACL\GroupPermissionController@groupsAvailable')->name('permissions.groups.available');
+    Route::get('permissions/{id}/groups', 'ACL\GroupPermissionController@groups')->name('permissions.groups');
 
 
     /**
@@ -50,10 +68,10 @@ Route::prefix('admin')
 
 
     /**
-     * Routes Profiles
+     * Routes Groups
      */
-    Route::any('profiles/search', 'ACL\ProfileController@search')->name('profiles.search');
-    Route::resource('profiles', 'ACL\ProfileController');
+    Route::any('groups/search', 'ACL\GroupController@search')->name('groups.search');
+    Route::resource('groups', 'ACL\GroupController');
 
     /**
      * Routes Details Plans
@@ -78,7 +96,7 @@ Route::prefix('admin')
     Route::post('plans/store', 'PlanController@store')->name('plans.store');
     Route::get('plans', 'PlanController@index')->name('plans.index');
     
-    Route::get('admin', 'PlanController@index')->name('admin.index');
+    Route::get('/', 'PlanController@index')->name('admin.index');
 });
 
 Route::get('/plan/{url}', 'Site\SiteController@plan')->name('plan.subscription');

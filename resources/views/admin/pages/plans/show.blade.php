@@ -1,9 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Detalhes do Plano <strong>{{ $plan->name }}")
+@section('title', "Detalhes do Plano")
 
 @section('content_header')
-    <h1> Detalhes do plano <strong>{{ $plan->name }}</strong></h1>
+    {{ Breadcrumbs::render('plansView')}}
+    <h1> Detalhes do plano</h1>
 @stop
 
 @section('content')

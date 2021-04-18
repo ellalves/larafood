@@ -1,13 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', "Visualizar Categoria <strong>{{ $category->name }}")
+@section('title', "Visualizar Categoria")
 
-@section('content_header')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('categories.index') }}"> Categorias</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('categories.show', $category->id) }}" class="active"> Cadastrar</a></li>
-    </ol>
+    @section('content_header')
+    {{ Breadcrumbs::render('cartegoriesView')}}
     <h1> Visualizar Categoria </h1>
 @stop
 

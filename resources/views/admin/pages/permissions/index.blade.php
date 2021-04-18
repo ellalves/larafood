@@ -3,11 +3,8 @@
 @section('title', 'Permissões')
 
 @section('content_header')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('permissions.index') }}" class="active"> Permissões</a></li>
-    </ol>
-    <h1>Permissões <a href="{{ route('permissions.create') }}" class="btn btn-success"> <i class="fas fa-plus-square"></i> NOVO</a> </h1>
+    {{ Breadcrumbs::render('permissions') }}
+    <h1>Permissões</h1>
 @stop
 
 @section('content')
@@ -16,12 +13,12 @@
         @include('admin.includes.alerts')
 
         <div class="div card-header">
-            <form action="{{ route('permissions.search') }}" method="post" class="form form-inline">
-                @csrf
-                <input type="text" name="filter" placeholder="Nome" value="{{ $filters['filter'] ?? '' }}" class="form-control">
-                <button type="submit" class="btn btn-dark">Filtrar</button>
-            </form>
+            @include('admin.includes.search', [
+                'route' => route('permissions.search'), 
+                'add' => route('permissions.create')
+            ])
         </div>
+
         <div class="div card-body">
             <table class="table table-condensed">
                 <thead>
@@ -35,9 +32,26 @@
                         <tr>
                             <td>{{ $permission->name }}</td>
                             <td>
-                                <a href="{{ route('permissions.show', $permission->id ) }}" class="btn btn-warning">Ver</a>
-                                <a href="{{ route('permissions.edit', $permission->id ) }}" class="btn btn-info">Editar</a>
-                                <a href="{{ route('permissions.profiles', $permission->id ) }}" class="btn btn-info"><i class="fas fa-address-book"></i></a>
+                                @each('admin.includes.forms_actions', ['items' => 
+                                    [
+                                        'route' => route('permissions.groups', $permission->id ), 
+                                        'color' => 'dark',
+                                        'icon' => 'layer-group',
+                                        'label' => 'Grupos'
+                                    ],
+                                    [
+                                        'route' => route('permissions.show', $permission->id ), 
+                                        'color' => 'secondary',
+                                        'icon' => 'eye',
+                                        'label' => 'Ver'
+                                    ],
+                                    [
+                                        'route' => route('permissions.edit', $permission->id ), 
+                                        'color' => 'primary',
+                                        'icon' => 'edit',
+                                        'label' => 'Editar'
+                                    ]
+                                ], 'item', 'admin.includes.forms_actions')
                             </td>
                         </tr>
                     @endforeach

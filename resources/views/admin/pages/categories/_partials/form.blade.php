@@ -13,5 +13,7 @@
 </div>
 
 <div class="form-group">
-    <button type="submit" class="btn btn-dark"> Salvar </button>
+    <button type="submit" class="btn btn-dark"> 
+        <i class="fa fa-save"></i> Salvar 
+    </button>
 </div>

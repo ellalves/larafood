@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', "Detalhes da Permissão <strong>{{ $permission->name }}")
+@section('title', "Visualizar Permissão")
 
 @section('content_header')
-    <h1> Detalhes da Permissão <strong>{{ $permission->name }}</strong></h1>
+    <h1> Visualizar Permissão</h1>
 @stop
 
 @section('content')

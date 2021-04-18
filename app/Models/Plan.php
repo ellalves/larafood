@@ -10,6 +10,8 @@ class Plan extends Model
 {
     use HasFactory;
 
+    protected $table = "plans";
+
     protected $fillable = ['name', 'url', 'price', 'description'];
 
     public function details() 
@@ -17,9 +19,9 @@ class Plan extends Model
         return $this->hasMany(DetailPlan::class); 
     }
 
-    public function profiles()
+    public function groups()
     {
-        return $this->belongsToMany(Profile::class);
+        return $this->belongsToMany(Group::class, 'plan_group');
     }
 
     public function tenants()
@@ -36,18 +38,19 @@ class Plan extends Model
         return $results;
     }
 
-    public function profilesAvailable($filter = null )
+    public function groupsAvailable($filter = null )
     {
-        $profiles = Profile::whereNotIn('profiles.id', function($query) use ($filter) {
-            $query->select('plan_profile.profile_id');
-            $query->from('plan_profile');
-            $query->whereRaw("plan_profile.profile_id={$this->id}");
+        $groups = Group::whereNotIn('id', function($query) {
+            $query->select('plan_group.group_id');
+            $query->from('plan_group');
+            $query->whereRaw("plan_group.plan_id={$this->id}");
         })
+
         ->where(function ($queryFilter) use ($filter) {
             if ($filter)
-                $queryFilter->where('profiles.name', 'LIKE', "%{$filter}%");
+                $queryFilter->where('groups.name', 'LIKE', "%{$filter}%");
         });
 
-        return $profiles;
+        return $groups;
     }
 }

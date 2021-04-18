@@ -1,13 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Visualizar o usuário <strong>{{ $user->name }}")
+@section('title', "Visualizar o usuário")
 
 @section('content_header')
-<ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-    <li class="breadcrumb-item active"><a href="{{ route('users.show', $user->id) }}" class="active"> Visualizar</a></li>
-</ol>
-<h1> Visualizar o usuário {{ $user->name }} </h1>
+    {{ Breadcrumbs::render('usersView')}}
+    <h1> Visualizar o usuário</h1>
 @stop
 
 @section('content')

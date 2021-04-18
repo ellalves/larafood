@@ -3,11 +3,8 @@
 @section('title', 'Categorias')
 
 @section('content_header')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('categories.index') }}" class="active"> Categorias</a></li>
-    </ol>
-    <h1>Categorias <a href="{{ route('categories.create') }}" class="btn btn-success"> <i class="fas fa-plus-square"></i> NOVO</a> </h1>
+    {{ Breadcrumbs::render('categories') }}
+    <h1>Categorias</h1>
 @stop
 
 @section('content')
@@ -16,12 +13,12 @@
         @include('admin.includes.alerts')
 
         <div class="div card-header">
-            <form action="{{ route('categories.index') }}" method="post" class="form form-inline">
-                @csrf
-                <input type="text" name="filter" placeholder="Nome" value="{{ $filters['filter'] ?? '' }}" class="form-control">
-                <button type="submit" class="btn btn-dark">Filtrar</button>
-            </form>
+            @include('admin.includes.search', [
+                'route' => route('categories.search'), 
+                'add' => route('categories.create')
+            ])
         </div>
+
         <div class="div card-body">
             <table class="table table-condensed">
                 <thead>
@@ -34,9 +31,21 @@
                     @foreach($categories as $category)
                         <tr>
                             <td>{{ $category->name }}</td>
-                            <td>
-                                <a href="{{ route('categories.show', $category->id ) }}" class="btn btn-warning">Ver</a>
-                                <a href="{{ route('categories.edit', $category->id ) }}" class="btn btn-info">Editar</a>
+                            <td class="align-middle">
+                                @each('admin.includes.forms_actions', ['items' => 
+                                [
+                                    'route' => route('categories.show', $category->id), 
+                                    'color' => 'secondary',
+                                    'icon' => 'eye',
+                                    'label' => 'Ver'
+                                ],
+                                [
+                                    'route' => route('categories.edit', $category->id), 
+                                    'color' => 'primary',
+                                    'icon' => 'edit',
+                                    'label' => 'Editar'
+                                ]
+                            ], 'item', 'admin.includes.forms_actions')
                             </td>
                         </tr>
                     @endforeach

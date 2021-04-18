@@ -3,11 +3,8 @@
 @section('title', 'Cadastrar Usuário')
 
 @section('content_header')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('users.create') }}" class="active"> Novo</a></li>
-    </ol>
-    <h1> Cadastrar Usuário </h1>
+    {{ Breadcrumbs::render('usersCreate') }}
+    <h1> Cadastrar Usuário  </h1>
 @stop
 
 @section('content')

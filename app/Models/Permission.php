@@ -14,9 +14,9 @@ class Permission extends Model
     /**
      * Get Permissions
      */ 
-    public function profiles()
+    public function groups()
     {
-        return $this->belongsToMany(Profile::class);
+        return $this->belongsToMany(Group::class);
     }
 
     public function search($filter = null)
@@ -27,5 +27,23 @@ class Permission extends Model
 
         return $results;
     }
-    
+
+    /**
+     * Groups not linked with this group
+     */
+    public function groupsAvailable($filter = null)
+    {
+        $permissions = Group::whereNotIn('id', function($query) {
+            $query->select('group_permission.group_id');
+            $query->from('group_permission');
+            $query->whereRaw("group_permission.permission_id={$this->id}");
+        })
+        ->where(function($queryFilter) use ($filter) {
+            if ($filter)
+                $queryFilter->where('groups.name', 'LIKE', "%{$filter}%");
+        })
+        ->paginate();
+
+        return $permissions;
+    }
 }

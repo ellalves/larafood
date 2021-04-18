@@ -3,10 +3,7 @@
 @section('title', 'Cadastrar Nova Permissão')
 
 @section('content_header')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('permissions.create') }}" class="active"> Novo</a></li>
-    </ol>
+    {{ Breadcrumbs::render('permissionsCreate') }}
     <h1> Cadastrar Nova Permissão </h1>
 @stop
 

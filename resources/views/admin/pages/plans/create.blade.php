@@ -1,14 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastrar novo Plano')
+@section('title', 'Cadastrar Plano')
 
 @section('content_header')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('plans.index') }}"> Planos</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('plans.create', $plan->url) }}" class="active"> novo</a></li>
-    </ol>
-    <h1> Cadastrar novo plano </h1>
+    {{ Breadcrumbs::render('plansCreate') }}
+    <h1> Cadastrar Plano </h1>
 @stop
 
 @section('content')

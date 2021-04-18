@@ -17,6 +17,11 @@ class Category extends Model
         return $this->belongsTo(Tenant::class);
     }
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
     public function search($filter = null)
     {
         $categories = $this->join('tenants', 'tenants.id', '=', 'categories.tenant_id')
