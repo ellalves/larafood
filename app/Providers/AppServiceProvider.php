@@ -6,12 +6,14 @@ use App\Models\{
     Category,
     Plan,
     Tenant,
-    Product
+    Product,
+    Table
 };
 use App\Observers\{
     CategoryObserver,
     PlanObserver,
     ProductObserver,
+    TableObserver,
     TenantObserver
 };
 use Illuminate\Pagination\Paginator;
@@ -41,5 +43,6 @@ class AppServiceProvider extends ServiceProvider
         Tenant::observe(TenantObserver::class);
         Category::observe(CategoryObserver::class);
         Product::observe(ProductObserver::class);
+        Table::observe(TableObserver::class);
     }
 }

@@ -240,6 +240,23 @@ return [
             'icon' => 'fas fa-user'
         ],
         [
+            'text' => 'Mesas',
+            'route'  => 'tables.index',
+            'icon' => 'fas fa-border-all',
+            'submenu' => [
+                [
+                    'text' => 'Novo',
+                    'route'=> 'tables.create',
+                    'icon' => 'fas fa-plus-square'
+                ],                
+                [
+                    'text' => 'Lista',
+                    'route'=> 'tables.index',
+                    'icon' => 'fas fa-fw fa-list-alt'
+                ],
+            ]
+        ],
+        [
             'header' => 'PLANOS',
         ],     
         [
@@ -254,7 +271,7 @@ return [
                 [
                     'text' => 'Lista',
                     'route'=> 'plans.index',
-                    'icon' => 'fas fa-fw fa-list-ol'
+                    'icon' => 'fas fa-fw fa-list-alt'
                 ],
             ]
         ],

@@ -224,3 +224,30 @@ Breadcrumbs::for('permissionGroups', function ($trail, $item) {
     $trail->push('Grupos da permissão', route('permissions.groups', $item->id));
     $trail->push('Vincular grupo');
 });
+
+// Admin > Tables
+Breadcrumbs::for('tables', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Mesas', route('tables.index'));
+});
+
+// Admin > Tables > create
+Breadcrumbs::for('tablesCreate', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Mesas', route('tables.index'));
+    $trail->push('Novo');
+});
+
+// Admin > Tables > edit
+Breadcrumbs::for('tablesEdit', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Mesas', route('tables.index'));
+    $trail->push('Editar');
+});
+
+// Admin > Tables > view
+Breadcrumbs::for('tablesView', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Mesas', route('tables.index'));
+    $trail->push('Visualizar');
+});

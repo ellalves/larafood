@@ -48,7 +48,7 @@ class CategoryController extends Controller
     {
         $this->repository->create($request->all());
 
-        return redirect()->route('categories.index')->with('message', 'Registro cadastrado com sucesso');
+        return redirect()->route('categories.index')->with('message', __('messages.store_success'));
     }
 
     /**
@@ -90,7 +90,7 @@ class CategoryController extends Controller
 
         $category->update($request->all());
 
-        return redirect()->route('categories.index')->with('message', 'Categoria alterada com sucesso!');
+        return redirect()->route('categories.index')->with('message', __('messages.update_success'));
     }
 
     /**
@@ -105,7 +105,7 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return redirect()->route('categories.index')->with('message', 'Categoria deletada com sucesso!');
+        return redirect()->route('categories.index')->with('message', __('messages.delete_success'));
     }
 
     /**
@@ -124,7 +124,7 @@ class CategoryController extends Controller
     public function verifyCategory($id)
     {
         if (!$category = $this->repository->findOrFail($id)) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
+            return redirect()->back()->with('error',  __('messages.empty_register'));
         }
 
         return $category;

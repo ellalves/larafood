@@ -5,7 +5,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
     ->namespace('Admin')
+    ->middleware(['auth'])
     ->group(function() {
+
+    /**
+     * Products x Categories
+     */
+    Route::any('tables/search', 'TableController@search')->name('tables.search');
+    Route::resource('tables', 'TableController');
 
     /**
      * Products x Categories
@@ -66,7 +73,6 @@ Route::prefix('admin')
     Route::any('permissions/search', 'ACL\PermissionController@search')->name('permissions.search');
     Route::resource('permissions', 'ACL\PermissionController');
 
-
     /**
      * Routes Groups
      */
@@ -103,7 +109,7 @@ Route::get('/plan/{url}', 'Site\SiteController@plan')->name('plan.subscription')
 Route::get('/', 'Site\SiteController@index')->name('site.home');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    Route::get('/', 'PlanController@index')->name('admin.index');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
