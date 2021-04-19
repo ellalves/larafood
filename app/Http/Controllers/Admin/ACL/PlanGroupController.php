@@ -15,6 +15,8 @@ class PlanGroupController extends Controller
     {
         $this->plan = $plan;
         $this->group = $group;
+
+        $this->middleware(['can:plans']);
     }
 
     public function groups ($idPlan)

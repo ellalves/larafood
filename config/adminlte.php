@@ -237,7 +237,8 @@ return [
         [
             'text' => 'Usuários',
             'route'  => 'users.index',
-            'icon' => 'fas fa-user'
+            'icon' => 'fas fa-user',
+            'can'  => 'users'
         ],
         [
             'text' => 'Mesas',
@@ -254,11 +255,12 @@ return [
                     'route'=> 'tables.index',
                     'icon' => 'fas fa-fw fa-list-alt'
                 ],
-            ]
+            ],
+            'can'  => 'tables'
         ],
-        [
-            'header' => 'PLANOS',
-        ],     
+        // [
+        //     'header' => 'PLANOS',
+        // ],     
         [
             'text' => 'Planos',
             'icon' => 'fas fa-list-alt',
@@ -273,7 +275,8 @@ return [
                     'route'=> 'plans.index',
                     'icon' => 'fas fa-fw fa-list-alt'
                 ],
-            ]
+            ],
+            'can'  => 'plans'
         ],
         [
             'text' => 'Grupos',
@@ -289,7 +292,8 @@ return [
                     'route'=> 'groups.index',
                     'icon' => 'fas fa-list-alt',
                 ]  
-            ]
+            ],
+            'can'  => 'groups'
         ],
         [
             'text' => 'Permissões',
@@ -305,11 +309,12 @@ return [
                     'route'=> 'permissions.index',
                     'icon' => 'fas fa-list-alt',
                 ]  
-            ]
+            ],
+            'can'  => 'permissions'
         ],
-        [
-            'header' => 'PRODUTOS',
-        ],
+        // [
+        //     'header' => 'PRODUTOS',
+        // ],
         [
             'text' => 'Produtos',
             'icon' => 'fas fa-boxes',
@@ -329,7 +334,8 @@ return [
                     'route'  => 'categories.index',
                     'icon' => 'fas fa-archive'
                 ],
-            ]
+            ],
+            'can'  => 'products'
         ],
         // [
         //     'text'        => 'pages',

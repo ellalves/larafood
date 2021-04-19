@@ -15,6 +15,8 @@ class GroupPermissionController extends Controller
     {
         $this->group = $group;
         $this->permission = $permission;
+
+        $this->middleware(['can:groups']);
     }
 
     /**

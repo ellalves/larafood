@@ -17,6 +17,8 @@ class ProductController extends Controller
     {
         $this->repository = $product;
         $this->category = $category;
+
+        $this->middleware(['can:products']);
     }
 
     /**

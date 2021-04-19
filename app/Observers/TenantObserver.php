@@ -8,24 +8,24 @@ use Illuminate\Support\Str;
 class TenantObserver
 {
     /**
-     * Handle the Tenant "created" event.
+     * Handle the Tenant "creating" event.
      *
      * @param  \App\Models\Tenant  $tenant
      * @return void
      */
-    public function created(Tenant $tenant)
+    public function creating(Tenant $tenant)
     {
-        $this->uuid = Str::uuid();
-        $this->url = Str::kebab($tenant->name);
+        $tenant->uuid = Str::uuid($tenant->uuid);
+        $tenant->url = Str::kebab($tenant->name);
     }
 
     /**
-     * Handle the Tenant "updated" event.
+     * Handle the Tenant "updating" event.
      *
      * @param  \App\Models\Tenant  $tenant
      * @return void
      */
-    public function updated(Tenant $tenant)
+    public function updating(Tenant $tenant)
     {
         $this->url = Str::kebab($tenant->name);
     }

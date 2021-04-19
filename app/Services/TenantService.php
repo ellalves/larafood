@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Plan;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
 class TenantService 

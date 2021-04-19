@@ -42,11 +42,9 @@ class RegisteredUserController extends Controller
         }
 
         $request->validate([
-            'name' => 'required|string|min:3, max:255',
-            'document' => 'required|unique:tenants',
-            'company' => 'required|unique:tenants,name',
-            'email' => 'required|string|email|min:3, max:255|unique:users',
-            'password' => 'required|string|confirmed|min:8',
+            // 'name' => ['required', 'string', 'max:255'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // 'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
         $tenantService = app(TenantService::class);

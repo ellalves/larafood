@@ -12,6 +12,8 @@ class GroupController extends Controller
     public function __construct(Group $group)
     {
         $this->repository = $group;
+
+        $this->middleware(['can:groups']);
     }
 
     protected $repository;
