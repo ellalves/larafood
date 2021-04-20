@@ -235,6 +235,12 @@ return [
             'icon' => 'fas fa-tachometer-alt'
         ],
         [
+            'text' => 'Empresas',
+            'route'  => 'tenants.index',
+            'icon' => 'fas fa-building',
+            'can'  => 'tenants'
+        ],
+        [
             'text' => 'Usuários',
             'route'  => 'users.index',
             'icon' => 'fas fa-user',

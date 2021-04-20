@@ -15,7 +15,7 @@
                     <strong>Nome: </strong> {{ $user->name}}
                 </li>
                 <li>
-                    <strong>Descrição: </strong> {{ $user->description}}
+                    <strong>E-mail: </strong> {{ $user->email}}
                 </li>
             </ul>
             
@@ -25,7 +25,7 @@
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger">
-                    Deletar o Usuário <strong>({{ $user->name }})</strong>
+                    Deletar o Usuário
                 </button>
             </form>
 

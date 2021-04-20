@@ -103,7 +103,7 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
-
+    @stack('scripts')
 </body>
 
 </html>

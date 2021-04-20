@@ -41,5 +41,4 @@ class TenantService
             'password' => Hash::make($this->data['password']),
         ]);         
     }
-
 }

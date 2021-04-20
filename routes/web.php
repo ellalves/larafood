@@ -9,6 +9,12 @@ Route::prefix('admin')
     ->group(function() {
         
         /**
+         * Companies
+         */
+        Route::any('search', 'TenantController@search')->name('tenants.search');
+        Route::resource('tenants', 'TenantController');
+
+        /**
          * Products x Categories
          */
         Route::any('tables/search', 'TableController@search')->name('tables.search');

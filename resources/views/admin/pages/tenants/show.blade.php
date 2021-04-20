@@ -1,0 +1,67 @@
+@extends('adminlte::page')
+
+@section('title', "Detalhes da Empresa <strong>{{ $tenant->name }}")
+
+    @section('content_header')
+    {{ Breadcrumbs::render('tenantsView') }}
+    <h1> Detalhes da Empresa <strong>{{ $tenant->name }}</strong></h1>
+@stop
+
+@section('content')
+    <div class="card">
+        <div class="card-body">
+            <img src="{{ url("storage/$tenant->logo") }}" alt='{{ $tenant->logo }}' width="100">
+            <ul>
+                <li>
+                    <strong>Plano: </strong> {{ $tenant->plan->name}}
+                </li>                <li>
+                    <strong>Responsável: </strong> {{ $user->name}}
+                </li>
+                <li>
+                    <strong>Nome: </strong> {{ $tenant->name}}
+                </li>
+                <li>
+                    <strong>Url: </strong> {{ $tenant->url}}
+                </li>
+                <li>
+                    <strong>Documento: </strong> {{ $tenant->document }}
+                </li>
+                <li>
+                    <strong>E-mail: </strong> {{ $tenant->email}}
+                </li>
+                <li>
+                    <strong>Ativo: </strong> {{ $tenant->active == "Y" ? 'Sim' : 'Não'}}
+                </li>
+            </ul>
+
+            <h3>Assinatura</h3>
+            <ul>
+                <li>
+                    <strong>Data Assinatura: </strong> {{ $tenant->subscription }}
+                </li>
+                <li>
+                    <strong>Data Expira: </strong> {{ $tenant->expires_at }}
+                </li>
+                <li>
+                    <strong>Identificador: </strong> {{ $tenant->subscription_id }}
+                </li>
+                <li>
+                    <strong>Ativo? </strong> {{ $tenant->subscription_active ? 'SIM' : 'NÃO' }}
+                </li>
+                <li>
+                    <strong>Cancelou? </strong> {{ $tenant->subscription_suspended ? 'SIM' : 'NÃO' }}
+                </li>
+            </ul>                
+            @include('admin.includes.alerts')
+
+            <form action="{{ route('tenants.destroy', $tenant->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">
+                    Deletar a empresa
+                </button>
+            </form>
+
+        </div>
+    </div>
+@stop

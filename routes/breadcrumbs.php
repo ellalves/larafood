@@ -251,3 +251,30 @@ Breadcrumbs::for('tablesView', function ($trail) {
     $trail->push('Mesas', route('tables.index'));
     $trail->push('Visualizar');
 });
+
+// Admin > Tenants
+Breadcrumbs::for('tenants', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Empresas', route('tenants.index'));
+});
+
+// Admin > Tenants > edit
+Breadcrumbs::for('tenantsCreate', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Empresas', route('tenants.index'));
+    $trail->push('Novo');
+});
+
+// Admin > Tenants > edit
+Breadcrumbs::for('tenantsEdit', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Empresas', route('tenants.index'));
+    $trail->push('Editar');
+});
+
+// Admin > Tenants > view
+Breadcrumbs::for('tenantsView', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Empresas', route('tenants.index'));
+    $trail->push('Visualização');
+});

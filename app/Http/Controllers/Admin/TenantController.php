@@ -2,13 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Plan;
+use App\Models\Tenant;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Services\TenantService;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreUpdateTenant;
 
 class TenantController extends Controller
 {
+    protected $repository, $plan;
 
-    
+    public function __construct(Tenant $tenant, Plan $plan)
+    {
+        $this->repository = $tenant;
+        $this->plan = $plan;
+        $this->middleware(['can:tenants']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +29,9 @@ class TenantController extends Controller
      */
     public function index()
     {
-        //
+        $tenants = $this->repository->latest()->paginate();
+
+        return view('admin.pages.tenants.index', compact('tenants'));
     }
 
     /**
@@ -26,18 +41,29 @@ class TenantController extends Controller
      */
     public function create()
     {
-        //
+        $plans = $this->plan->latest()->get();
+        return view('admin.pages.tenants.create', compact('plans'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreUpdateTenant;  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateTenant $request)
     {
-        //
+        $plan = $this->plan->find($request->plan_id);
+
+        $data = (array)$request->all();
+
+        $data['password'] = bcrypt(Str::random(8));
+        
+        $tenantService = app(TenantService::class);
+        
+        $user = $tenantService->make($plan, $data);
+        
+        return redirect()->route('tenants.index');
     }
 
     /**
@@ -48,7 +74,11 @@ class TenantController extends Controller
      */
     public function show($id)
     {
-        //
+        $tenant = $this->verifyTenant($id);
+
+        $user = $tenant->users->first();
+
+        return view('admin.pages.tenants.show', compact('tenant', 'user'));
     }
 
     /**
@@ -59,19 +89,39 @@ class TenantController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (!$tenant = $this->repository->with('plan')->find($id)) {
+            return redirect()->back()->with('error', __('messages.empty_register'));
+        }
+
+        $user = $tenant->users->first();
+
+        return view('admin.pages.tenants.edit', compact('tenant', 'user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreUpdateTenant;  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdateTenant $request, $id)
     {
-        //
+        $tenant = $this->verifyTenant($id);
+
+        $data = $request->all();
+
+        if ($request->hasFile('logo') && $request->logo->isValid()) {
+            if (Storage::exists($tenant->logo)) {
+                Storage::delete($tenant->logo);
+            }
+
+            $data['logo'] = $request->logo->store("tenants/{$tenant->uuid}/logo");
+        }
+
+        $tenant->update($data);
+
+        return redirect()->route('tenants.index')->with('message', __('messages.store_success'));
     }
 
     /**
@@ -82,6 +132,37 @@ class TenantController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tenant = $this->verifyTenant($id);
+
+        if (Storage::allDirectories("tenants/{$tenant->uuid}")) {
+            // Storage::delete($tenant->logo);
+            Storage::deleteDirectory("tenants/{$tenant->uuid}"); //deleta a pasta da empresa
+        }
+
+        $tenant->delete();
+
+        return redirect()->route('tenants.index')->with('message', __('messages.delete_success'));
     }
+
+    public function search(Request $request) 
+    {
+        $filters = $request->except('_token');
+
+        $tenants = $this->repository->where(function ($query) use ($request) {
+            $query->where('name', 'LIKE', "%{$request->filter}%");
+        })
+        ->latest()
+        ->paginate();
+
+        return view('admin.pages.tenants.index', compact('tenants', 'filters'));
+    }
+
+    public function verifyTenant($id) {
+        if (!$tenant = $this->repository->find($id)) {
+            return redirect()->back()->with('error', __('messages.empty_register'));
+        }
+
+        return $tenant;
+    }
+
 }

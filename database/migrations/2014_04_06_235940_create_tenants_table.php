@@ -29,7 +29,7 @@ class CreateTenantsTable extends Migration
             // Subscription
             $table->date('subscription')->nullable(); // Data que se inscreveu
             $table->date('expires_at')->nullable(); // Data que expira o acesso
-            $table->string('subscription_id', 255)->nullable(); // Identificado do Gateway de pagamento
+            $table->string('subscription_id', 255)->nullable(); // Identificador do Gateway de pagamento
             $table->boolean('subscription_active')->default(false); // Assinatura ativa (porque pode cancelar)
             $table->boolean('subscription_suspended')->default(false); // Assinatura cancelada
 
