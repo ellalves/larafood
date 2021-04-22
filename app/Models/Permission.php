@@ -19,6 +19,11 @@ class Permission extends Model
         return $this->belongsToMany(Group::class);
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
     public function search($filter = null)
     {
         $results = $this->where('name', 'LIKE', "%{$filter}%")
@@ -33,7 +38,7 @@ class Permission extends Model
      */
     public function groupsAvailable($filter = null)
     {
-        $permissions = Group::whereNotIn('id', function($query) {
+        return Group::whereNotIn('id', function($query) {
             $query->select('group_permission.group_id');
             $query->from('group_permission');
             $query->whereRaw("group_permission.permission_id={$this->id}");
@@ -43,7 +48,21 @@ class Permission extends Model
                 $queryFilter->where('groups.name', 'LIKE', "%{$filter}%");
         })
         ->paginate();
+    }
 
-        return $permissions;
+    /**
+     * Groups not linked with this group
+     */
+    public function rolesAvailable($filter = null)
+    {
+        return Role::whereNotIn('id', function($query) {
+            $query->select('permission_role.role_id');
+            $query->from('permission_role');
+            $query->whereRaw("permission_role.permission_id={$this->id}");
+        })
+        ->where(function($queryFilter) use ($filter) {
+            if ($filter)
+                $queryFilter->where('roles.name', 'LIKE', "%{$filter}%");
+        });
     }
 }

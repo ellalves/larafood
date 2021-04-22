@@ -21,9 +21,7 @@ class PlanGroupController extends Controller
 
     public function groups ($idPlan)
     {
-        if (!$plan = $this->plan->find($idPlan)) {
-            return redirect()->back()->with('Nenhum registro encontrado!');
-        }
+        $plan = $this->verifyPlan($idPlan);
 
         $groups = $plan->groups()->paginate();
 
@@ -32,9 +30,7 @@ class PlanGroupController extends Controller
 
     public function groupsAvailable(Request $request, $idPlan)
     {
-        if (!$plan = $this->plan->find($idPlan)) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
-        }
+        $plan = $this->verifyPlan($idPlan);
 
         $filters = $request->except('_token');
 
@@ -45,32 +41,44 @@ class PlanGroupController extends Controller
 
     public function planGroupsAttach(Request $request, $idPlan)
     {
-        if (!$plan = $this->plan->find($idPlan)) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
-        }
+        $plan = $this->verifyPlan($idPlan);
 
         $groups = $request->groups;
 
         if (!$groups || count($groups) == 0) {
-            return redirect()->back()->with('info', 'Escolha, pelo menos, um perfil');
+            return redirect()->back()->with('info', __('messages.choose_one_option'));
         }
 
         $plan->groups()->attach($groups);
 
-        return redirect()->route('plans.groups', $plan->id)->with('Registro vinculado com sucesso!');
+        return redirect()->route('plans.groups', $plan->id)->with('message', __('messages.record_linked'));
     }
 
     public function planGroupsDetach ($idPlan, $idGroup)
     {
-        $plan = $this->plan->find($idPlan);
-        $group = $this->group->find($idGroup);
-
-        if (!$plan || !$group) {
-            return redirect()->back()->with('info', 'Escolha, pelo menos, um grupo');
-        }
+        $plan = $this->verifyPlan($idPlan);
+        $group = $this->verifyGroup($idGroup);
 
         $group->plans()->detach($plan);
 
-        return redirect()->route('plans.groups', $plan->id)->with('message', 'Registro desvinculado com sucesso!');
+        return redirect()->route('plans.groups', $plan->id)->with('message', __('messages.record_unlinked'));
+    }
+
+    public function verifyPlan($idPlan)
+    {
+        if (!$plan = $this->plan->find($idPlan)) {
+            return redirect()->back()->with('error', __('messages.empty_register'));
+        }
+
+        return $plan;
+    }
+
+    public function verifyGroup($idGroup)
+    {
+        if (!$group = $this->group->find($idGroup)) {
+            return redirect()->back()->with('error', __('messages.empty_register'));
+        }
+
+        return $group;
     }
 }

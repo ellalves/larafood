@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Permissões do grupo {$group->name} ")
+@section('title', "Permissões do cargo {$role->name} ")
 
 @section('content_header')
-    {{ Breadcrumbs::render('groupsPermissions', $group) }}
-    <h1>Permissões do grupo: <strong>{{$group->name}}</strong></h1>
+    {{ Breadcrumbs::render('rolesPermissions', $role) }}
+    <h1>Permissões do cargo: <strong>{{$role->name}}</strong></h1>
 @stop
 
 @section('content')
@@ -15,7 +15,7 @@
         <div class="div card-header">
             @include('admin.includes.search', [
                 'route' => null,
-                'add' => route('groups.permissions.available', $group->id),
+                'add' => route('roles.permissions.available', $role->id),
                 'label' => 'VINCULAR',
                 'icon' => 'link'
             ])
@@ -36,7 +36,7 @@
                             <td>
                                 @each('admin.includes.forms_actions', ['items' =>                               
                                     [
-                                        'route' => route('groups.permissions.detach', [$group->id, $permission->id]), 
+                                        'route' => route('roles.permissions.detach', [$role->id, $permission->id]), 
                                         'color' => 'danger',
                                         'icon' => 'unlink',
                                         'label' => 'Desvincular'
@@ -45,11 +45,11 @@
                              </td>
                         </tr>
                     @empty
-                        <tr>
-                            <td colspan="500">
-                                @include('admin.includes.alerts_messages', ['msg' => __('messages.no_link_yet') ])
-                            </td>
-                        </tr>
+                    <tr>
+                        <td colspan="500">
+                            @include('admin.includes.alerts', ['msg' => __('messages.no_link_yet') ])
+                        </td>
+                    </tr>
                     @endforelse
                 </tbody>
             </table>

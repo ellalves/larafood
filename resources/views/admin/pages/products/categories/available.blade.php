@@ -3,10 +3,7 @@
 @section('title', "Categorias do Produto {{ $product->title }} ")
 
 @section('content_header')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('categories.index') }}" class="active"> Categorias</a></li>
-    </ol>
+    {{ Breadcrumbs::render('productsCategoriesAvailable', $product) }}
     <h1>Categorias do Produto <strong>{{ $product->title }}</strong>
 @stop
 
@@ -16,12 +13,11 @@
         @include('admin.includes.alerts')
 
         <div class="div card-header">
-            <form action="{{ route('products.categories.attach', $product->id) }}" method="post" class="form form-inline">
-                @csrf
-                <input type="text" name="filter" placeholder="Nome" value="{{ $filters['filter'] ?? '' }}" class="form-control">
-                <button type="submit" class="btn btn-dark">Filtrar</button>
-            </form>
+            @include('admin.includes.search', [
+                'route' => route('products.categories.available', $product->id)
+            ])
         </div>
+
         <div class="div card-body">
             <table class="table table-condensed">
                 <thead>
@@ -42,7 +38,13 @@
                         @endforeach
                         <tr>
                             <td colspan="500">
-                                <button type="submit" class="btn btn-dark">Vincular</button>
+                                @if (count($categories) > 0)
+                                    <button type="submit" class="btn btn-dark">
+                                        <i class="fas fa-link"></i> Vincular
+                                    </button>
+                                @else
+                                    @include('admin.includes.alerts_messages', ['msg' => __('messages.no_options_available') ])
+                                @endif
                             </td>
                         </tr>                      
                     </form>

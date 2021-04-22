@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($groups as $group)
+                    @forelse($groups as $group)
                         <tr>
                             <td>{{ $group->name }}</td>
                             <td>
@@ -44,7 +44,13 @@
                                 ], 'item')
                              </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="500">
+                                @include('admin.includes.alerts_messages', ['msg' => __('messages.no_link_yet') ])
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

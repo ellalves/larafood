@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastrar Novo Grupo')
+@section('title', 'Cadastrar Grupo')
 
 @section('content_header')
     {{ Breadcrumbs::render('groupsCreate') }}
-    <h1> Cadastrar Novo Grupo </h1>
+    <h1> Cadastrar Grupo </h1>
 @stop
 
 @section('content')

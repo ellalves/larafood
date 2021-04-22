@@ -1,29 +1,26 @@
 @extends('adminlte::page')
 
-@section('title', "Categorias Disponíveis para o Produto {$product->title} ")
+@section('title', "Categorias do Produto {$product->title} ")
 
 @section('content_header')
-    <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('products.index') }}"> Produtos </a></li>
-        <li class="breadcrumb-item"><a href="{{ route('products.categories', $product->id) }}"> Categorias</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('products.categories.available', $product->id) }}" class="active"> Disponíveis</a></li>
-    </ol>
-    <h1>Categorias Disponíveis para o Produto <strong>{{$product->title}}</strong> <a href="{{ route('products.categories.available', $product->id) }}" class="btn btn-success"> <i class="fas fa-plus-square"></i> NOVO </a> </h1>
+    {{ Breadcrumbs::render('productsCategories', $product) }}
+    <h1>Categorias do Produto <strong>{{$product->title}}</strong> </h1>
 @stop
 
 @section('content')
     <div class="card">
 
         @include('admin.includes.alerts')
-
+        
         <div class="div card-header">
-            <form action="{{ route('categories.search') }}" method="post" class="form form-inline">
-                @csrf
-                <input type="text" name="filter" placeholder="Filtrar" value="{{ $filters['filter'] ?? '' }}" class="form-control">
-                <button type="submit" class="btn btn-dark">Filtrar</button>
-            </form>
+            @include('admin.includes.search', [
+                'route' => null,
+                'add' => route('products.categories.available', $product->id),
+                'label' => 'VINCULAR',
+                'icon' => 'link'
+            ])
         </div>
+
         <div class="div card-body">
             <table class="table table-condensed">
                 <thead>
@@ -33,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($categories as $category)
+                    @forelse($categories as $category)
                         <tr>
                             <td>{{ $category->name }}</td>
                             <td>
@@ -42,7 +39,13 @@
                                 </a>
                              </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="500">
+                                @include('admin.includes.alerts_messages', ['msg' => __('messages.no_link_yet') ])
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

@@ -15,7 +15,7 @@ Route::prefix('admin')
         Route::resource('tenants', 'TenantController');
 
         /**
-         * Products x Categories
+         * Tables
          */
         Route::any('tables/search', 'TableController@search')->name('tables.search');
         Route::resource('tables', 'TableController');
@@ -53,25 +53,50 @@ Route::prefix('admin')
         Route::get('users', 'UserController@index')->name('users.index');    
 
         /**
-         * Group x permission
+         * Plans x Groups
          */
         Route::get('plans/{id}/groups/{idGroup}/detach', 'ACL\PlanGroupController@planGroupsDetach')->name('plans.groups.detach');
         Route::post('plans/{id}/groups', 'ACL\PlanGroupController@planGroupsAttach')->name('plans.groups.attach');
         Route::any('plans/{id}/groups/create', 'ACL\PlanGroupController@groupsAvailable')->name('plans.groups.available');
         Route::get('plans/{id}/groups', 'ACL\PlanGroupController@groups')->name('plans.groups');
+        
         /**
-         * Permission x Group
+         * Groups x Permissions
          */
         Route::get('groups/{id}/permissions/{idPermission}/detach', 'ACL\GroupPermissionController@groupPermissionsDetach')->name('groups.permissions.detach');
         Route::post('groups/{id}/permissions', 'ACL\GroupPermissionController@groupPermissionsAttach')->name('groups.permissions.attach');
         Route::any('groups/{id}/permissions/create', 'ACL\GroupPermissionController@permissionsAvailable')->name('groups.permissions.available');
         Route::get('groups/{id}/permissions', 'ACL\GroupPermissionController@permissions')->name('groups.permissions');
         
+        /**
+         * Permissions x Groups
+         */
         Route::get('permissions/{id}/groups/{idGroup}/detach', 'ACL\GroupPermissionController@permissionGroupsDetach')->name('permissions.groups.detach');
         Route::post('permissions/{id}/groups', 'ACL\GroupPermissionController@permissionsGroupAttach')->name('permissions.groups.attach');
         Route::any('permissions/{id}/groups/create', 'ACL\GroupPermissionController@groupsAvailable')->name('permissions.groups.available');
         Route::get('permissions/{id}/groups', 'ACL\GroupPermissionController@groups')->name('permissions.groups');
 
+        /**
+         * Permissions x Roles
+         */
+        Route::get('permissions/{idPermission}/roles/{idRole}/detach', 'ACL\PermissionRoleController@PermissionRoleDetach')->name('permissions.roles.detach');
+        Route::get('permissions/{id}/roles/create', 'ACL\PermissionRoleController@rolesAvailable')->name('permissions.roles.available');
+        Route::post('permissions/{id}/roles', 'ACL\PermissionRoleController@attachRolesPermission')->name('permissions.roles.attach');
+        Route::get('permissions/{id}/roles', 'ACL\PermissionRoleController@roles')->name('permissions.roles');
+
+        /**
+         * Roles x Permissions
+         */
+        Route::get('roles/{idRole}/permissions/{idPermission}/detach', 'ACL\PermissionRoleController@rolePermissionDetach')->name('roles.permissions.detach');
+        Route::any('roles/{id}/permissions/create', 'ACL\PermissionRoleController@permissionsAvailable')->name('roles.permissions.available');
+        Route::post('roles/{id}/permissions', 'ACL\PermissionRoleController@attachPermissionsRole')->name('roles.permissions.attach');
+        Route::get('roles/{id}/permissions', 'ACL\PermissionRoleController@permissions')->name('roles.permissions');
+
+        /**
+         * Roles
+         */
+        Route::any('roles/search', 'ACL\RoleController@search')->name('roles.search');
+        Route::resource('roles', 'ACL\RoleController');
 
         /**
          * Routes Permissions

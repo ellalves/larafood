@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Permissões do grupo {$group->name} ")
+@section('title', "Cargos da permissão {$permission->name} ")
 
 @section('content_header')
-    {{ Breadcrumbs::render('groupsPermissions', $group) }}
-    <h1>Permissões do grupo: <strong>{{$group->name}}</strong></h1>
+    {{ Breadcrumbs::render('PermissionsRoles', $permission) }}
+    <h1>Cargos da permissão: <strong>{{$permission->name}}</strong> </h1>
 @stop
 
 @section('content')
@@ -15,12 +15,12 @@
         <div class="div card-header">
             @include('admin.includes.search', [
                 'route' => null,
-                'add' => route('groups.permissions.available', $group->id),
+                'add' => route('permissions.roles.available', $permission->id),
                 'label' => 'VINCULAR',
                 'icon' => 'link'
             ])
         </div>
-        
+
         <div class="div card-body">
             <table class="table table-condensed">
                 <thead>
@@ -30,18 +30,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($permissions as $permission)
+                    @forelse($roles as $role)
                         <tr>
-                            <td>{{ $permission->name }}</td>
+                            <td>{{ $role->name }}</td>
                             <td>
                                 @each('admin.includes.forms_actions', ['items' =>                               
                                     [
-                                        'route' => route('groups.permissions.detach', [$group->id, $permission->id]), 
+                                        'route' => route('permissions.roles.detach', [$role->id, $permission->id]), 
                                         'color' => 'danger',
                                         'icon' => 'unlink',
                                         'label' => 'Desvincular'
                                     ]
-                                ], 'item')                                
+                                ], 'item')
                              </td>
                         </tr>
                     @empty
@@ -53,13 +53,6 @@
                     @endforelse
                 </tbody>
             </table>
-        </div>
-        <div class="card-footer">
-            @if (isset($filters))
-                {!! $permissions->appends($filters)->onEachSide(5)->links() !!}
-            @else
-                {!! $permissions->onEachSide(5)->links() !!}
-            @endif
         </div>
     </div>
 @stop

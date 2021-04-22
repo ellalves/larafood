@@ -22,10 +22,9 @@ class GroupPermissionController extends Controller
     /**
      * Groups x Permission
      */
-    public function groups ($idPermission) {
-        if (!$permission = $this->permission->find($idPermission)) {
-            return redirect()->back();
-        }
+    public function groups ($idPermission) 
+    {
+        $permission = $this->verifyPermission($idPermission);
 
         $groups = $permission->groups()->paginate();
 
@@ -34,9 +33,7 @@ class GroupPermissionController extends Controller
     
     public function groupsAvailable(Request $request, $idPermission)
     {
-        if (!$permission = $this->permission->find($idPermission)) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
-        }
+        $permission = $this->verifyPermission($idPermission);
         
         $filters = $request->except('_token');
 
@@ -47,33 +44,28 @@ class GroupPermissionController extends Controller
 
     public function groupPermissionsAttach(Request $request, $idGroup)
     {
-        if (!$group = $this->group->find($idGroup)) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
-        }
+        $group = $this->verifyGroup($idGroup);
 
         $permissions = $request->permissions;
 
         if(!$permissions || count($permissions) == 0){
-            return redirect()->back()->with('info', 'Escolha, pelo menos, uma permissão!');
+            return redirect()->back()->with('info', __('messages.choose_one_option'));
         }
 
         $group->permissions()->attach($permissions);
 
-        return redirect()->route('groups.permissions', $group->id);
+        return redirect()->route('groups.permissions', $group->id)->with('message', __('messages.record_linked'));
     }
 
     public function groupPermissionsDetach ($idGroup, $idPermission) 
     {
-        $group = $this->group->find($idGroup);
-        $permission = $this->permission->find($idPermission);
-
-        if (!$group || !$permission) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
-        }
+        $group = $this->verifyGroup($idGroup);
+        
+        $permission = $this->verifyPermission($idPermission);
 
         $group->permissions()->detach($permission);
 
-        return redirect()->route('groups.permissions', $group->id)->with('message', 'Registro desvinculado com sucesso!');
+        return redirect()->route('groups.permissions', $group->id)->with('message', __('messages.record_unlinked'));
     }
 
     /**
@@ -82,10 +74,7 @@ class GroupPermissionController extends Controller
 
     public function permissions($idGroup)
     {
- 
-        if (!$group = $this->group->find($idGroup)) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
-        }
+        $group = $this->verifyGroup($idGroup);
 
         $permissions = $group->permissions()->paginate();
 
@@ -94,9 +83,7 @@ class GroupPermissionController extends Controller
 
     public function permissionsAvailable(Request $request, $idGroup)
     {
-        if (!$group = $this->group->find($idGroup)) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
-        }
+        $group = $this->verifyGroup($idGroup);
         
         $filters = $request->except('_token');
 
@@ -107,14 +94,12 @@ class GroupPermissionController extends Controller
 
     public function permissionsGroupAttach(Request $request, $idPermission)
     {
-        if (!$permission = $this->permission->find($idPermission)) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
-        }
+        $permission = $this->verifyPermission($idPermission);
 
         $groups = $request->groups;
 
-        if(!$groups || count($groups) == 0){
-            return redirect()->back()->with('info', 'Escolha, pelo menos, um grupo!');
+        if (!$groups || count($groups) == 0) {
+            return redirect()->back()->with('info', __('messages.choose_one_option'));
         }
 
         $permission->groups()->attach($groups);
@@ -124,15 +109,28 @@ class GroupPermissionController extends Controller
 
     public function permissionGroupsDetach ($idGroup, $idPermission) 
     {
-        $group = $this->permission->find($idGroup);
-        $permission = $this->permission->find($idPermission);
+        $permission = $this->verifyPermission($idPermission);
 
-        if (!$group || !$permission) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado!');
-        }
+        $group = $this->verifyGroup($idGroup);
 
         $permission->groups()->detach($group);
 
-        return redirect()->route('groups.permissions', $permission->id)->with('message', 'Registro desvinculado com sucesso!');
+        return redirect()->route('groups.permissions', $permission->id)->with('message', __('messages.record_unlinked'));
+    }
+
+    public function verifyGroup($idGroup) {
+        if (!$group = $this->group->find($idGroup)) {
+            return redirect()->back()->with('error', __('messages.empty_register'));
+        }
+
+        return $group;
+    }    
+    
+    public function verifyPermission($idPermission) {
+        if (!$permission = $this->permission->find($idPermission)) {
+            return redirect()->back()->with('error', __('messages.empty_register'));
+        }
+
+        return $permission;
     }
 }

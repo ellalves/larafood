@@ -83,6 +83,21 @@ Breadcrumbs::for('productsView', function ($trail) {
     $trail->push('Visualizar');
 });
 
+// Painel > Products > categories
+Breadcrumbs::for('productsCategories', function ($trail, $item) {
+    $trail->parent('admin');
+    $trail->push("Products", route('groups.index'));
+    $trail->push('Categorias do produto');
+});
+
+// Admin > Products > Categories > available
+Breadcrumbs::for('productsCategoriesAvailable', function ($trail, $item) {
+    $trail->parent('admin');
+    $trail->push('Produtos', route('products.index'));
+    $trail->push('Categoria do produto', route('products.categories', $item->id));
+    $trail->push('Vincular categoria');
+});
+
 // Admin > Categories
 Breadcrumbs::for('categories', function ($trail) {
     $trail->parent('admin');
@@ -225,6 +240,63 @@ Breadcrumbs::for('permissionGroups', function ($trail, $item) {
     $trail->push('Vincular grupo');
 });
 
+// Painel > Permissions > roles
+Breadcrumbs::for('PermissionsRoles', function ($trail, $item) {
+    $trail->parent('admin');
+    $trail->push("Permissions", route('permissions.index'));
+    $trail->push('Cargo por permissão');
+});
+
+// Admin > Permissions > Roles > available
+Breadcrumbs::for('permissionRolesAvailable', function ($trail, $item) {
+    $trail->parent('admin');
+    $trail->push('Permissões', route('permissions.index'));
+    $trail->push('Cargos da permissão', route('permissions.roles', $item->id));
+    $trail->push('Vincular cargo');
+});
+
+// Admin > Roles
+Breadcrumbs::for('roles', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Cargos', route('roles.index'));
+});
+
+// Admin > Roles > create
+Breadcrumbs::for('rolesCreate', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Cargos', route('roles.index'));
+    $trail->push('Novo');
+});
+
+// Admin > Roles > edit
+Breadcrumbs::for('rolesEdit', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Cargos', route('roles.index'));
+    $trail->push('Editar');
+});
+
+// Admin > Roles > view
+Breadcrumbs::for('rolesView', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Cargos', route('roles.index'));
+    $trail->push('Visualização');
+});
+
+// Painel > Roles > permissions
+Breadcrumbs::for('rolesPermissions', function ($trail, $item) {
+    $trail->parent('admin');
+    $trail->push("Cargos", route('roles.index'));
+    $trail->push('Permissão por cargo');
+});
+
+// Admin > Roles > Permissions > available
+Breadcrumbs::for('RolePermissionAvailable', function ($trail, $item) {
+    $trail->parent('admin');
+    $trail->push('Cargos', route('roles.index'));
+    $trail->push('Permissão do cargo', route('roles.permissions', $item->id));
+    $trail->push('Vincular permissão');
+});
+
 // Admin > Tables
 Breadcrumbs::for('tables', function ($trail) {
     $trail->parent('admin');
@@ -258,7 +330,7 @@ Breadcrumbs::for('tenants', function ($trail) {
     $trail->push('Empresas', route('tenants.index'));
 });
 
-// Admin > Tenants > edit
+// Admin > Tenants > create
 Breadcrumbs::for('tenantsCreate', function ($trail) {
     $trail->parent('admin');
     $trail->push('Empresas', route('tenants.index'));

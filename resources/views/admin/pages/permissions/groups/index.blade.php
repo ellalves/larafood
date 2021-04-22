@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Grupos por permissão {$permission->name} ")
+@section('title', "Grupos da permissão {$permission->name} ")
 
 @section('content_header')
     {{ Breadcrumbs::render('permissionsGroup', $permission) }}
-    <h1>Grupos por permissão: <strong>{{$permission->name}}</strong> </h1>
+    <h1>Grupos da permissão: <strong>{{$permission->name}}</strong> </h1>
 @stop
 
 @section('content')
@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($groups as $group)
+                    @forelse($groups as $group)
                         <tr>
                             <td>{{ $group->name }}</td>
                             <td>
@@ -44,7 +44,13 @@
                                 ], 'item')
                              </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="500">
+                                @include('admin.includes.alerts_messages', ['msg' => __('messages.no_link_yet') ])
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

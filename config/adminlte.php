@@ -247,6 +247,12 @@ return [
             'can'  => 'users'
         ],
         [
+            'text' => 'Cargos',
+            'route'  => 'roles.index',
+            'icon' => 'fas fa-address-book',
+            'can'  => 'roles'
+        ],
+        [
             'text' => 'Mesas',
             'route'  => 'tables.index',
             'icon' => 'fas fa-border-all',
