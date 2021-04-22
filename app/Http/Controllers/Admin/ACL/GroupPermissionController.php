@@ -104,7 +104,7 @@ class GroupPermissionController extends Controller
 
         $permission->groups()->attach($groups);
 
-        return redirect()->route('permissions.groups', $permission->id);
+        return redirect()->route('permissions.groups', $permission->id)->with('message', __('messages.record_linked'));;
     }
 
     public function permissionGroupsDetach ($idGroup, $idPermission) 

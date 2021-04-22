@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Permissões disponíveis para o grupo: {{ $permission->name }} ")
+@section('title', "Permissões disponíveis para o grupo: $user->name")
 
 @section('content_header')
-    {{ Breadcrumbs::render('permissionRolesAvailable', $permission) }}
-    <h1>Permissões disponíveis para o grupo: <strong>{{$permission->name}}</strong>
+    {{ Breadcrumbs::render('userRolesAvailable', $user) }}
+    <h1>Permissões disponíveis para o grupo: <strong>{{$user->name}}</strong>
 @stop
 
 @section('content')
@@ -14,7 +14,7 @@
 
         <div class="div card-header">
             @include('admin.includes.search', [
-                'route' => route('permissions.roles.available', $permission->id)
+                'route' => route('users.roles.available', $user->id)
             ])
         </div>
 
@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <form action="{{ route('permissions.roles.attach', $permission->id)}}" method="post">
+                    <form action="{{ route('users.roles.attach', $user->id)}}" method="post">
                         @csrf
 
                         @foreach($roles as $role)

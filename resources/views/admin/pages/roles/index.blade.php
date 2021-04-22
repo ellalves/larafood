@@ -31,7 +31,13 @@
                         <tr>
                             <td>{{ $role->name }}</td>
                             <td>
-                                @each('admin.includes.forms_actions', ['items' =>                               
+                                @each('admin.includes.forms_actions', ['items' => 
+                                    [
+                                        'route' => route('roles.users', $role->id), 
+                                        'color' => 'info',
+                                        'icon' => 'user',
+                                        'label' => 'Usuários'
+                                    ],                               
                                     [
                                         'route' => route('roles.permissions', $role->id), 
                                         'color' => 'dark',

@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Permissões disponíveis para o grupo: {{ $permission->name }} ")
+@section('title', "Usuários disponíveis para o cargo: $role->name")
 
 @section('content_header')
-    {{ Breadcrumbs::render('permissionRolesAvailable', $permission) }}
-    <h1>Permissões disponíveis para o grupo: <strong>{{$permission->name}}</strong>
+    {{ Breadcrumbs::render('roleUsersAvailable', $role) }}
+    <h1>Usuários disponíveis para o cargo: <strong>{{$role->name}}</strong>
 @stop
 
 @section('content')
@@ -14,7 +14,7 @@
 
         <div class="div card-header">
             @include('admin.includes.search', [
-                'route' => route('permissions.roles.available', $permission->id)
+                'route' => route('roles.users.available', $role->id)
             ])
         </div>
 
@@ -27,20 +27,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <form action="{{ route('permissions.roles.attach', $permission->id)}}" method="post">
+                    <form action="{{ route('roles.users.attach', $role->id)}}" method="post">
                         @csrf
 
-                        @foreach($roles as $role)
+                        @foreach($users as $user)
                             <tr>
-                                <td><input id="{{$role->id}}" type="checkbox" name="roles[]" value="{{ $role->id }}"></td>
+                                <td><input id="{{$user->id}}" type="checkbox" name="users[]" value="{{ $user->id }}"></td>
                                 <td>
-                                    <label for="{{$role->id}}">{{ $role->name }}</label>
+                                    <label for="{{$user->id}}">{{ $user->name }}</label>
                                 </td>
                             </tr>
                         @endforeach
                         <tr>
                             <td colspan="500">
-                                @if (count($roles) > 0)
+                                @if (count($users) > 0)
                                     <button type="submit" class="btn btn-dark">
                                         <i class="fas fa-link"></i> Vincular
                                     </button>
@@ -55,9 +55,9 @@
         </div>
         <div class="card-footer">
             @if (isset($filters))
-                {!! $roles->appends($filters)->onEachSide(5)->links() !!}
+                {!! $users->appends($filters)->onEachSide(5)->links() !!}
             @else
-                {!! $roles->onEachSide(5)->links() !!}
+                {!! $users->onEachSide(5)->links() !!}
             @endif
         </div>
     </div>

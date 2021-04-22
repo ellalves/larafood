@@ -41,6 +41,14 @@ Route::prefix('admin')
         Route::resource('categories', 'CategoryController');
 
         /**
+         * Users x Roles
+         */
+        Route::get('users/{id}/roles/{idRole}/detach', 'ACL\RoleUserController@detachUserRole')->name('users.roles.detach');
+        Route::any('users/{id}/roles/create', 'ACL\RoleUserController@userRoleAvailable')->name('users.roles.available');
+        Route::post('users/{id}/roles', 'ACL\RoleUserController@attachUserRole')->name('users.roles.attach');
+        Route::get('users/{id}/roles', 'ACL\RoleUserController@roles')->name('users.roles');
+
+        /**
          * Users
          */
         Route::get('users/create', 'UserController@create')->name('users.create');
@@ -91,6 +99,14 @@ Route::prefix('admin')
         Route::any('roles/{id}/permissions/create', 'ACL\PermissionRoleController@permissionsAvailable')->name('roles.permissions.available');
         Route::post('roles/{id}/permissions', 'ACL\PermissionRoleController@attachPermissionsRole')->name('roles.permissions.attach');
         Route::get('roles/{id}/permissions', 'ACL\PermissionRoleController@permissions')->name('roles.permissions');
+
+        /**
+         * Users x Roles
+         */
+        Route::get('roles/{id}/users/{idUser}/detach', 'ACL\RoleUserController@detachRoleUser')->name('roles.users.detach');
+        Route::any('roles/{id}/users/create', 'ACL\RoleUserController@roleUserAvailable')->name('roles.users.available');
+        Route::post('roles/{id}/users', 'ACL\RoleUserController@attachRoleUser')->name('roles.users.attach');
+        Route::get('roles/{id}/users', 'ACL\RoleUserController@users')->name('roles.users');
 
         /**
          * Roles

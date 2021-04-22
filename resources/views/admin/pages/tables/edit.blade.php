@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Editar Mesa $table->identify")
+@section('title', "Editar Mesa")
 
 @section('content_header')
     {{ Breadcrumbs::render('tablesEdit')}}
-    <h1> Editar Mesa:  <strong>{{ $table->identify }}</strong></h1>
+    <h1> Editar Mesa </h1>
 @stop
 
 @section('content')

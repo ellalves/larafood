@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Usuários')
+@section('title', 'Usuários Cadastrados')
 
 @section('content_header')
     {{ Breadcrumbs::render('users') }}
-    <h1>Usuários</h1>
+    <h1>Usuários Cadastrados</h1>
 @stop
 
 @section('content')
@@ -34,6 +34,12 @@
                             <td>{{ $user->email }}</td>
                             <td>
                                 @each('admin.includes.forms_actions', ['items' => 
+                                    [
+                                        'route' => route('users.roles', $user->id ), 
+                                        'color' => 'info',
+                                        'icon' => 'address-book',
+                                        'label' => 'Cargos'
+                                    ],
                                     [
                                         'route' => route('users.show', $user->id ), 
                                         'color' => 'secondary',

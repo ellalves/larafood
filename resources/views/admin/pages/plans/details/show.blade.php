@@ -1,17 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Visualizar o detalhe {{ $detail->name }}")
+@section('title', "Visualizar o detalhe: $detail->name")
 
 @section('content_header')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('plans.index') }}"> Planos</a></li>
-        <li class="breadcrumb-item "><a href="{{ route('plans.show', $plan->url) }}"> {{ $plan->name }}</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('details.plan.index', $plan->url) }}"> Detalhes</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('details.plan.show', [$plan->url, $detail->id]) }}" class="active"> visualizar</a></li>
-    </ol>
-    <h1>Visualizar o detalhe {{ $detail->name }} </h1>
-
+    {{ Breadcrumbs::render('PlansDetailsCreate', $plan)}}
+    <h1>Visualizar o detalhe: <strong>{{ $detail->name }}</strong> </h1>
 @stop
 
 @section('content')
@@ -27,7 +20,7 @@
             <form action="{{ route('details.plan.destroy', [$plan->url, $detail->id])}}" method="post">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger"> Deletar o detalhe {{ $detail->name}}, do plano {{ $plan->name }}</button>
+                <button type="submit" class="btn btn-danger"> Deletar o detalhe</button>
             </form>
         </div>
     </div>

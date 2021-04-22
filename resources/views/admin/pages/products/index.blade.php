@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Produtos')
+@section('title', 'Produtos Cadastrados')
 
 @section('content_header')
     {{ Breadcrumbs::render('products') }}
-    <h1>Produtos</h1>
+    <h1>Produtos Cadastrados</h1>
 @stop
 
 @section('content')

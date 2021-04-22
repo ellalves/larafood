@@ -1,9 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Detalhes do Plano <strong>{{ $product->name }}")
+@section('title', "Visualizar Produto")
 
 @section('content_header')
-    <h1> Detalhes do plano <strong>{{ $product->name }}</strong></h1>
+    {{ Breadcrumbs::render('productsView', $product)}}
+    <h1> Visualizar Produto</h1>
 @stop
 
 @section('content')
@@ -14,10 +15,7 @@
                     <img src="{{ url("storage/$product->image") }}" alt='{{ $product->image }}' width="100">
                 </li>
                 <li>
-                    <strong>Nome: </strong> {{ $product->name}}
-                </li>
-                <li>
-                    <strong>Url: </strong> {{ $product->url}}
+                    <strong>Nome: </strong> {{ $product->title}}
                 </li>
                 <li>
                     <strong>Price: </strong> {{ number_format($product->price, 2, ',', '.') }}
@@ -33,7 +31,7 @@
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger">
-                    Deletar o produto <strong>({{ $product->title }})</strong>
+                    Deletar o produto
                 </button>
             </form>
 

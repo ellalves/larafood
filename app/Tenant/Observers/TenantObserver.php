@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TenantObserver
 {
     /**
-     * Handle the Tenant "created" event.
+     * Handle the Tenant "creating" event.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return void

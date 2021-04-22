@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Tenant\ManagerTenant;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Role extends Model
 {
@@ -14,6 +15,27 @@ class Role extends Model
     public function permissions()
     {
         return $this->belongsToMany(Permission::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function roleUserAvailable($filter)
+    {
+        return User::whereNotIn('users.id', function($query) {
+            $query->select('ru.user_id');
+            $query->from('role_user AS ru');
+            $query->whereRaw("ru.role_id={$this->id}");
+        })
+        ->where(function($queryFilter) use ($filter) {
+            if ($filter) {
+                $queryFilter->where('users.name', 'LIKE', "%{$filter}%");
+                $queryFilter->where('users.email', 'LIKE', "%{$filter}%");
+            }
+        })
+        ->where('tenant_id', app(ManagerTenant::class)->getTenantIdentify());
     }
 
     public function permissionsAvailable($filter) 

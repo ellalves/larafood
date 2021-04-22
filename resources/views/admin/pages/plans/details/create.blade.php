@@ -1,16 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Adicionar novo detalhe ao plano {{ $plan->name }}")
+@section('title', "Cadastrar detalhes do plano: $plan->name")
 
 @section('content_header')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"> Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('plans.index') }}"> Planos</a></li>
-        <li class="breadcrumb-item "><a href="{{ route('plans.show', $plan->url) }}"> {{ $plan->name }}</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('details.plan.index', $plan->url) }}"> Detalhes</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('details.plan.create', $plan->url) }}" class="active"> Novo</a></li>
-    </ol>
-    <h1>Detalhes do plano {{ $plan->name }} </h1>
+    {{ Breadcrumbs::render('PlansDetailsCreate', $plan)}}
+    <h1>Cadastrar detalhes do plano: <strong>{{ $plan->name }}</strong> </h1>
 
 @stop
 

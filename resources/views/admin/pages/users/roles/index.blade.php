@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Cargos da permissão: $permission->name")
+@section('title', "Cargos do usuário: $user->name")
 
 @section('content_header')
-    {{ Breadcrumbs::render('PermissionsRoles', $permission) }}
-    <h1>Cargos da permissão: <strong>{{$permission->name}}</strong> </h1>
+    {{ Breadcrumbs::render('userRoles', $user) }}
+    <h1>Cargos da permissão: <strong>{{$user->name}}</strong> </h1>
 @stop
 
 @section('content')
@@ -15,7 +15,7 @@
         <div class="div card-header">
             @include('admin.includes.search', [
                 'route' => null,
-                'add' => route('permissions.roles.available', $permission->id),
+                'add' => route('users.roles.available', $user->id),
                 'label' => 'VINCULAR',
                 'icon' => 'link'
             ])
@@ -36,7 +36,7 @@
                             <td>
                                 @each('admin.includes.forms_actions', ['items' =>                               
                                     [
-                                        'route' => route('permissions.roles.detach', [$role->id, $permission->id]), 
+                                        'route' => route('users.roles.detach', [$role->id, $user->id]), 
                                         'color' => 'danger',
                                         'icon' => 'unlink',
                                         'label' => 'Desvincular'

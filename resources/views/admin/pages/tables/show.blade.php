@@ -2,7 +2,7 @@
 
 @section('title', "Visualizar Mesa")
 
-    @section('content_header')
+@section('content_header')
     {{ Breadcrumbs::render('tablesView')}}
     <h1> Visualizar Mesa </h1>
 @stop
@@ -12,7 +12,7 @@
         <div class="card-body">
             <ul>
                 <li>
-                    <strong>Nome: </strong> {{ $table->name}}
+                    <strong>Nome: </strong> {{ $table->identify}}
                 </li>
                 <li>
                     <strong>Descrição: </strong> {{ $table->description}}

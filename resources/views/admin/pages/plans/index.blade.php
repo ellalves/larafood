@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Planos')
+@section('title', 'Planos Cadastrados')
 
 @section('content_header')
     {{ Breadcrumbs::render('plans') }}
-    <h1>Planos</h1>
+    <h1>Planos Cadastrados</h1>
 @stop
 
 @section('content')

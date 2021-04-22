@@ -34,11 +34,35 @@ Breadcrumbs::for('plansView', function ($trail) {
     $trail->push('Visualizar');
 });
 
-// Painel > Planos > [Detalhes]
+// Painel > Planos > detalhes
 Breadcrumbs::for('details', function ($trail, $plan) {
-    $trail->parent('plans');
-    $trail->push($plan->name, route('details.plan.index', $plan->url));
+    $trail->parent('admin');
+    $trail->push('Planos', route('plans.index'));
     $trail->push('Detalhes');
+});
+
+// Painel > Planos > Detalhes > create
+Breadcrumbs::for('PlansDetailsCreate', function ($trail, $plan) {
+    $trail->parent('admin');
+    $trail->push('Planos', route('plans.index'));
+    $trail->push('Detalhes', route('details.plan.index', $plan->url));
+    $trail->push('Novo');
+});
+
+// Painel > Planos > Detalhes > edit
+Breadcrumbs::for('PlansDetailsEdit', function ($trail, $plan) {
+    $trail->parent('admin');
+    $trail->push('Planos', route('plans.index'));
+    $trail->push('Detalhes', route('details.plan.index', $plan->url));
+    $trail->push('Editar');
+});
+
+// Painel > Planos > Detalhes > view
+Breadcrumbs::for('PlansDetailsView', function ($trail, $plan) {
+    $trail->parent('admin');
+    $trail->push('Planos', route('plans.index'));
+    $trail->push('Detalhes', route('details.plan.index', $plan->url));
+    $trail->push('Visualizar');
 });
 
 // Admin > Plans > groups
@@ -118,39 +142,10 @@ Breadcrumbs::for('categoriesEdit', function ($trail) {
     $trail->push('Editar');
 });
 
-
 // Admin > Categories > view
 Breadcrumbs::for('categoriesView', function ($trail) {
     $trail->parent('admin');
     $trail->push('Categorias', route('categories.index'));
-    $trail->push('Visualizar');
-});
-
-// Admin > Users
-Breadcrumbs::for('users', function ($trail) {
-    $trail->parent('admin');
-    $trail->push('Usuários', route('users.index'));
-});
-
-// Admin > Users > create
-Breadcrumbs::for('usersCreate', function ($trail) {
-    $trail->parent('admin');
-    $trail->push('Usuários', route('users.index'));
-    $trail->push('Novo', route('users.create'));
-});
-
-// Admin > Users > edit
-Breadcrumbs::for('usersEdit', function ($trail) {
-    $trail->parent('admin');
-    $trail->push('Usuários', route('users.index'));
-    $trail->push('Editar');
-});
-
-
-// Admin > Users > view
-Breadcrumbs::for('usersView', function ($trail) {
-    $trail->parent('admin');
-    $trail->push('Usuários', route('users.index'));
     $trail->push('Visualizar');
 });
 
@@ -295,6 +290,63 @@ Breadcrumbs::for('RolePermissionAvailable', function ($trail, $item) {
     $trail->push('Cargos', route('roles.index'));
     $trail->push('Permissão do cargo', route('roles.permissions', $item->id));
     $trail->push('Vincular permissão');
+});
+
+// Admin > Roles > users
+Breadcrumbs::for('roleUsers', function ($trail, $item) {
+    $trail->parent('admin');
+    $trail->push('Cargos', route('roles.index'));
+    $trail->push('Usuários do cargo', route('roles.users', $item->id));
+});
+
+// Admin > Roles > Users > available
+Breadcrumbs::for('roleUsersAvailable', function ($trail, $item) {
+    $trail->parent('admin');
+    $trail->push('Cargos', route('roles.index'));
+    $trail->push('Usuários do cargo', route('roles.users', $item->id));
+    $trail->push('Vincular usuário');
+});
+
+// Admin > Users
+Breadcrumbs::for('users', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Usuários', route('users.index'));
+});
+
+// Admin > Users > create
+Breadcrumbs::for('usersCreate', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Usuários', route('users.index'));
+    $trail->push('Novo', route('users.create'));
+});
+
+// Admin > Users > edit
+Breadcrumbs::for('usersEdit', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Usuários', route('users.index'));
+    $trail->push('Editar');
+});
+
+// Admin > Users > view
+Breadcrumbs::for('usersView', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Usuários', route('users.index'));
+    $trail->push('Visualizar');
+});
+
+// Admin > Users > roles
+Breadcrumbs::for('userRoles', function ($trail, $item) {
+    $trail->parent('admin');
+    $trail->push('Usuários', route('users.index'));
+    $trail->push('Cargos do usuários', route('users.roles', $item->id));
+});
+
+// Admin > Users > Roles > available
+Breadcrumbs::for('userRolesAvailable', function ($trail, $item) {
+    $trail->parent('admin');
+    $trail->push('Usuários', route('users.index'));
+    $trail->push('Cargos do usuários', route('users.roles', $item->id));
+    $trail->push('Vincular cargo');
 });
 
 // Admin > Tables
