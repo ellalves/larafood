@@ -15,7 +15,7 @@ class TableObserver
      */
     public function creating(Table $table)
     {
-        $table->uuid = Str::kebab($table->uuid);
+        $table->uuid = Str::uuid($table->uuid);
     }
 
     /**

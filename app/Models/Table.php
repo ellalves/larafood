@@ -12,7 +12,7 @@ class Table extends Model
 
     protected $fillable = ['identify','description','uuid'];
 
-    public function tenants() {
+    public function tenant() {
         return $this->belongsTo(Tenant::class);
     }
 
