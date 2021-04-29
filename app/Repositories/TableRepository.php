@@ -14,16 +14,16 @@ class TableRepository implements TableRepositoryInterface
         $this->entity = $entity;    
     }
 
-    public function getTablesByTenantUuid(string $uuid)
-    {
-        return $this->entity
-                            ->withoutGlobalScope(TenantScope::class)
-                            ->join('tenants', 'tenants.id', '=', 'tables.tenant_id')
-                            ->where('tenants.uuid', $uuid)
-                            ->select('tables.*')
-                            ->latest()
-                            ->get();
-    }
+    // public function getTablesByTenantUuid(string $uuid)
+    // {
+    //     return $this->entity
+    //                         ->withoutGlobalScope(TenantScope::class)
+    //                         ->join('tenants', 'tenants.id', '=', 'tables.tenant_id')
+    //                         ->where('tenants.uuid', $uuid)
+    //                         ->select('tables.*')
+    //                         ->latest()
+    //                         ->get();
+    // }
 
     public function getTablesByTenantId(int $idTenant)
     {

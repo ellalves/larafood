@@ -15,8 +15,8 @@ class TenantObserver
      */
     public function creating(Tenant $tenant)
     {
-        $tenant->uuid = Str::uuid($tenant->uuid);
-        $tenant->url = Str::kebab($tenant->name);
+        $tenant->uuid = Str::uuid();
+        $tenant->url = Str::slug($tenant->name);
     }
 
     /**

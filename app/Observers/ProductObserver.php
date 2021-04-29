@@ -15,7 +15,7 @@ class ProductObserver
      */
     public function creating(Product $product)
     {
-        $product->flag = Str::kebab($product->title);
+        $product->flag = Str::slug($product->title);
         // $product->price = number_format($product->price, 2, '.', '');
     }
 

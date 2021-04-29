@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Services\TableService;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\TableResource;
+use App\Http\Controllers\ApiController;
 
-class TableApiController extends Controller
+class TableApiController extends ApiController
 {
     protected $tableService;
     
