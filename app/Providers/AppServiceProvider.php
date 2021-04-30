@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\{
     Category,
+    Client,
     Plan,
     Tenant,
     Product,
@@ -11,6 +12,7 @@ use App\Models\{
 };
 use App\Observers\{
     CategoryObserver,
+    ClientObserver,
     PlanObserver,
     ProductObserver,
     TableObserver,
@@ -48,5 +50,6 @@ class AppServiceProvider extends ServiceProvider
         Category::observe(CategoryObserver::class);
         Product::observe(ProductObserver::class);
         Table::observe(TableObserver::class);
+        Client::observe(ClientObserver::class);
     }
 }
