@@ -19,7 +19,19 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'tenant_id',
+        'pĺan_id',
+        'tenant_id',
+        'uuid',
+        'name',
+        'document',
+        'username',
+        'email',
+        'phone',
+        'password',
+        'birth',
+        'sex',
+        'bio',
+        'photo',
     ];
 
     public function tenant()

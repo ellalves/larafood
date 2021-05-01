@@ -10,14 +10,14 @@ class Table extends Model
 {
     use HasFactory, TenantTrait;
 
-    protected $fillable = ['identify','description','uuid'];
+    protected $fillable = ['name','description','uuid', 'tenant_id'];
 
     public function tenant() {
         return $this->belongsTo(Tenant::class);
     }
 
     public function search($filter = null) {
-        $tables = $this->where('identify', 'LIKE', "%{$filter}%")
+        $tables = $this->where('name', 'LIKE', "%{$filter}%")
                     ->orWhere('description', 'LIKE', "%{$filter}%");
         return $tables;
     }

@@ -25,8 +25,8 @@ class ClientObserver
      * @param  \App\Models\Plan  $plan
      * @return void
      */
-    public function updating(Client $plan)
+    public function updating(Client $client)
     {
-
+        $client->password = bcrypt($client->password);
     }
 }

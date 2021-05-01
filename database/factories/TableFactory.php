@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Plan;
+use App\Models\Table;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PlanFactory extends Factory
+class TableFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Plan::class;
+    protected $model = Table::class;
 
     /**
      * Define the model's default state.
@@ -22,11 +22,11 @@ class PlanFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word(),
+            'name' => 'Mesa ' . $this->faker->numerify('#'),
             'uuid' => $this->faker->uuid(),
-            'description' => $this->faker->realText(),
             'url' => $this->faker->slug(),
-            'price' => $this->faker->randomFloat(2, 0, 200)
+            'description' => $this->faker->sentence(3, true),
+            'tenant_id' => $this->faker->randomDigitNot(0)
         ];
     }
 }

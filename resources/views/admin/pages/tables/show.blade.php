@@ -12,10 +12,10 @@
         <div class="card-body">
             <ul>
                 <li>
-                    <strong>Nome: </strong> {{ $table->identify}}
+                    <strong>Nome: </strong> {{ $table->name }}
                 </li>
                 <li>
-                    <strong>Descrição: </strong> {{ $table->description}}
+                    <strong>Descrição: </strong> {{ $table->description }}
                 </li>
             </ul>
             

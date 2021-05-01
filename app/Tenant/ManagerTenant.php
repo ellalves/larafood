@@ -13,10 +13,10 @@ class ManagerTenant
         return auth()->check() ? auth()->user()->tenant_id : '';
     }
 
-    public function getTenant(): Tenant
+    public function getTenant()
     {
         // return auth()->user()->tenant;
-        return auth()->check() ? auth()->user()->tenant_id : 0;
+        return auth()->check() ? auth()->user()->tenant_id : '';
     }
 
     public function isAdmin(): bool

@@ -15,7 +15,7 @@ class ProductObserver
      */
     public function creating(Product $product)
     {
-        $product->flag = Str::slug($product->title);
+        $product->url = Str::slug($product->title);
         $product->uuid = Str::uuid();
         // $product->price = number_format($product->price, 2, '.', '');
     }
@@ -28,6 +28,6 @@ class ProductObserver
      */
     public function updating(Product $product)
     {
-
+        $product->url = Str::slug($product->title);
     }
 }

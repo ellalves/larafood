@@ -3,8 +3,8 @@
 @csrf
 
 <div class="form-group">
-    <label for="identify"> Identificador: </label>
-    <input type="text" name="identify" value="{{ $table->identify ?? old('identify') }}" class="form-control" placeholder="Identificador:">
+    <label for="name"> Identificador: </label>
+    <input type="text" name="name" value="{{ $table->name ?? old('name') }}" class="form-control" placeholder="Identificador:">
 </div>
 
 <div class="form-group">

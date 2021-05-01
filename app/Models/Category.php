@@ -10,7 +10,7 @@ class Category extends Model
 {
     use HasFactory, TenantTrait;
 
-    protected $fillable = ['name', 'url', 'description'];
+    protected $fillable = ['name', 'url', 'description', 'tenant_id'];
 
     public function tenant()
     {

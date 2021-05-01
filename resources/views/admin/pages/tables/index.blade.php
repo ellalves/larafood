@@ -30,7 +30,7 @@
                 <tbody>
                     @foreach($tables as $table)
                         <tr>
-                            <td>{{ $table->identify }}</td>
+                            <td>{{ $table->name }}</td>
                             <td class="align-middle">
                                 @each('admin.includes.forms_actions', ['items' => 
                                 [

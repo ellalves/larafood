@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Plan;
-use App\Models\Tenant;
+use App\Models\Table;
 use Illuminate\Database\Seeder;
 
-class PlansTableSeeder extends Seeder
+class TableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +14,6 @@ class PlansTableSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\Plan::factory(3)->create();
+        Table::factory()->count(9)->create();
     }
 }

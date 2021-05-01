@@ -11,13 +11,18 @@ class Product extends Model
 {
     use HasFactory, TenantTrait;
 
-    protected $fillable = ['title', 'flag', 'price', 'description', 'image'];
+    protected $fillable = ['title', 'url', 'price', 'description', 'image', 'tenant_id'];
 
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'category_product');
     }
 
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
+    
     public function categoriesAvailable($filter = null)
     {
         $categories = Category::whereNotIn('categories.id', function($query) {

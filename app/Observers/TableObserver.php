@@ -15,6 +15,7 @@ class TableObserver
      */
     public function creating(Table $table)
     {
+        $table->url = Str::slug($table->name);
         $table->uuid = Str::uuid();
     }
 
@@ -26,6 +27,6 @@ class TableObserver
      */
     public function updating(Table $table)
     {
-        //
+        $table->url = Str::slug($table->name);
     }
 }

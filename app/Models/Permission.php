@@ -16,7 +16,7 @@ class Permission extends Model
      */ 
     public function groups()
     {
-        return $this->belongsToMany(Group::class);
+        return $this->belongsToMany(Group::class, 'permission_group');
     }
 
     public function roles()
@@ -39,9 +39,9 @@ class Permission extends Model
     public function groupsAvailable($filter = null)
     {
         return Group::whereNotIn('id', function($query) {
-            $query->select('group_permission.group_id');
-            $query->from('group_permission');
-            $query->whereRaw("group_permission.permission_id={$this->id}");
+            $query->select('pg.group_id');
+            $query->from('permission_group AS pg');
+            $query->whereRaw("pg.permission_id={$this->id}");
         })
         ->where(function($queryFilter) use ($filter) {
             if ($filter)
