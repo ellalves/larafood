@@ -7,7 +7,8 @@ use App\Repositories\{
     CategoryRepository,
     ClientRepository,
     ProductRepository,
-    TenantRepository
+    TenantRepository,
+    OrderRepository
 };
 
 use App\Repositories\Contracts\{
@@ -15,7 +16,8 @@ use App\Repositories\Contracts\{
     CategoryRepositoryInterface,
     ClientRepositoryInterface,
     ProductRepositoryInterface,
-    TenantRepositoryInterface
+    TenantRepositoryInterface,
+    OrderRepositoryInterface
 };
 
 use Illuminate\Support\ServiceProvider;
@@ -52,6 +54,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ClientRepositoryInterface::class,
             ClientRepository::class
+        );
+
+        $this->app->bind(
+            OrderRepositoryInterface::class,
+            OrderRepository::class
         );
     }
 

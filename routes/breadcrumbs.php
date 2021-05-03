@@ -110,7 +110,7 @@ Breadcrumbs::for('productsView', function ($trail) {
 // Painel > Products > categories
 Breadcrumbs::for('productsCategories', function ($trail, $item) {
     $trail->parent('admin');
-    $trail->push("Products", route('groups.index'));
+    $trail->push("Produtos", route('products.index'));
     $trail->push('Categorias do produto');
 });
 

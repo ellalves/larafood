@@ -30,9 +30,7 @@ trait ApiResponser {
 	 */
 	public function successResponse($data, $message = null, $code = Response::HTTP_OK): JsonResponse
 	{
-		return response()->json([
-			'status'=> 'success', 
-			'message' => $message, 
+		return response()->json([ 
 			'data' => $data
 		], $code);
 	}
@@ -46,8 +44,9 @@ trait ApiResponser {
 	 */
 	public function errorResponse($message = null, $code = Response::HTTP_BAD_REQUEST): JsonResponse
 	{
+		$code = ($code == 0 || $code == '') ? 500: $code;
+
 		return response()->json([
-			'status'=>'Error',
 			'message' => $message,
 			'data' => null
 		], $code);

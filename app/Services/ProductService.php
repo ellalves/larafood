@@ -17,16 +17,16 @@ class ProductService
         $this->productRepository = $productRepository;
     }
 
-    public function getProductByTenantUuid($uuid, $categories = null)
+    public function getProductsByTenantUuid($uuidTenant, $categories = null)
     {
-        $tenant = $this->tenantRepository->getTenantByUuid($uuid);
+        $tenant = $this->tenantRepository->getTenantByUuid($uuidTenant);
         $products = $this->productRepository->getProductsByTenantId($tenant->id, $categories);
         return $products;
     }
 
-    public function getProductByFlag($uuid, $flag)
+    public function getProductByFlag($uuidTenant, $uuidProduct)
     {
-        $tenant = $this->tenantRepository->getTenantByUuid($uuid);
-        return $this->productRepository->getProductByFlag($tenant->id, $flag);
+        $tenant = $this->tenantRepository->getTenantByUuid($uuidTenant);
+        return $this->productRepository->getProductByUuid($tenant->id, $uuidProduct);
     }
 }

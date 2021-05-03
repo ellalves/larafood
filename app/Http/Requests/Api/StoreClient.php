@@ -26,7 +26,7 @@ class StoreClient extends FormRequest
         return [
             'name' => 'required|min:3|max:60',
             'email' => 'required|email|min:3|max:60',
-            'password' => 'required|min:3|max:15',
+            'password' => 'required|min:3|max:60',
         ];
     }
 }

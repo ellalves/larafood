@@ -16,30 +16,28 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getProductsByTenantId(int $idTenant, array $categories = null)
     {
-        $product = $this->entity
-                            ->select('p.*')
-                            ->distinct()
-                            ->from('products  AS p')
-                            ->join('category_product AS cp','cp.product_id','=', 'p.id')
-                            ->join('categories AS c','c.id','=', 'category_id')
-                            ->where(function ($query) use ($categories) {
-                                if($categories != [])
-                                    $query->whereIn('c.url', $categories);
+        $products = $this->entity
+                            ->select('products.*')
+                            ->with('categories')
+                            ->when($categories, function($query) use ($idTenant, $categories) {
+                                $query->whereHas('categories', function($q) use ($idTenant, $categories) {
+                                    $q->where('categories.tenant_id', $idTenant);
+                                    $q->whereIn('categories.url', $categories);
+                                });
                             })
-                            ->where('p.tenant_id', $idTenant)
-                            ->where('c.tenant_id', $idTenant)
+                            ->where('products.tenant_id', $idTenant)
                             ->withoutGlobalScope(TenantScope::class)
                             ->get();
-        return $product;
+        return $products;
     }
 
-    public function getProductByFlag(int $idTenant, string $flag)
+    public function getProductByUuid(int $idTenant, string $uuidProduct)
     {
         $product = $this->entity
-                            ->where('flag', $flag)
+                            ->where('uuid', $uuidProduct)
                             ->where('tenant_id', $idTenant)
                             ->withoutGlobalScope(TenantScope::class)
-                            ->first();
+                            ->firstOrFail();
         return $product;
     }
 }

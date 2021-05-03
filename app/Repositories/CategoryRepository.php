@@ -17,11 +17,11 @@ class CategoryRepository implements CategoryRepositoryInterface
     public function getCategoriesByTenantUuid(string $uuid)
     {
         return $this->entity
-                ->withoutGlobalScope(TenantScope::class)
-                ->join('tenants', 'tenants.id', '=', 'categories.tenant_id')
-                ->where('tenants.uuid', $uuid)
-                ->select('categories.*')
-                ->get();
+                        ->withoutGlobalScope(TenantScope::class)
+                        ->join('tenants', 'tenants.id', '=', 'categories.tenant_id')
+                        ->where('tenants.uuid', $uuid)
+                        ->select('categories.*')
+                        ->get();
     }
 
     public function getCategoriesByTenantId(int $idTenant)

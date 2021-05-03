@@ -8,8 +8,10 @@ Route::post('/auth/sanctum/token', 'Api\Auth\AuthClientController@auth');
 Route::group([
     'middleware' => ['auth:sanctum']
 ], function() {
-    Route::get('/auth/clients/me', 'Api\Auth\AuthClientController@me');
     Route::post('/auth/clients/logout', 'Api\Auth\AuthClientController@logout');
+    Route::get('/auth/clients/me', 'Api\Auth\AuthClientController@me');
+
+    Route::get('/v1/clients/my-orders', 'Api\OrderApiController@myOrders');
 });
 
 Route::group([
@@ -18,11 +20,16 @@ Route::group([
 ], function () {
     // Tenants
     Route::get('tenants/{uuid}', 'TenantApiController@show');
+    Route::get('tenants', 'TenantApiController@index');
+
     Route::get('tenants/{uuid}/categories', 'CategoryApiController@categoriesByTenant');
     Route::get('tenants/{uuid}/tables', 'TableApiController@tablesByTenant');
-    Route::get('tenants/{uuid}/products', 'ProductApiController@productsByTenant');
+
     Route::get('tenants/{uuid}/products/{flag}', 'ProductApiController@productByFlag');
-    Route::get('tenants', 'TenantApiController@index');
+    Route::get('tenants/{uuid}/products', 'ProductApiController@productsByTenant');
+
+    Route::get('/tenants/{uuid}/orders/{identify}', 'OrderApiController@show');
+    Route::post('/tenants/{uuid}/orders', 'OrderApiController@store');
 });
 
 Route::fallback(function(){

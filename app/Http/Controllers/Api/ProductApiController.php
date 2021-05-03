@@ -18,12 +18,12 @@ class ProductApiController extends ApiController
         $this->productService = $productService;
     }
 
-    public function productsByTenant(Request $request, $uuid)
+    public function productsByTenant(Request $request, $uuidTenant)
     {
         $categories = $request->get('categories') ? explode(',', $request->get('categories')) : null;
 
         try {
-            $products = $this->productService->getProductByTenantUuid($uuid, $categories);
+            $products = $this->productService->getProductsByTenantUuid($uuidTenant, $categories);
             return $this->successResponse(ProductResource::collection($products));
         } catch (\Throwable $e) {
             //throw $th;
