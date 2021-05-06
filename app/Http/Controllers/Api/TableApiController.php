@@ -19,10 +19,22 @@ class TableApiController extends ApiController
     public function tablesByTenant($uuid)
     {
         try {
-            $table = $this->tableService->getTableByTenantUuid($uuid);
+            $table = $this->tableService->getTablesByTenantUuid($uuid);
             return TableResource::collection($table);
         } catch (\Throwable $e) {
             //throw $th;
+            return $this->errorResponse($e->getMessage());
+        }
+
+    }
+
+    public function tableByTenant($uuidTenant, $identify)
+    {
+        try {
+            $table = $this->tableService->getTableByTenantUuid($uuidTenant, $identify);
+            return $this->successResponse( new TableResource($table));
+        } catch (\Throwable $e) {
+            //throw $e;
             return $this->errorResponse($e->getMessage());
         }
 

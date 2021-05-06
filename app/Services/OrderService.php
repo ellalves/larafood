@@ -27,14 +27,14 @@ class OrderService
     public function newOrder(array $order, $uuidTenant)
     {
         $identify = $this->getIdentifyOrder();
-        
+        // dd($order);
         $status = 'open';
         $tenantId = $this->getTenantIdByOrder($uuidTenant);
         $productsOrder = $this->getProductsByOrder($tenantId, $order['products'] ?? []);
         $total = $this->getTotalOrder($productsOrder);
         $comment = isset($order['comment']) ? $order['comment'] : '';
         $clientId = $this->getClientOrder();
-        $tableId = $this->getTableIdByOrder($order['table'] ?? '');
+        $tableId = $this->getTableIdByOrder($tenantId, $order['table'] ?? '');
 
         $order = $this->orderRepository->newOrder(
             $identify,
@@ -62,6 +62,16 @@ class OrderService
 
         return $this->orderRepository->getOrdersByClientId($idClient);
     }
+
+    public function getTenantIdByOrder(string $uuidTenant)
+    {
+        if ($tenant = $this->tenantRepository->getTenantByUuid($uuidTenant)) {
+            return $tenant->id;
+        }
+
+        return false;
+    }
+    
     /**
      * Privados
      */
@@ -87,19 +97,10 @@ class OrderService
         return $identify;
     }
 
-    private function getTenantIdByOrder(string $uuidTenant)
+    private function getTableIdByOrder(int $uuidTenant, string $identify)
     {
-        if ($tenant = $this->tenantRepository->getTenantByUuid($uuidTenant)) {
-            return $tenant->id;
-        }
-
-        return false;
-    }
-
-    private function getTableIdByOrder(string $uuidTenant = '')
-    {
-        if ($uuidTenant) {
-            $table = $this->tableRepository->getTableByUuid($uuidTenant);
+        if ($uuidTenant && $identify) {
+            $table = $this->tableRepository->getTableIdentifyByTenantId($uuidTenant, $identify);
 
             return $table->id;
         }
@@ -109,7 +110,7 @@ class OrderService
 
     private function getClientOrder()
     {
-        $client = auth()->check() ? auth()->user()->id : 0;
+        $client = auth()->check() ? auth()->user()->id : null;
 
         return $client;
     }

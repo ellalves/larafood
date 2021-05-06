@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Services\TenantService;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\TenantResource;
-use App\Repositories\TenantRepository;
+use App\Http\Controllers\ApiController;
 
-class TenantApiController extends Controller
+class TenantApiController extends ApiController
 {
 
     protected $tenantService;
@@ -20,12 +18,25 @@ class TenantApiController extends Controller
 
     public function index()
     {
-        return TenantResource::collection($this->tenantService->getAllTenants());
+        try {
+            $tenants = $this->tenantService->getAllTenants();
+            return $this->successResponse(TenantResource::collection($tenants));
+        } catch (\Throwable $e) {
+            //throw $e;
+            return $this->errorResponse($e->getMessage());
+        }
+
     }
 
     public function show($uuid)
     {
-        $tenant = $this->tenantService->getTenantByUuid($uuid);
-        return new TenantResource($tenant);
+        try {
+            $tenant = $this->tenantService->getTenantByUuid($uuid);
+            return $this->successResponse(new TenantResource($tenant));
+        } catch (\Throwable $e) {
+            //throw $e;
+            return $this->errorResponse($e->getMessage());
+        }
+
     }
 }

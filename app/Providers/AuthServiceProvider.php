@@ -25,7 +25,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (app()->runningInConsole()) return;
+        if (app()->runningInConsole()) return; // Para não da erro no terminal
         
         $this->registerPolicies();
 

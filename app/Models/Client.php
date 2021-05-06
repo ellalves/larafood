@@ -25,4 +25,9 @@ class Client extends Authenticatable
         'bio',
         'photo',
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

@@ -25,7 +25,7 @@ class OrderApiController extends ApiController
             return OrderResource::collection($orders);
        } catch (\Throwable $e) {
            //throw $e;
-           return $this->errorResponse($e->getMessage(), 500);
+           return $this->errorResponse($e->getMessage());
        }
 
    }
@@ -35,9 +35,9 @@ class OrderApiController extends ApiController
        try {
             $order = $this->orderService->newOrder($request->all(), $uuidTenant);
 
-            return $this->successResponse(new OrderResource($order));
+            return $this->successResponse(new OrderResource($order), null, 201);
         } catch (\Throwable $e) {
-           return $this->errorResponse($e->getMessage(), 500);
+           return $this->errorResponse($e->getMessage());
         }
 
    }
@@ -51,7 +51,7 @@ class OrderApiController extends ApiController
            return $this->successResponse(new OrderResource($order));
        } catch (\Throwable $e) {
            //throw $e;
-           return $this->errorResponse($e->getMessage(), 500);
+           return $this->errorResponse($e->getMessage());
        } 
    }
 }

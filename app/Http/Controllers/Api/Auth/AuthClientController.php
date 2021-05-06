@@ -20,8 +20,9 @@ class AuthClientController extends ApiController
 
         try {
             $client = Client::where('email', $request->email)->first();
+
             if (!$client || ! Hash::check($request->password, $client->password)) {
-                return $this->errorResponse('Credenciais inválidas!', 404);
+                return $this->errorResponse(__('messages.invalid_credentials'), 404);
             }
 
             $token = $client->createToken($request->device_name)->plainTextToken;
@@ -35,7 +36,7 @@ class AuthClientController extends ApiController
 
     public function me(Request $request)
     {
-        $client = $request->user();
+        $client = auth()->user();
 
         return $this->successResponse(new ClientResource($client));
     }
@@ -46,6 +47,6 @@ class AuthClientController extends ApiController
 
         $client->tokens()->delete();
 
-        return $this->successResponse('', 204);
+        return $this->successResponse('', '', 204);
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Category;
+use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CategoryFactory extends Factory
@@ -22,10 +23,10 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->unique()->word(),
             'uuid' => $this->faker->uuid(),
             'description' => $this->faker->sentence(3, true),
-            'tenant_id' => $this->faker->randomDigitNot(0)
+            'tenant_id' => Tenant::factory()->create() // $this->faker->randomDigitNot(0)
         ];
     }
 }

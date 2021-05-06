@@ -19,12 +19,12 @@ class Order extends Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class)->withDefault();
     }
 
     public function table()
     {
-        return $this->belongsTo(Table::class);
+        return $this->belongsTo(Table::class)->withDefault();
     }
 
     public function products()

@@ -32,4 +32,16 @@ class CategoryRepository implements CategoryRepositoryInterface
                         ->withoutGlobalScope(TenantScope::class)
                         ->get();
     }
+
+
+    public function getCategoryFlagByTenantId(int $idTenant, string $flag)
+    {
+        $category = $this->entity
+                            ->where('url', $flag)
+                            ->where('tenant_id', $idTenant)
+                            ->withoutGlobalScope(TenantScope::class)
+                            ->first();
+        
+        return $category;
+    }
 }

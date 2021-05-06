@@ -2,18 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\Table;
+use App\Models\Order;
 use App\Models\Tenant;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TableFactory extends Factory
+class OrderFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Table::class;
+    protected $model = Order::class;
 
     /**
      * Define the model's default state.
@@ -23,11 +24,10 @@ class TableFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'Mesa ' . $this->faker->numerify('#'),
-            'uuid' => $this->faker->uuid(),
-            'url' => $this->faker->slug(),
-            'description' => $this->faker->sentence(3, true),
-            'tenant_id' => Tenant::factory()->create()
+            'tenant_id' => Tenant::factory()->create(),
+            'identify' => uniqid() . Str::random(10),
+            'total' => 80.0,
+            'status' => 'open',
         ];
     }
 }

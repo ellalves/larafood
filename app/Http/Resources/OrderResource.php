@@ -20,12 +20,9 @@ class OrderResource extends JsonResource
             'status' => $this->status,
             'message' => $this->comment,
             'products' => ProductResource::collection($this->products),
-            'client' => $this->client_id ? new ClientResource($this->client) : '',
-            'table' => $this->table_id ? new TableResource($this->table()->select(
-                'uuid AS uuid_tab', 
-                'name AS name_tab', 
-                'description AS description_tab'
-            )->first()) : '',
+            'client' => new ClientResource($this->client),
+            'table' => new TableResource($this->table),
+            'tenant' => new TenantResource($this->tenant)
         ];
     }
 }

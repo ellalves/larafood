@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Repositories\TenantRepository;
+use App\Services\OrderService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrder extends FormRequest
@@ -13,6 +15,10 @@ class StoreOrder extends FormRequest
      */
     public function authorize()
     {
+        if(!app(TenantRepository::class)->getTenantByUuid($this->segment(4))) {
+            return false; // 404
+        }
+        
         return true;
     }
 
@@ -23,7 +29,6 @@ class StoreOrder extends FormRequest
      */
     public function rules()
     {
-        // dd($this->products);
         return [
             'table' => [
                 'nullable',

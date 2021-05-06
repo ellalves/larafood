@@ -16,7 +16,7 @@ class CategoryApiController extends ApiController
        $this->categoryService = $categoryService;
     }
 
-    public function CategoriesByTenant($uuid)
+    public function categoriesByTenant($uuid)
     {
         try {
             $categories = $this->categoryService->getCategoriesByUuid($uuid);
@@ -24,8 +24,20 @@ class CategoryApiController extends ApiController
             return  $this->successResponse(CategoryResource::collection($categories));
         } catch (\Exception $e) {
             //throw $th;
-
             return $this->errorResponse($e->getMessage());
         }
+    }
+
+    public function categoryByTenant($uuidTenant, $flag)
+    {
+        try {
+            $category = $this->categoryService->getCategoryByTenantUuid($uuidTenant, $flag);
+
+            return $this->successResponse(new CategoryResource($category));
+        } catch (\Throwable $e) {
+            //throw $e;
+            return $this->errorResponse($e->getMessage());
+        }
+
     }
 }

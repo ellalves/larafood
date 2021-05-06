@@ -29,7 +29,18 @@ class Tenant extends Model
         return $this->belongsTo(Plan::class);
     }
 
-    public function tables() {
+    public function tables() 
+    {
         return $this->hasMany(Table::class);
+    }
+
+    public function products() 
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function orders() 
+    {
+        return $this->hasMany(Order::class);
     }
 }

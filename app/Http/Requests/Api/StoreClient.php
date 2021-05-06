@@ -25,6 +25,7 @@ class StoreClient extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:60',
+            'phone' => 'required|min:11|max:15, unique:clients',
             'email' => 'required|email|min:3|max:60',
             'password' => 'required|min:3|max:60',
         ];

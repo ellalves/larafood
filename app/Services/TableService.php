@@ -17,10 +17,18 @@ class TableService
         $this->tenantRepository = $tenantRepository;
     }
 
-    public function getTableByTenantUuid($uuid)
+    public function getTablesByTenantUuid($uuid)
     {
         $tenant = $this->tenantRepository->getTenantByUuid($uuid);
 
         return $this->tableRepository->getTablesByTenantId($tenant->id);
+    }
+
+    public function getTableByTenantUuid($uuidTenant, $identify)
+    {
+        $tenant = $this->tenantRepository->getTenantByUuid($uuidTenant);
+
+        $table = $this->tableRepository->getTableIdentifyByTenantId($tenant->id, $identify);
+        return $table;
     }
 }

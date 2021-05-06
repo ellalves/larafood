@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Plan;
 use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,7 @@ class TenantFactory extends Factory
     public function definition()
     {
         return [
+            'plan_id' => Plan::factory()->create(),
             'document' => $this->faker->cnpj(false),
             'name' => $this->faker->unique()->company,
             'uuid' => $this->faker->uuid(),

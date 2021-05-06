@@ -12,13 +12,20 @@ class Table extends Model
 
     protected $fillable = ['name','description','uuid', 'tenant_id'];
 
-    public function tenant() {
+    public function tenant() 
+    {
         return $this->belongsTo(Tenant::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
     public function search($filter = null) {
         $tables = $this->where('name', 'LIKE', "%{$filter}%")
                     ->orWhere('description', 'LIKE', "%{$filter}%");
+
         return $tables;
     }
 }

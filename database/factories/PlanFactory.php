@@ -22,7 +22,7 @@ class PlanFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word(),
+            'name' => $this->faker->unique()->word,
             'uuid' => $this->faker->uuid(),
             'description' => $this->faker->realText(),
             'url' => $this->faker->slug(),

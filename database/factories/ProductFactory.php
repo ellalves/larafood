@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Product;
+use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
@@ -26,8 +27,8 @@ class ProductFactory extends Factory
             'uuid' => $this->faker->uuid(),
             'url' => $this->faker->slug(),
             'description' => $this->faker->realText(),
-            'price' => $this->faker->randomFloat(2, 0, 200),
-            'tenant_id' => $this->faker->randomDigitNot(0)
+            'price' => 12.9, // $this->faker->randomFloat(2, 0, 200),
+            'tenant_id' => Tenant::factory()->create()
         ];
     }
 }
