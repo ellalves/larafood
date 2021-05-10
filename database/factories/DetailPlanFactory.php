@@ -22,8 +22,9 @@ class DetailPlanFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word(2),
+            'name' => $this->faker->unique()->word,
             'url' => $this->faker->slug(),
+            'plan_id' => $this->faker->numberBetween(1,3)
         ];
     }
 }

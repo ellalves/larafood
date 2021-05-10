@@ -34,6 +34,13 @@
                             <td class="align-middle">
                                 @each('admin.includes.forms_actions', ['items' => 
                                 [
+                                    'route' => route('tables.qrcode', $table->id), 
+                                    'color' => 'dark',
+                                    'icon' => 'qrcode',
+                                    'label' => ''
+                                    'target' => '_blank'
+                                ],
+                                [
                                     'route' => route('tables.show', $table->id), 
                                     'color' => 'secondary',
                                     'icon' => 'eye',

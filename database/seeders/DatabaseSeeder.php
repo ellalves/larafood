@@ -21,16 +21,16 @@ class DatabaseSeeder extends Seeder
          */
 
         $this->call([
-            // PlansTableSeeder::class,
-            TenantsTableSeeder::class,
-            UsersTableSeeder::class,
-            GroupsTableSeeder::class,
+            PlanSeeder::class,
+            DetailPlanSeeder::class,
+            TenantSeeder::class,
+            UserSeeder::class,
+            GroupSeeder::class,
             PermissionSeeder::class,
             ProductSeeder::class,
             RoleSeeder::class,
             TableSeeder::class,
             CategorySeeder::class,
-            DetailPlanSeeder::class,
             ClientSeeder::class
         ]);
     }

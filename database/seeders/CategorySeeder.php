@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tenant;
 use App\Models\Category;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,9 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        Category::factory()->count(9)->create();
+        Category::factory()
+                        ->count(9)
+                        ->for(Tenant::first())
+                        ->create();
     }
 }

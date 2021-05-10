@@ -3,10 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Plan;
-use App\Models\DetailPlan;
 use Illuminate\Database\Seeder;
 
-class DetailPlanSeeder extends Seeder
+class PlanSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +14,8 @@ class DetailPlanSeeder extends Seeder
      */
     public function run()
     {
-        DetailPlan::factory()->count(12)->create();
+        Plan::factory()
+                    ->count(3)
+                    ->create();
     }
 }

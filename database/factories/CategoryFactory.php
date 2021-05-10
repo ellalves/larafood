@@ -26,7 +26,7 @@ class CategoryFactory extends Factory
             'name' => $this->faker->unique()->word(),
             'uuid' => $this->faker->uuid(),
             'description' => $this->faker->sentence(3, true),
-            'tenant_id' => Tenant::factory()->create() // $this->faker->randomDigitNot(0)
+            // 'tenant_id' => Tenant::factory()->create() // $this->faker->randomDigitNot(0)
         ];
     }
 }

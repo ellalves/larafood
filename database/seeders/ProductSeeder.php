@@ -15,6 +15,10 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        $posts = Product::factory()->count(30)->create();
+        $tenant = Tenant::first();
+        Product::factory()
+                        ->count(30)
+                        ->for($tenant)
+                        ->create();
     }
 }

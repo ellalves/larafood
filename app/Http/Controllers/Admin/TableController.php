@@ -6,6 +6,7 @@ use App\Models\Table;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateTable;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TableController extends Controller
 {
@@ -107,6 +108,17 @@ class TableController extends Controller
         return redirect()->route('tables.index')->with('message', __('messages.delete_success'));
     }
 
+    public function qrcode($idTable)
+    {
+        $table = $this->verifyTable($idTable);
+
+        $tenant = auth()->user()->tenant;
+        $uri = env('URI_CLIENT') . "/{$tenant->uuid}/{$table->uuid}";
+
+        $qrcode = QrCode::size(300)->generate($uri);
+
+        return view('admin.pages.tables.qrcode', compact('uri','qrcode'));
+    }
 
     public function search(Request $request) {
         

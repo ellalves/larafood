@@ -8,7 +8,7 @@ use App\Models\Tenant;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
-class UsersTableSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -27,11 +27,11 @@ class UsersTableSeeder extends Seeder
             'bio' => 'Administrador do sistema',
         ];
 
-        // $tenant = Tenant::first();
-        // $user = User::factory()
-        //                     ->count(9)
-        //                     ->for($tenant)
-        //                     ->create();
+        $tenant = Tenant::first();
+        $user = User::factory()
+                            ->count(9)
+                            ->for($tenant)
+                            ->create();
         
         // Atualiza com os dados do adm master
         User::first()->update($data);
