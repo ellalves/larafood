@@ -23,7 +23,7 @@ class TenantFactory extends Factory
     public function definition()
     {
         return [
-            // 'plan_id' => Plan::first()->id,
+            'plan_id' => Plan::factory()->create(),
             'document' => $this->faker->cnpj(false),
             'name' => $this->faker->unique()->company,
             'uuid' => $this->faker->uuid(),
