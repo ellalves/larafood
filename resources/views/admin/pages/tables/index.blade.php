@@ -37,7 +37,7 @@
                                     'route' => route('tables.qrcode', $table->id), 
                                     'color' => 'dark',
                                     'icon' => 'qrcode',
-                                    'label' => ''
+                                    'label' => '',
                                     'target' => '_blank'
                                 ],
                                 [

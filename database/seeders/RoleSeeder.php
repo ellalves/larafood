@@ -16,33 +16,36 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        Role::factory()->count(1)->create();
+        $r1 = Role::factory()->count(1)->create();
         
-        Role::create(
+        $r2 = Role::create(
             ['name' => 'Entregador', 'description' => 'Entregador da empresa','uuid' => Str::uuid()]
         );
         
-        Role::create(
+        $r1 = Role::create(
             ['name' => 'Gerente', 'description' => 'Gerente da empresa','uuid' => Str::uuid()]
         );
 
-        Role::create(
+        $r3 = Role::create(
             ['name' => 'Caixa', 'description' => 'Caixa da empresa','uuid' => Str::uuid()]
         );
         
-        Role::create(
+        $r4 = Role::create(
             ['name' => 'Garçom', 'description' => 'Garçom da empresa','uuid' => Str::uuid()]
-        );        
-        Role::create(
+        );
+
+        $r5 = Role::create(
             ['name' => 'Cozinheiro', 'description' => 'Cozinheiro da empresa','uuid' => Str::uuid()]
         );   
 
-        Role::create(
+        $r6 = Role::create(
             ['name' => 'Vendedor', 'description' => 'Vendedor da empresa','uuid' => Str::uuid()]
         );     
           
-        Role::create(
+        $r7 = Role::create(
             ['name' => 'Estoque', 'description' => 'Estoque da empresa','uuid' => Str::uuid()]
         );
+
+        Role::first()->permissions()->attach([1,2,3,4,5,6,7]);
     }
 }
