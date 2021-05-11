@@ -28,11 +28,9 @@ use App\Observers\{
     PermissionObserver,
     GroupObserver
 };
-// use App\Repositories\Contracts\{
-//     TenantRepositoryInterface,
-// };
-// use App\Repositories\TenantRepository;
+
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -66,5 +64,12 @@ class AppServiceProvider extends ServiceProvider
         Role::observe(RoleObserver::class);
         User::observe(UserObserver::class);
         DetailPlan::observe(DetailPlanObserver::class);
+
+        /**
+         * Custom If Statements
+         */
+        Blade::if('admin', function () {
+            return auth()->user()->isAdmin();
+        });
     }
 }

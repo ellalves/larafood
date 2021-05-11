@@ -240,42 +240,12 @@ return [
             'icon' => 'fas fa-building',
             'can'  => 'tenants'
         ],
-        [
-            'text' => 'Usuários',
-            'route'  => 'users.index',
-            'icon' => 'fas fa-user',
-            'can'  => 'users'
-        ],
-        [
-            'text' => 'Cargos',
-            'route'  => 'roles.index',
-            'icon' => 'fas fa-address-book',
-            'can'  => 'roles'
-        ],
-        [
-            'text' => 'Mesas',
-            'route'  => 'tables.index',
-            'icon' => 'fas fa-border-all',
-            'submenu' => [
-                [
-                    'text' => 'Novo',
-                    'route'=> 'tables.create',
-                    'icon' => 'fas fa-plus-square'
-                ],                
-                [
-                    'text' => 'Lista',
-                    'route'=> 'tables.index',
-                    'icon' => 'fas fa-fw fa-list-alt'
-                ],
-            ],
-            'can'  => 'tables'
-        ],
         // [
         //     'header' => 'PLANOS',
         // ],     
         [
             'text' => 'Planos',
-            'icon' => 'fas fa-list-alt',
+            'icon' => 'fas fa-map',
             'submenu' => [
                 [
                     'text' => 'Novo',
@@ -324,6 +294,36 @@ return [
             ],
             'can'  => 'permissions'
         ],
+        [
+            'text' => 'Usuários',
+            'route'  => 'users.index',
+            'icon' => 'fas fa-user',
+            'can'  => 'users'
+        ],
+        [
+            'text' => 'Cargos',
+            'route'  => 'roles.index',
+            'icon' => 'fas fa-address-book',
+            'can'  => 'roles'
+        ],
+        [
+            'text' => 'Mesas',
+            'route'  => 'tables.index',
+            'icon' => 'fas fa-border-all',
+            'submenu' => [
+                [
+                    'text' => 'Novo',
+                    'route'=> 'tables.create',
+                    'icon' => 'fas fa-plus-square'
+                ],                
+                [
+                    'text' => 'Lista',
+                    'route'=> 'tables.index',
+                    'icon' => 'fas fa-fw fa-list-alt'
+                ],
+            ],
+            'can'  => 'tables'
+        ],
         // [
         //     'header' => 'PRODUTOS',
         // ],
@@ -340,14 +340,27 @@ return [
                     'text' => 'Lista',
                     'route'=> 'products.index',
                     'icon' => 'fas fa-fw fa-list-alt'
-                ],
-                [
-                    'text' => 'Categorias',
-                    'route'  => 'categories.index',
-                    'icon' => 'fas fa-archive'
-                ],
+                ]
             ],
             'can'  => 'products'
+        ],
+        [
+            'text' => 'Categorias',
+            'route'  => 'categories.index',
+            'icon' => 'fas fa-archive',
+            'submenu' => [
+                [
+                    'text' => 'Novo',
+                    'route'=> 'categories.create',
+                    'icon' => 'fas fa-plus-square'
+                ],                
+                [
+                    'text' => 'Lista',
+                    'route'=> 'categories.index',
+                    'icon' => 'fas fa-fw fa-list-alt'
+                ]
+            ],
+            'can' => 'categories'
         ],
         // [
         //     'text'        => 'pages',

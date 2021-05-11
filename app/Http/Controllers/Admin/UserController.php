@@ -9,7 +9,6 @@ use App\Http\Requests\StoreUpdateUser;
 
 class UserController extends Controller
 {
-
     protected $user;
 
     public function __construct(User $user)
