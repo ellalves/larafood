@@ -150,15 +150,15 @@ Route::prefix('admin')
         Route::post('plans/store', 'PlanController@store')->name('plans.store');
         Route::get('plans', 'PlanController@index')->name('plans.index');
         
-        Route::get('/', 'PlanController@index')->name('admin.index');
+        Route::get('/', 'DashboardController@index')->name('admin.index');
 });
 
 Route::get('/plan/{url}', 'Site\SiteController@plan')->name('plan.subscription');
 Route::get('/', 'Site\SiteController@index')->name('site.home');
 
-Route::get('/dashboard', function () {
-    Route::get('/', 'PlanController@index')->name('admin.index');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     Route::get('/', 'PlanController@index')->name('admin.index');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 

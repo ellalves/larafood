@@ -2,8 +2,14 @@
 
 use Diglactic\Breadcrumbs\Breadcrumbs;
 
+// Home
+Breadcrumbs::for('home', function ($trail) {
+    $trail->push('Home', route('site.home'));
+});
+
 // Admin
 Breadcrumbs::for('admin', function ($trail) {
+    $trail->parent('home');
     $trail->push('Painel', route('admin.index'));
 });
 

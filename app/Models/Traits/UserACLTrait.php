@@ -78,6 +78,7 @@ trait UserACLTrait {
 
     public function isAdmin(): bool
     {
+        // dd($this->email, config('acl.admins'));
         return in_array($this->email, config('acl.admins'));
     }    
     

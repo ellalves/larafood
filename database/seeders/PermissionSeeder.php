@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\Group;
 use App\Models\Permission;
 use Illuminate\Support\Str;
@@ -16,17 +17,15 @@ class PermissionSeeder extends Seeder
      * @return void
      */
     public function run()
-    {       
-        $p1 = Permission::create(
+    {
+        $p1 = Permission::factory()->count(1)->create();
+
+        $p2 = Permission::create(
             ['name' => 'users', 'description' => 'Usuários','uuid' => Str::uuid()]
         );
 
-        $p2 = Permission::create(
-            ['name' => 'roles', 'description' => 'Funções','uuid' => Str::uuid()]
-        );
-
         $p3 = Permission::create(
-            ['name' => 'tables', 'description' => 'Mesas','uuid' => Str::uuid()]
+            ['name' => 'roles', 'description' => 'Funções','uuid' => Str::uuid()]
         );
         
         $p4 = Permission::create(
@@ -42,8 +41,18 @@ class PermissionSeeder extends Seeder
           
         $p7 = Permission::create(
             ['name' => 'products', 'description' => 'Produtos','uuid' => Str::uuid()]
+        );     
+          
+        $p8 = Permission::create(
+            ['name' => 'categories', 'description' => 'Categorias','uuid' => Str::uuid()]
         );
 
-        Group::first()->permissions()->attach([1,2,3,4,5,6,7]);
+        $p9 = Permission::create(
+            ['name' => 'tables', 'description' => 'Mesas','uuid' => Str::uuid()]
+        );
+
+        Group::first()->permissions()->attach([1,2,3,4,5,6,7,8,9]);
+
+        Role::first()->permissions()->attach([1,2,3,4,5,6,7,8,9]);
     }
 }

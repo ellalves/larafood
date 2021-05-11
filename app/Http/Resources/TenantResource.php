@@ -20,7 +20,7 @@ class TenantResource extends JsonResource
             'uuid' => $this->uuid,
             'flag' => $this->url,
             'contact' => $this->email,
-            'date_created' => Carbon::parse($this->created_at)->format('d/m/Y H:s:i'),
+            'date_created' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
         ];
     }
 }
