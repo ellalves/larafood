@@ -33,7 +33,7 @@ class StoreUpdateProduct extends FormRequest
                 "string",
                 "min:3",
                 "max:255",
-                new UniqueTenant('tables', $id)
+                new UniqueTenant('products', $id)
             ],
             'description' => 'nullable|min:3,max:255',
             'price' => "required|regex:/^\d+(\.\d{1,2})?$/",
