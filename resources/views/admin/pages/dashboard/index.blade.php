@@ -90,7 +90,7 @@
                     <p>Empresas</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-building"></i>
                 </div>
                 <a href="#" class="small-box-footer">
                     Acessar <i class="fas fa-arrow-circle-right"></i>

@@ -362,6 +362,12 @@ return [
             ],
             'can' => 'categories'
         ],
+        [
+            'text' => 'Pedidos',
+            'route'  => 'orders.index',
+            'icon' => 'fas fa-utensils',
+            // 'can' => 'orders'
+        ],
         // [
         //     'text'        => 'pages',
         //     'url'         => 'admin/pages',

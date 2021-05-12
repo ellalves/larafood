@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\OrderCreated;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use App\Http\Controllers\Controller;
@@ -34,6 +35,8 @@ class OrderApiController extends ApiController
    {
        try {
             $order = $this->orderService->newOrder($request->all(), $uuidTenant);
+
+            broadcast(new OrderCreated($order)); //Eviar notificação push
 
             return $this->successResponse(new OrderResource($order), null, 201);
         } catch (\Throwable $e) {
