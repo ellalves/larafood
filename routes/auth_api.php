@@ -1,11 +1,10 @@
 <?php
-
-use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
 
 Route::group([
     'prefix' => 'v1',
-    'namespace' => 'Api',
+    'namespace' => 'Api'
 ], function () {
-    Route::get('my-orders', 'Auth\OrderTenantController@index')->Route::middleware(['auth']);
-    Route::patch('my-orders', 'Auth\OrderTenantController@update')->Route::middleware(['auth']);
+    Route::get('/my-orders', 'Auth\OrderTenantController@index')->middleware(['auth']);
+    Route::patch('/my-orders', 'Auth\OrderTenantController@update')->middleware(['auth']);
 });

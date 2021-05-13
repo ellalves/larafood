@@ -23,8 +23,8 @@
 
 @push('scripts-header')
 <script>
-    // window.Laravel = {!! json_encode([
-    //     'tenantId' => auth()->check() ? auth()->user()->tenant_id : ''
-    // ]) !!}
+    window.Laravel = {!! json_encode([
+        'tenantId' => auth()->check() ? auth()->user()->tenant_id : ''
+    ]) !!}
 </script>
 @endpush

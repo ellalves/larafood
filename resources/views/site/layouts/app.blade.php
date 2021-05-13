@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<div class="demo">
+<div id="app" class="demo">
     <div class="container">
     	@yield('content')
     </div>
