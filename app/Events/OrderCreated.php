@@ -2,15 +2,18 @@
 
 namespace App\Events;
 
-use App\Models\Order;
-use Illuminate\Broadcasting\Channel;
 use App\Http\Resources\OrderResource;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Foundation\Events\Dispatchable;
+use App\Models\Order;
+use Carbon\Carbon;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class OrderCreated implements ShouldBroadcast
 {
@@ -31,11 +34,11 @@ class OrderCreated implements ShouldBroadcast
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\PrivateChannel|array
+     * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('order-created'.$this->order->tenant_id);
+        return new PrivateChannel('order-created.'.$this->order->tenant_id);
     }
 
     /**
@@ -45,8 +48,6 @@ class OrderCreated implements ShouldBroadcast
      */
     public function broadcastWith()
     {
-        return [
-            'order' => (new OrderResource($this->order))->resolve()
-        ];
+        return ['order' => (new OrderResource($this->order))->resolve()];
     }
 }

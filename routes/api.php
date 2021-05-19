@@ -34,7 +34,8 @@ Route::group([
     Route::get('tenants/{uuid}/products/{flag}', 'ProductApiController@productByFlag');
     Route::get('tenants/{uuid}/products', 'ProductApiController@productsByTenant');
 
-    Route::get('tenants/{uuid}/orders/{identify}', 'OrderApiController@show');
+    // Route::get('tenants/{uuid}/orders/{identify}', 'OrderApiController@show');
+    Route::get('orders/{identify}', 'OrderApiController@show');
     Route::post('tenants/{uuid}/orders', 'OrderApiController@store');
 });
 

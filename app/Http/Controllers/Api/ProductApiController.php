@@ -24,7 +24,7 @@ class ProductApiController extends ApiController
 
         try {
             $products = $this->productService->getProductsByTenantUuid($uuidTenant, $categories);
-            return $this->successResponse(ProductResource::collection($products));
+            return ProductResource::collection($products);
         } catch (\Throwable $e) {
             //throw $th;
             return $this->errorResponse($e->getMessage());

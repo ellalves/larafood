@@ -27,7 +27,7 @@ class ProductRepository implements ProductRepositoryInterface
                             })
                             ->where('products.tenant_id', $idTenant)
                             ->withoutGlobalScope(TenantScope::class)
-                            ->get();
+                            ->paginate();
         return $products;
     }
 

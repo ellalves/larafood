@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Tenant;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
@@ -15,9 +16,11 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        Category::factory()
+        $category = Category::factory()
                         ->count(9)
                         ->for(Tenant::first())
                         ->create();
+        
+        Product::inRandomOrder()->first()->categories()->attach($category);
     }
 }

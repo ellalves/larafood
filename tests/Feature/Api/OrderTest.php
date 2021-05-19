@@ -185,7 +185,7 @@ class OrderTest extends TestCase
         $uuid = 'fake_value';
         $identify = 'fake_value';
 
-        $response = $this->getJson("{$this->url}/{$uuid}/orders/{$identify}");
+        $response = $this->getJson("api/v1/orders/{$identify}");
 
         $response->assertStatus(404);
     }
@@ -202,7 +202,7 @@ class OrderTest extends TestCase
         $uuid = 'fake_value';
         $identify = $order->uuid;
 
-        $response = $this->getJson("{$this->url}/{$uuid}/orders/{$identify}");
+        $response = $this->getJson("api/v1/orders/{$identify}");
 
         $response->assertStatus(404);
     }
@@ -219,7 +219,7 @@ class OrderTest extends TestCase
         $uuid = $tenant->uuid;
         $identify = "fake_value";
 
-        $response = $this->getJson("{$this->url}/{$uuid}/orders/{$identify}");
+        $response = $this->getJson("api/v1/orders/{$identify}");
 
         $response->assertStatus(404);
     }
@@ -237,7 +237,7 @@ class OrderTest extends TestCase
         
         $identify = $tenant->orders()->first()->identify;
 
-        $response = $this->getJson("api/v1/tenants/{$tenant->uuid}/orders/{$identify}");
+        $response = $this->getJson("api/v1/orders/{$identify}");
 
         $response->assertStatus(200);
     }

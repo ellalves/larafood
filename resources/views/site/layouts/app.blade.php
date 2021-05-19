@@ -8,7 +8,7 @@
 
 	<link rel="shortcut icon" type="images/png" href="{{ asset('imgs/favicon.png') }}" />
 	
-    <link rel="stylesheet" type="text/css" href="{{ url('css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/site.css') }}">
 </head>
 <body>
 

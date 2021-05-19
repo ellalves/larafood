@@ -45,7 +45,7 @@ class OrderApiController extends ApiController
 
    }
 
-   public function show($uuidTenant, $identify)
+   public function show($identify)
    {
        try {
            if (!$order = $this->orderService->getOrderByIdentify($identify)) {
@@ -57,4 +57,17 @@ class OrderApiController extends ApiController
            return $this->errorResponse($e->getMessage());
        } 
    }
+
+//    public function show($uuidTenant, $identify)
+//    {
+//        try {
+//            if (!$order = $this->orderService->getOrderByIdentify($identify)) {
+//                 return $this->errorResponse(__('messages.empty_register'), 404);
+//            }
+//            return $this->successResponse(new OrderResource($order));
+//        } catch (\Throwable $e) {
+//            //throw $e;
+//            return $this->errorResponse($e->getMessage());
+//        } 
+//    }
 }

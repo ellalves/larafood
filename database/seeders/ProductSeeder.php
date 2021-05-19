@@ -17,7 +17,7 @@ class ProductSeeder extends Seeder
     {
         $tenant = Tenant::first();
         Product::factory()
-                        ->count(30)
+                        ->count(15)
                         ->for($tenant)
                         ->create();
     }
