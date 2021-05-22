@@ -43,4 +43,9 @@ class Order extends Model
     {
         return $this->belongsToMany(Product::class)->withPivot(['price', 'qty']);
     }
+    
+    public function evaluations()
+    {
+        return $this->hasMany(Evaluation::class);
+    }
 }

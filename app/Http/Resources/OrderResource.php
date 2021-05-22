@@ -26,7 +26,7 @@ class OrderResource extends JsonResource
             'client' => new ClientResource($this->client),
             'table' => new TableResource($this->table),
             'company' => new TenantResource($this->tenant),
-            'evaluations' => $this->evaluations
+            'evaluations' => EvaluationResource::collection($this->evaluations)
         ];
     }
 }
