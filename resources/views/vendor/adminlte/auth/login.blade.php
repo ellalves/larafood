@@ -21,6 +21,9 @@
 @section('auth_header', __('adminlte::adminlte.login_message'))
 
 @section('auth_body')
+    @if(session('plan'))
+        <p><strong>Você está assinando o plano</strong>: {{ session('plan')->name ?? ''}}</p>
+    @endif
     <form action="{{ $login_url }}" method="post">
         {{ csrf_field() }}
 

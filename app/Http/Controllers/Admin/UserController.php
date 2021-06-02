@@ -58,8 +58,7 @@ class UserController extends Controller
 
         $user = $this->user->create($data);
 
-        return redirect()->route('users.index')
-                        ->with('message', 'Usuários cadastrado com sucesso!');
+        return redirect()->route('users.index')->with('message', __('messages.store_success'));
     }
 
     /**
@@ -106,7 +105,7 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('users.index')->with('message', 'Usuário alterado com sucesso!');
+        return redirect()->route('users.index')->with('message', __('messages.update_success'));
     }
 
     /**
@@ -121,12 +120,12 @@ class UserController extends Controller
 
         // Impedir Auto-destruição
         if($id == auth()->user()->id){
-            return redirect()->back()->with('error', 'Você não pode remover seu próprio usuário.');
+            return redirect()->back()->with('error', __('messages.impossible_to_remove'));
         }
 
         $user->delete();
 
-        return redirect()->route('users.index')->with('message', 'Usuário deletado com sucesso!');
+        return redirect()->route('users.index')->with('message', __('messages.delete_success'));
     }
 
     public function search(Request $request)
@@ -137,13 +136,22 @@ class UserController extends Controller
         return view('admin.pages.users.index', compact('users', 'filters'));
     }
 
+    public function profile($username)
+    {
+       if (! $user = $this->user->userProfile($username)) {
+            return redirect()->back()->with('error', __('messages.empty_register'));
+       }
+
+       return view('admin.pages.users.profile', compact('user'));
+    }
+
     /**
      * Verify User
      */
     public function verifyUser($id)
     {
         if (!$user = $this->user->tenantUser()->findOrFail($id)) {
-            return redirect()->back()->with('error', 'Nenhum usuário encontrado!');
+            return redirect()->back()->with('error', __('messages.empty_register'));
         }
 
         return $user;

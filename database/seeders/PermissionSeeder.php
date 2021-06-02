@@ -51,8 +51,12 @@ class PermissionSeeder extends Seeder
             ['name' => 'tables', 'description' => 'Mesas','uuid' => Str::uuid()]
         );
 
-        Group::first()->permissions()->attach([1,2,3,4,5,6,7,8,9]);
+        $p10 = Permission::create(
+            ['name' => 'orders', 'description' => 'Pedidos','uuid' => Str::uuid()]
+        );
 
-        Role::first()->permissions()->attach([1,2,3,4,5,6,7,8,9]);
+        Group::first()->permissions()->attach([1,2,6,7,8,9,10]);
+
+        Role::first()->permissions()->attach([1,2,6,7,8,9,10]);
     }
 }

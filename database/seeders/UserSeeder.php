@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
 
         $tenant = Tenant::first();
         $user = User::factory()
-                            ->count(9)
+                            ->count(1)
                             ->for($tenant)
                             ->create();
         

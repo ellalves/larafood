@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
     ->namespace('Admin')
-    ->middleware(['auth'])
-    ->group(function() {
-        
+    ->middleware(['auth', 'subscribed'])
+    ->group(function () {
+
         //Orders
         Route::get('orders', 'OrderController@index')->name('orders.index');
 
@@ -36,8 +36,8 @@ Route::prefix('admin')
          * Products
          */
         Route::any('products/search', 'ProductController@search')->name('products.search');
-        Route::resource('products', 'ProductController');    
-        
+        Route::resource('products', 'ProductController');
+
         /**
          * Categories
          */
@@ -55,6 +55,8 @@ Route::prefix('admin')
         /**
          * Users
          */
+        Route::get('users/profile/{username}', 'UserController@profile')->name('users.profile');
+
         Route::get('users/create', 'UserController@create')->name('users.create');
         Route::delete('users/{id}', 'UserController@destroy')->name('users.destroy');
         Route::post('users', 'UserController@store')->name('users.store');
@@ -62,7 +64,7 @@ Route::prefix('admin')
         Route::put('users/{id}', 'UserController@update')->name('users.update');
         Route::any('users/search', 'UserController@search')->name('users.search');
         Route::get('users/show/{id}', 'UserController@show')->name('users.show');
-        Route::get('users', 'UserController@index')->name('users.index');    
+        Route::get('users', 'UserController@index')->name('users.index');
 
         /**
          * Plans x Groups
@@ -71,7 +73,7 @@ Route::prefix('admin')
         Route::post('plans/{id}/groups', 'ACL\PlanGroupController@planGroupsAttach')->name('plans.groups.attach');
         Route::any('plans/{id}/groups/create', 'ACL\PlanGroupController@groupsAvailable')->name('plans.groups.available');
         Route::get('plans/{id}/groups', 'ACL\PlanGroupController@groups')->name('plans.groups');
-        
+
         /**
          * Groups x Permissions
          */
@@ -79,7 +81,7 @@ Route::prefix('admin')
         Route::post('groups/{id}/permissions', 'ACL\GroupPermissionController@groupPermissionsAttach')->name('groups.permissions.attach');
         Route::any('groups/{id}/permissions/create', 'ACL\GroupPermissionController@permissionsAvailable')->name('groups.permissions.available');
         Route::get('groups/{id}/permissions', 'ACL\GroupPermissionController@permissions')->name('groups.permissions');
-        
+
         /**
          * Permissions x Groups
          */
@@ -125,6 +127,14 @@ Route::prefix('admin')
         Route::resource('permissions', 'ACL\PermissionController');
 
         /**
+         * Subscriptions
+         */
+        Route::get('subscriptions/resume', 'SubscriptionController@resume')->name('subscriptions.resume');
+        Route::get('subscriptions/cancel', 'SubscriptionController@cancel')->name('subscriptions.cancel');
+        Route::get('subscriptions/invoices', 'SubscriptionController@invoices')->name('subscriptions.invoices');
+        Route::get('subscriptions/invoices/download/{idInvoice}', 'SubscriptionController@downloadInvoice')->name('subscriptions.invoice.download');
+
+        /**
          * Routes Groups
          */
         Route::any('groups/search', 'ACL\GroupController@search')->name('groups.search');
@@ -152,9 +162,15 @@ Route::prefix('admin')
         Route::get('plans/{url}', 'PlanController@show')->name('plans.show');
         Route::post('plans/store', 'PlanController@store')->name('plans.store');
         Route::get('plans', 'PlanController@index')->name('plans.index');
-        
+
         Route::get('/', 'DashboardController@index')->name('admin.index');
-});
+    });
+
+/**
+ * Subscriptions
+ */
+Route::post('subscriptions/store', 'Admin\SubscriptionController@store')->name('subscriptions.store');
+Route::get('subscriptions/checkout', 'Admin\SubscriptionController@checkout')->name('subscriptions.checkout');
 
 Route::get('/plan/{url}', 'Site\SiteController@plan')->name('plan.subscription');
 Route::get('/', 'Site\SiteController@index')->name('site.home');
@@ -163,7 +179,7 @@ Route::get('/', 'Site\SiteController@index')->name('site.home');
 //     Route::get('/', 'PlanController@index')->name('admin.index');
 // })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Auth::routes();
 

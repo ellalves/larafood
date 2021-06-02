@@ -32,12 +32,12 @@ class StoreUpdateTenant extends FormRequest
             'plan_id' => ['required', 'numeric'],
             'active' => ['required', 'in:Y,N'],
 
-            // subscription
-            'subscription' => ['nullable', 'date'],
-            'expires_at' => ['nullable', 'date'],
-            'subscription_id' => ['nullable', 'max:255'],
-            'subscription_active' => ['required', 'boolean'],
-            'subscription_suspended' => ['required', 'boolean'],
+            // // subscription
+            // 'subscription' => ['nullable', 'date'],
+            // 'expires_at' => ['nullable', 'date'],
+            // 'subscription_id' => ['nullable', 'max:255'],
+            // 'subscription_active' => ['required', 'boolean'],
+            // 'subscription_suspended' => ['required', 'boolean'],
         ];
     }
 }

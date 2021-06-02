@@ -24,6 +24,7 @@ class PlanFactory extends Factory
         return [
             'name' => $this->faker->unique()->word,
             'uuid' => $this->faker->uuid(),
+            'stripe_id' => $this->faker->uuid(),
             'description' => $this->faker->realText(),
             'url' => $this->faker->slug(),
             'price' => $this->faker->randomFloat(2, 0, 200)

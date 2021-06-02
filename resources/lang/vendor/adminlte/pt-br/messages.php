@@ -7,4 +7,5 @@ return [
     'cpf_cnpj'              => 'CNPJ ou CPF',
     'company_name'          => 'Nome da empresa',
     'company'               => 'Empresa',
+    'phone'                 => 'Celular',
 ];

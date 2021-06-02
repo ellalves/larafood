@@ -35,7 +35,7 @@ class PlanController extends Controller
     {
         $this->repository->create($request->all());
         
-        return redirect()->route('plans.index');
+        return redirect()->route('plans.index')->with('message', __('messages.store_success'));
     }
 
     public function show($url)
@@ -59,10 +59,15 @@ class PlanController extends Controller
     public function update(StoreUpdatePlan $request, $url)
     {
         $plan = $this->verifyPlan($url);
-
+        
+        if($request->recommended == 1) {
+            $r = $plan->where('recommended', 1)
+                    ->update(['recommended' => 0]);
+        }
+        // dd($request->all());
         $plan->update($request->all());
 
-        return redirect()->route('plans.index')->with('message', 'Registro alterado com sucesso!');
+        return redirect()->route('plans.index')->with('message', __('messages.update_success'));
     }
 
     public function destroy($url)
@@ -78,12 +83,12 @@ class PlanController extends Controller
         if ($plan->details->count() > 0) {
             return redirect()
                         ->back()
-                        ->with('error', 'Antes de deletar o plano, você deve deletar os detalhes vinculados a ele!');
+                        ->with('error', __('messages.impossible_remove_plan'));
         }
 
         $plan->delete();
 
-        return redirect()->route('plans.index')->with('message', 'Registro deletado com sucesso!');
+        return redirect()->route('plans.index')->with('message', __('messages.delete_success'));
     }
 
     public function search(Request $request) { 
@@ -102,7 +107,7 @@ class PlanController extends Controller
     public function verifyPlan($url)
     {
         if (!$plan = $this->repository->where('url', $url)->first()) {
-            return redirect()->back()->with('error', 'Nenhum registro encontrado');            
+            return redirect()->back()->with('error', __('messages.empty_register'));            
         }
 
         return $plan;

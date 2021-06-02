@@ -63,7 +63,7 @@ class TenantController extends Controller
         
         $user = $tenantService->make($plan, $data);
         
-        return redirect()->route('tenants.index');
+        return redirect()->route('tenants.index')->with('message', __('messages.store_success'));
     }
 
     /**
@@ -121,7 +121,7 @@ class TenantController extends Controller
 
         $tenant->update($data);
 
-        return redirect()->route('tenants.index')->with('message', __('messages.store_success'));
+        return redirect()->route('tenants.index')->with('message', __('messages.update_success'));
     }
 
     /**

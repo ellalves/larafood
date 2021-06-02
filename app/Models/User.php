@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Laravel\Cashier\Billable;
 use App\Models\Traits\UserACLTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, UserACLTrait;
+    use HasFactory, Notifiable, UserACLTrait, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -44,6 +46,13 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function userProfile($username)
+    {
+       return $this->with(['tenant', 'roles'])
+                    ->where('username', $username)
+                    ->orWhere('phone', $username)
+                    ->first();
+    }
     public function userRoleAvailable($filter = null)
     {
         return Role::whereNotIn('roles.id', function ($query) {
@@ -71,6 +80,36 @@ class User extends Authenticatable
             ->tenantUser();
     
         return $users;
+    }
+
+    public function getAccessEndAttribute()
+    {
+        $accessEndAt = $this->subscription('default')->ends_at;
+
+        return Carbon::make($accessEndAt)->format("d/m/Y à\s H:i:s");
+    }
+
+    public function plan()
+    {
+        $stripe_plan = $this->subscription('default')->stripe_plan;
+
+        return Plan::where('stripe_id', $stripe_plan)->first();
+    }
+
+    public function adminlte_profile_url()
+    {
+        $username = auth()->user()->username ?? auth()->user()->phone;
+        return route('users.profile', $username);
+    }
+
+    public function adminlte_image()
+    {
+        return auth()->user()->photo ?? url('images/user-profile-none.png');
+    }
+
+    public function adminlte_desc()
+    {
+        return auth()->user()->bio;
     }
 
     /**

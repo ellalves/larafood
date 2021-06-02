@@ -26,7 +26,7 @@
 </div>
 
 <div class="form-group">
-    <button type="submit" class="btn btn-dark"> 
+    <button type="submit" class="btn btn-info"> 
         <i class="fa fa-save"></i> Salvar 
     </button>
 </div>

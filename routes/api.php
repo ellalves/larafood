@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/clients', 'Api\Auth\ClientController@store');
 Route::post('/auth/token', 'Api\Auth\AuthClientController@auth');
 
+Route::post('/contact', 'Api\ContactController@sendContact');
+
 Route::group([
     'middleware' => ['auth:sanctum']
 ], function() {

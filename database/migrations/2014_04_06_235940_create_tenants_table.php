@@ -16,22 +16,24 @@ class CreateTenantsTable extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('plan_id');
-            $table->uuid('uuid');
+            $table->uuid('uuid')->unique();
             $table->string('document')->unique();
             $table->string('name')->unique();
+            $table->string('phone')->nullable();
             $table->string('url')->unique();
             $table->string('email')->unique();
             $table->string('logo')->nullable();
+            $table->text('bio')->nullable();
 
             // Status tenant (se inativar 'N' ele perde o acesso ao sistema)
             $table->enum('active', ['Y', 'N'])->default('Y');
 
             // Subscription
-            $table->date('subscription')->nullable(); // Data que se inscreveu
-            $table->date('expires_at')->nullable(); // Data que expira o acesso
-            $table->string('subscription_id', 255)->nullable(); // Identificador do Gateway de pagamento
-            $table->boolean('subscription_active')->default(false); // Assinatura ativa (porque pode cancelar)
-            $table->boolean('subscription_suspended')->default(false); // Assinatura cancelada
+            // $table->date('subscription')->nullable(); // Data que se inscreveu
+            // $table->date('expires_at')->nullable(); // Data que expira o acesso
+            // $table->string('subscription_id', 255)->nullable(); // Identificador do Gateway de pagamento
+            // $table->boolean('subscription_active')->default(false); // Assinatura ativa (porque pode cancelar)
+            // $table->boolean('subscription_suspended')->default(false); // Assinatura cancelada
 
             $table->timestamps();
 

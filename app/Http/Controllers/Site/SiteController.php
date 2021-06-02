@@ -12,7 +12,7 @@ class SiteController extends Controller
     {
         $plans = Plan::with('details')->orderBy('price', 'ASC')->get();
 
-        return view('site.pages.home.index', compact('plans'));
+        return view('site.pages.home', compact('plans'));
     }
 
     public function plan($url)
@@ -23,6 +23,6 @@ class SiteController extends Controller
 
         session()->put('plan', $plan);
 
-        return redirect()->route('register');
+        return redirect()->route('subscriptions.checkout');
     }
 }

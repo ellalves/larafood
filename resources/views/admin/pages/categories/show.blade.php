@@ -3,7 +3,7 @@
 @section('title', "Visualizar Categoria")
 
     @section('content_header')
-    {{ Breadcrumbs::render('cartegoriesView')}}
+    {{ Breadcrumbs::render('categoriesView')}}
     <h1> Visualizar Categoria </h1>
 @stop
 

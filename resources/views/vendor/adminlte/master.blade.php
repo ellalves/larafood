@@ -50,7 +50,7 @@
 
     {{-- Favicon --}}
     @if(config('adminlte.use_ico_only'))
-        <link rel="shortcut icon" type="images/png" href="{{ asset('imgs/favicon.png') }}" />
+        <link rel="shortcut icon" href="{{ asset('favicons/favicon.ico') }}" />
     @elseif(config('adminlte.use_full_favicon'))
         <link rel="shortcut icon" href="{{ asset('favicons/favicon.ico') }}" />
         <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicons/apple-icon-57x57.png') }}">
@@ -70,8 +70,7 @@
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
     @endif
-
-    <link rel="stylesheet" href="{{asset('./css/custom-dash.css')}}">
+    
     @stack('scripts-header')
 </head>
 
@@ -79,7 +78,7 @@
 
     {{-- Body Content --}}
     @yield('body')
-{{config('adminlte.enabled_laravel_mix')}}
+
     {{-- Base Scripts --}}
     @if(!config('adminlte.enabled_laravel_mix'))
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>

@@ -28,7 +28,7 @@ class ProductFactory extends Factory
             'url' => $this->faker->slug(),
             'description' => $this->faker->realText(),
             'price' => 12.9, // $this->faker->randomFloat(2, 0, 200),
-            'tenant_id' => Tenant::factory()->create()
+            'tenant_id' => Tenant::first()
         ];
     }
 }

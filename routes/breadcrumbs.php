@@ -340,6 +340,20 @@ Breadcrumbs::for('usersView', function ($trail) {
     $trail->push('Visualizar');
 });
 
+// Admin > Users > profile
+Breadcrumbs::for('usersProfile', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Usuários', route('users.index'));
+    $trail->push('Perfil');
+});
+
+// Admin > Users > invoices
+Breadcrumbs::for('usersInvoices', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Usuários', route('users.index'));
+    $trail->push('Minhas faturas');
+});
+
 // Admin > Users > roles
 Breadcrumbs::for('userRoles', function ($trail, $item) {
     $trail->parent('admin');

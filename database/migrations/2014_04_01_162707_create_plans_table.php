@@ -15,11 +15,14 @@ class CreatePlansTable extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid');
+            $table->uuid('uuid')->unique();
             $table->string('name')->unique();
             $table->string('url')->unique();
             $table->double('price', 10, 2);
             $table->string('description')->nullable();
+            $table->string('stripe_id')->unique();
+            $table->boolean('recommended')->default(false);
+            $table->enum('period', ['year', 'semester', 'trimester', 'month'])->default('month');
             $table->timestamps();
         });
     }

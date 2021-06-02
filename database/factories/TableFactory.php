@@ -27,7 +27,7 @@ class TableFactory extends Factory
             'uuid' => $this->faker->uuid(),
             'url' => $this->faker->slug(),
             'description' => $this->faker->sentence(3, true),
-            'tenant_id' => Tenant::factory()->create()
+            'tenant_id' => Tenant::first()
         ];
     }
 }

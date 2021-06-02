@@ -12,7 +12,15 @@ class Plan extends Model
 
     protected $table = "plans";
 
-    protected $fillable = ['name', 'url', 'price', 'description'];
+    protected $fillable = [
+        'name',
+        'url',
+        'price',
+        'description',
+        'recommended',
+        'period',
+        'stripe_id'
+    ];
 
     public function details() 
     {
@@ -52,5 +60,10 @@ class Plan extends Model
         });
 
         return $groups;
+    }
+
+    public function getPriceBrAttribute()
+    {
+        return number_format($this->price, 2, ',', '.');
     }
 }

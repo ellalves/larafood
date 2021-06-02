@@ -22,12 +22,14 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+        $tenant = Tenant::first();
+        
         return [
             'name' => $this->faker->unique()->word(),
             'icon' => $this->faker->unique()->word(),
             'uuid' => $this->faker->uuid(),
             'description' => $this->faker->sentence(3, true),
-            'tenant_id' => Tenant::factory()->create() // $this->faker->randomDigitNot(0)
+            'tenant_id' => $tenant != null ? $tenant : Tenant::factory()->create(), // $this->faker->randomDigitNot(0)
         ];
     }
 }

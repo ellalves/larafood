@@ -23,8 +23,10 @@ class OrderFactory extends Factory
      */
     public function definition()
     {
+        $tenant = Tenant::first();
+
         return [
-            'tenant_id' => Tenant::factory()->create(),
+            'tenant_id' => $tenant != null ? $tenant : Tenant::factory()->create(),
             'identify' => uniqid() . Str::random(10),
             'total' => 80.0,
             'status' => 'open',

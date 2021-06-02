@@ -42,9 +42,7 @@ class TenantService
             'document' => $this->data['document'],
             'name' => $this->data['company'],
             'email' => $this->data['email'],
-            
-            'subscription' => now(),
-            'expires_at' => now()->addDays(7),
+            'phone' => $this->data['phone'],
         ]);
 
         return $tenant;
@@ -55,6 +53,7 @@ class TenantService
         return $tenant->users()->create([
             'name' => $this->data['name'],
             'email' => $this->data['email'],
+            'phone' => $this->data['phone'],
             'password' => Hash::make($this->data['password']),
         ]);         
     }

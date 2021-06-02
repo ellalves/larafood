@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\DetailPlan;
+use App\Models\Plan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DetailPlanFactory extends Factory

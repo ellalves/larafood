@@ -15,6 +15,11 @@ class DetailPlanSeeder extends Seeder
      */
     public function run()
     {
-        DetailPlan::factory()->count(12)->create();
+        $plan = Plan::first();
+
+        DetailPlan::factory()
+                        ->count(3)
+                        ->for($plan)
+                        ->create();
     }
 }
