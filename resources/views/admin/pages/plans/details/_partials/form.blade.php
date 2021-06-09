@@ -1,13 +1,7 @@
-@include('admin.includes.alerts')
-
 @csrf
 <div class="form-group">
-    <label for="name">Nome</label>
-    <input id="name" type="text" name="name" value="{{ $detail->name ?? old('name') }}" placeholder="Nome" class="form-control">
+    <label for="name"> {{ __("Name") }}: </label>
+    <input id="name" type="text" name="name" value="{{ $detail->name ?? old('name') }}" placeholder="{{ __("Name") }}:" class="form-control">
 </div>
 
-<div class="form-group">
-    <button type="submit" class="btn btn-info"> 
-        <i class="fa fa-save"></i> Salvar 
-    </button>
-</div>
+@include('admin.includes.button_save')

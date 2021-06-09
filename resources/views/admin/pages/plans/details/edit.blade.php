@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Editar o detalhe: $detail->name")
+@section('title', __('Edit detail') . ': ' . $detail->name )
 
 @section('content_header')
     {{ Breadcrumbs::render('PlansDetailsEdit', $plan)}}
-    <h1>Editar o detalhe: <strong>{{ $detail->name }}</strong> </h1>
+    <h1> {{ __('Edit detail') }}: <strong>{{ $detail->name }}</strong> </h1>
 @stop
 
 @section('content')

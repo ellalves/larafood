@@ -1,33 +1,25 @@
 @extends('adminlte::page')
 
-@section('title', "Visualizar Mesa")
+@section('title',  __("View Table"))
 
 @section('content_header')
     {{ Breadcrumbs::render('tablesView')}}
-    <h1> Visualizar Mesa </h1>
+    <h1> {{ __("View Table") }} </h1>
 @stop
 
 @section('content')
     <div class="card">
         <div class="card-body">
-            <ul>
-                <li>
-                    <strong>Nome: </strong> {{ $table->name }}
-                </li>
-                <li>
-                    <strong>Descrição: </strong> {{ $table->description }}
-                </li>
-            </ul>
-            
-            @include('admin.includes.alerts')
-
-            <form action="{{ route('tables.destroy', $table->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">
-                    Deletar a mesa
-                </button>
-            </form>
+            <div class="card-body">
+                <h5 class="card-title mb-3"> <strong>{{ __("Name") }}: </strong> {{ $table->name }}</h5>
+                <p class="card-text"><strong>{{ __("Description") }}:</strong> {{ $table->description }}</p>
+            </div>
+    
+            <div class="card-footer">
+                @include('admin.includes.button_delete', [
+                    'pathDelete' => route('tables.destroy', $table->id)          
+                ])
+            </div>
 
         </div>
     </div>

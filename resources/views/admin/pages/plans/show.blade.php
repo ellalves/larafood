@@ -1,40 +1,26 @@
 @extends('adminlte::page')
 
-@section('title', "Detalhes do Plano")
+@section('title', __("View Plan"))
 
 @section('content_header')
     {{ Breadcrumbs::render('plansView')}}
-    <h1> Detalhes do plano</h1>
+    <h1> {{ __("View Plan") }} </h1>
 @stop
 
 @section('content')
     <div class="card">
         <div class="card-body">
-            <ul>
-                <li>
-                    <strong>Nome: </strong> {{ $plan->name}}
-                </li>
-                <li>
-                    <strong>Url: </strong> {{ $plan->url}}
-                </li>
-                <li>
-                    <strong>Price: </strong> {{ number_format($plan->price, 2, ',', '.') }}
-                </li>
-                <li>
-                    <strong>Descrição: </strong> {{ $plan->description}}
-                </li>
-            </ul>
-            
-            @include('admin.includes.alerts')
-
-            <form action="{{ route('plans.destroy', $plan->url) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">
-                    Deletar o plano ({{ $plan->name }})
-                </button>
-            </form>
-
+            <h5 class="card-title mb-3"> <strong>{{ __("Name") }}: </strong> {{ $plan->name }}</h5>
+            <p class="card-text"><strong>{{ __("Url") }}:</strong> {{ $plan->url }}</p>
+            <p class="card-text"><strong>{{ __("Price") }}:</strong> {{ number_format($plan->price, 2, ',', '.') }}</p>
+            <p class="card-text"><strong>{{ __("Description") }}:</strong> {{ $plan->description }}</p>
         </div>
+
+        <div class="card-footer">
+            @include('admin.includes.button_delete', [
+                'pathDelete' => route('permissions.destroy', $plan->url)           
+            ])
+        </div>
+
     </div>
 @stop

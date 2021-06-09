@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Editar Plano")
+@section('title', __('Edit Plan'))
 
 @section('content_header')
     {{ Breadcrumbs::render('plansEdit')}}
-    <h1> Editar plano: </h1>
+    <h1> {{ __('Edit Plan') }} </h1>
 @stop
 
 @section('content')

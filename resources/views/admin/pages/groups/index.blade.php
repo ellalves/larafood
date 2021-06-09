@@ -1,54 +1,56 @@
 @extends('adminlte::page')
 
-@section('title', 'Grupos Cadastrados')
+@section('title', __('Registered Groups')) 
 
 @section('content_header')
     {{ Breadcrumbs::render('groups') }}
-    <h1>Grupos Cadastrados</h1>
+    <h1>{{ __('Registered Groups') }}</h1>
 @stop
 
 @section('content')
     <div class="card">
-        @include('admin.includes.alerts')
 
-        <div class="div card-header">
+        <div class="div card-header px-4"> 
             @include('admin.includes.search', [
                 'route' => route('groups.search'),
                 'add' => route('groups.create')
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
+        <div class="div card-body table-responsive">
+
+            @include('admin.includes.alerts')
+            
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Ações</th>
+                        <th scope="col">{{ __('Name') }}</th>
+                        <th scope="col" class="float-right mr-4">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($groups as $group)
                         <tr>
-                            <td>{{ $group->name }}</td>
-                            <td>
+                            <td class="align-middle">{{ $group->name }}</td>
+                            <td class="align-middle float-right">
                                 @each('admin.includes.forms_actions', ['items' =>                               
                                     [
                                         'route' => route('groups.permissions', $group->id), 
                                         'color' => 'dark',
                                         'icon' => 'lock',
-                                        'label' => 'Permissões'
+                                        'label' => __('Permissions')
                                     ],
                                     [
                                         'route' => route('groups.show', $group->id), 
                                         'color' => 'secondary',
                                         'icon' => 'eye',
-                                        'label' => 'Ver'
+                                        'label' => __('View')
                                     ],
                                     [
                                         'route' => route('groups.edit', $group->id), 
                                         'color' => 'primary',
                                         'icon' => 'edit',
-                                        'label' => 'Editar'
+                                        'label' => __('Edit')
                                     ]
                                 ], 'item')
                             </td>

@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Editar Categoria {{ $category->name }}")
+@section('title', __("Edit Category") . $category->name)
 
 @section('content_header')
     {{ Breadcrumbs::render('categoriesEdit')}}
-    <h1> Editar Categoria:  <strong>{{ $category->name }}</strong></h1>
+    <h1> {{ __("Edit Category")  }} <strong>{{ $category->name }}</strong></h1>
 @stop
 
 @section('content')

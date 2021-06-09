@@ -22,7 +22,7 @@
 
 @section('auth_body')
     @if(session('plan'))
-        <p><strong>Você está assinando o plano</strong>: {{ session('plan')->name ?? ''}}</p>
+        <p><strong>{{ __("You are signing") }}</strong>: {{ session('plan')->name ?? ''}}</p>
     @endif
     <form action="{{ $login_url }}" method="post">
         {{ csrf_field() }}
@@ -92,7 +92,7 @@
     @if($register_url)
         <p class="my-0">
             <a href="{{ $register_url }}">
-                {{ __('adminlte::adminlte.register_a_new_membership') }}
+                {{ __('adminlte::messages.sign_plan_now') }}
             </a>
         </p>
     @endif

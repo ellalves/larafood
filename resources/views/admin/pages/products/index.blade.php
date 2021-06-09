@@ -1,39 +1,45 @@
 @extends('adminlte::page')
 
-@section('title', 'Produtos Cadastrados')
+@section('title', __('Registered Products'))
 
 @section('content_header')
     {{ Breadcrumbs::render('products') }}
-    <h1>Produtos Cadastrados</h1>
+    <h1> {{ __('Registered Products') }} </h1>
 @stop
 
 @section('content')
     <div class="card">
 
-        @include('admin.includes.alerts')
-
-        <div class="div card-header">
+        <div class="div card-header px-4">
             @include('admin.includes.search', [
                 'route' => route('products.search'), 
                 'add' => route('products.create')
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
+        <div class="div card-body table-responsive">
+
+            @include('admin.includes.alerts')
+
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <thead>
                     <tr>
-                        <th>Image</th>
-                        <th>Título</th>
-                        <th>Preço</th>
-                        <th>Ações</th>
+                        <th scope="col">{{ __('Image') }}</th>
+                        <th scope="col">{{ __('Title') }}</th>
+                        <th scope="col">{{ __('Price') }}</th>
+                        <th scope="col" class="float-right mr-4">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($products as $product)
                         <tr>
                             <td class="align-middle">
-                                <img src="{{ url("storage/$product->image") }}" alt='{{ $product->image }}' width="100" height="100">
+                                <img src="{{ !empty($product->image) ? url("storage/$product->image") : url("images/company_none.png") }}" 
+                                    alt='{{ $product->image }}' 
+                                    width="100" 
+                                    height="100"
+                                    class="img-fluid"
+                                >
                             </td>
                             <td class="align-middle">
                                 {{ $product->title }}
@@ -41,7 +47,7 @@
                             <td class="align-middle">
                                 R$ {{ number_format($product->price, 2, ',', '.') }}
                             </td>
-                            <td class="align-middle">
+                            <td class="align-middle float-right">
                                 @each('admin.includes.forms_actions', ['items' =>
                                     [
                                         'route' => route('products.categories', $product->id), 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Tenant\Traits\TenantTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +41,20 @@ class Product extends Model
         return $categories;
     }
 
+    public function getPriceBrAttribute()
+    {
+        return number_format($this->price, 2, ',', '.');
+    }
+
+    public function getCreatedAttribute()
+    {
+        return Carbon::make($this->created_at)->format("d/m/Y à\s H:i:s");
+    }
+
+    public function getUpdatedAttribute()
+    {
+        return Carbon::make($this->updated_at)->format("d/m/Y à\s H:i:s");
+    }
     /**
      * Search results
      *

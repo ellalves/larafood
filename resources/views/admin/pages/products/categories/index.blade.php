@@ -1,43 +1,49 @@
 @extends('adminlte::page')
 
-@section('title', "Categorias do Produto {$product->title} ")
+@section('title', __("Product Categories") . ': ' . $product->title)
 
 @section('content_header')
     {{ Breadcrumbs::render('productsCategories', $product) }}
-    <h1>Categorias do Produto <strong>{{$product->title}}</strong> </h1>
+    <h1> {{ __("Product Categories") }}: <strong>{{$product->title}}</strong> </h1>
 @stop
 
 @section('content')
     <div class="card">
 
-        @include('admin.includes.alerts')
-        
         <div class="div card-header">
             @include('admin.includes.search', [
                 'route' => null,
                 'add' => route('products.categories.available', $product->id),
-                'label' => 'VINCULAR',
+                'label' => __('Link'),
                 'icon' => 'link'
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
+        <div class="div card-body table-responsive">
+
+            @include('admin.includes.alerts')
+
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Ações</th>
+                        <th scope="col">{{ __('Name') }}</th>
+                        <th scope="col" class="float-right mr-4">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($categories as $category)
                         <tr>
-                            <td>{{ $category->name }}</td>
-                            <td>
-                                <a href="{{ route('products.categories.detach', [$product->id, $category->id] ) }}" class="btn btn-danger">
-                                    <i class="fas fa-unlink"></i> Desvincular
-                                </a>
-                             </td>
+                            <td class="align-middle">{{ $category->name }}</td>
+                            <td class="align-middle float-right">
+                                @each('admin.includes.forms_actions', ['items' =>                               
+                                    [
+                                        'route' => route('products.categories.detach', [$product->id, $category->id] ), 
+                                        'color' => 'danger',
+                                        'icon' => 'unlink',
+                                        'label' => __('Unlink')
+                                    ]
+                                ], 'item')                                
+                            </td>
                         </tr>
                     @empty
                         <tr>

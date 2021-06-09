@@ -1,47 +1,51 @@
 @extends('adminlte::page')
 
-@section('title', "Categorias do Produto {{ $product->title }} ")
+@section('title', __("Categories available for the product") . ': ' . $product->title)
 
 @section('content_header')
     {{ Breadcrumbs::render('productsCategoriesAvailable', $product) }}
-    <h1>Categorias do Produto <strong>{{ $product->title }}</strong>
+    <h1> {{ __("Categories available for the product") }}: <strong>{{ $product->title }}</strong>
 @stop
 
 @section('content')
     <div class="card">
 
-        @include('admin.includes.alerts')
-
-        <div class="div card-header">
+        <div class="div card-header px-4">
             @include('admin.includes.search', [
                 'route' => route('products.categories.available', $product->id)
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th width="50px">#</th>
-                        <th>Nome</th>
-                    </tr>
-                </thead>
+        <div class="div card-body table-responsive">
+
+            @include('admin.includes.alerts')
+
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <tbody>
                     <form action="{{ route('products.categories.attach', $product->id)}}" method="post">
                         @csrf
+                        <tr class="row mx-0">
+                            @foreach ($categories as $category)
+                                <td class="align-middle">
+                                    <div class="form-group col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                                        <div class="custom-control custom-switch custom-switch-on-success">
+                                            <input type="checkbox" name="categories[]" value="{{ $category->id }}" class="custom-control-input" id="{{ $category->id }}">
+                                            <label class="custom-control-label" for="{{ $category->id }}">
+                                                {{ $category->name }}
+                                            </label>
+                                        </div>
+                                    </div>
 
-                        @foreach($categories as $category) 
-                            <tr>
-                                <td><input id="{{ $category->id }}" type="checkbox" name="categories[]" value="{{ $category->id }}"></td>
-                                <td><label for="{{ $category->id }}">{{ $category->name }}</label></td>
-                            </tr>
-                        @endforeach
+                                </td>
+                            @endforeach
+                        </tr>
                         <tr>
-                            <td colspan="500">
+                            <td class="align-middle">
                                 @if (count($categories) > 0)
-                                    <button type="submit" class="btn btn-dark">
-                                        <i class="fas fa-link"></i> Vincular
-                                    </button>
+                                    @include('admin.includes.button_save', [
+                                        'btnIcon' => 'link',
+                                        'btnSave' => __('Link'),
+                                    ])
                                 @else
                                     @include('admin.includes.alerts_messages', ['msg' => __('messages.no_options_available') ])
                                 @endif

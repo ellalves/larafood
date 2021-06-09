@@ -1,66 +1,68 @@
 @extends('adminlte::page')
 
-@section('title', 'Cargos Cadastrados')
+@section('title', __('Registered Roles'))
 
 @section('content_header')
     {{ Breadcrumbs::render('roles') }}
-    <h1>Cargos Cadastrados</h1>
+    <h1> {{ __('Registered Roles') }} </h1>
 @stop
 
 @section('content')
     <div class="card">
-        @include('admin.includes.alerts')
 
-        <div class="div card-header">
+        <div class="div card-header px-4">
             @include('admin.includes.search', [
                 'route' => route('roles.search'),
                 'add' => route('roles.create')
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
+        <div class="div card-body table-responsive">
+
+            @include('admin.includes.alerts')
+
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Ações</th>
+                        <th scope="col">{{ __('Name') }}</th>
+                        <th scope="col" class="float-right mr-4">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($roles as $role)
                         <tr>
-                            <td>{{ $role->name }}</td>
-                            <td>
+                            <td class="align-middle">{{ $role->name }}</td>
+                            <td class="align-middle float-right">
                                 @each('admin.includes.forms_actions', ['items' => 
                                     [
                                         'route' => route('roles.users', $role->id), 
                                         'color' => 'info',
                                         'icon' => 'user',
-                                        'label' => 'Usuários'
+                                        'label' => __('Users')
                                     ],                               
                                     [
                                         'route' => route('roles.permissions', $role->id), 
                                         'color' => 'dark',
                                         'icon' => 'lock',
-                                        'label' => 'Permissões'
+                                        'label' => __('Permissions')
                                     ],
                                     [
                                         'route' => route('roles.show', $role->id), 
                                         'color' => 'secondary',
                                         'icon' => 'eye',
-                                        'label' => 'Ver'
+                                        'label' => __('View')
                                     ],
                                     [
                                         'route' => route('roles.edit', $role->id), 
                                         'color' => 'primary',
                                         'icon' => 'edit',
-                                        'label' => 'Editar'
+                                        'label' => __('Edit')
                                     ]
                                 ], 'item')
                             </td>
                         </tr>
                     @empty
-                    @include('admin.includes.alerts_messages', ['msg' => __('messages.empty_register') ])
+                        @include('admin.includes.alerts_messages', ['msg' => __('messages.empty_register') ])
                     @endforelse
                 </tbody>
             </table>

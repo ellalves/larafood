@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastrar Usuário')
+@section('title', __("Register User"))
 
 @section('content_header')
     {{ Breadcrumbs::render('usersCreate') }}
-    <h1> Cadastrar Usuário  </h1>
+    <h1> {{ __("Register User") }}  </h1>
 @stop
 
 @section('content')

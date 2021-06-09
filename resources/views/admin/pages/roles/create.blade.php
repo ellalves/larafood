@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastrar Cargo')
+@section('title', __('Register Role'))
 
 @section('content_header')
     {{ Breadcrumbs::render('rolesCreate') }}
-    <h1> Cadastrar Cargo </h1>
+    <h1> {{ __('Register Role') }}  </h1>
 @stop
 
 @section('content')

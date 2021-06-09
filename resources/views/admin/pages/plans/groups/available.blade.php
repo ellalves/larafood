@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Grupos disponíveis para o Plano $plan->name")
+@section('title', __("Groups available for the Plan") . ': ' . $plan->name)
 
 @section('content_header')
     {{ Breadcrumbs::render('plansGroupsAvailable', $plan) }}
-    <h1>Grupos disponíveis para o Plano <strong>{{$plan->name}}</strong>
+    <h1> {{ __("Groups available for the Plan") }}: <strong>{{$plan->name}}</strong>
 @stop
 
 @section('content')
@@ -12,36 +12,41 @@
 
         @include('admin.includes.alerts')
         
-        <div class="div card-header">
+        <div class="div card-header px-4">
             @include('admin.includes.search', [
                 'route' => route('plans.groups.available', $plan->id)
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th width="50px">#</th>
-                        <th>Nome</th>
-                    </tr>
-                </thead>
+        <div class="div card-body table-responsive">
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <tbody>
                     <form action="{{ route('plans.groups.attach', $plan->id)}}" method="post">
                         @csrf
 
-                        @foreach($groups as $group)
-                            <tr>
-                                <td><input id="{{ $group->id }}" type="checkbox" name="groups[]" value="{{ $group->id }}"></td>
-                                <td><label for="{{ $group->id }}">{{ $group->name }}</label></td>
-                            </tr>
-                        @endforeach
+                        <tr class="row">
+                            @foreach ($groups as $group)
+                                <td class="align-middle">
+
+                                    <div class="form-group col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                                        <div class="custom-control custom-switch custom-switch-on-success">
+                                            <input type="checkbox" name="groups[]" value="{{ $group->id }}" class="custom-control-input" id="{{ $group->id }}">
+                                            <label class="custom-control-label" for="{{ $group->id }}">
+                                                {{ $group->name }}
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            @endforeach
+                        </tr>
                         <tr>
-                            <td colspan="500">
+                            <td class="align-middle">
                                 @if (count($groups) > 0)
-                                    <button type="submit" class="btn btn-dark">
-                                        <i class="fas fa-link"></i> Vincular
-                                    </button>
+                                    @include('admin.includes.button_save', [
+                                        'btnIcon' => 'link',
+                                        'btnSave' => __('Link'),
+                                    ])
                                 @else
                                     @include('admin.includes.alerts_messages', ['msg' => __('messages.no_options_available') ])
                                 @endif

@@ -8,56 +8,23 @@ use Illuminate\Support\Str;
 class RoleObserver
 {
     /**
-     * Handle the Role "created" event.
+     * Handle the Role "creating" event.
      *
      * @param  \App\Models\Role  $role
      * @return void
      */
-    public function created(Role $role)
+    public function creating(Role $role)
     {
         $role->uuid = Str::uuid();
     }
 
     /**
-     * Handle the Role "updated" event.
+     * Handle the Role "updating" event.
      *
      * @param  \App\Models\Role  $role
      * @return void
      */
-    public function updated(Role $role)
-    {
-        //
-    }
-
-    /**
-     * Handle the Role "deleted" event.
-     *
-     * @param  \App\Models\Role  $role
-     * @return void
-     */
-    public function deleted(Role $role)
-    {
-        //
-    }
-
-    /**
-     * Handle the Role "restored" event.
-     *
-     * @param  \App\Models\Role  $role
-     * @return void
-     */
-    public function restored(Role $role)
-    {
-        //
-    }
-
-    /**
-     * Handle the Role "force deleted" event.
-     *
-     * @param  \App\Models\Role  $role
-     * @return void
-     */
-    public function forceDeleted(Role $role)
+    public function updating(Role $role)
     {
         //
     }

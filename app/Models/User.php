@@ -89,6 +89,16 @@ class User extends Authenticatable
         return Carbon::make($accessEndAt)->format("d/m/Y à\s H:i:s");
     }
 
+    public function getCreatedAttribute()
+    {
+        return Carbon::make($this->created_at)->format("d/m/Y à\s H:i:s");
+    }
+
+    public function getUpdatedAttribute()
+    {
+        return Carbon::make($this->updated_at)->format("d/m/Y à\s H:i:s");
+    }
+    
     public function plan()
     {
         $stripe_plan = $this->subscription('default')->stripe_plan;

@@ -1,34 +1,24 @@
 @extends('adminlte::page')
 
-@section('title', "Detalhes do Grupo")
+@section('title', __('View Group'))
 
 @section('content_header')
-    {{ Breadcrumbs::render('groupsView')}}
-    <h1> Visualizar do Grupo</h1>
+    {{ Breadcrumbs::render('groupsView') }}
+    <h1> {{ __('View Group') }}</h1>
 @stop
 
 @section('content')
     <div class="card">
+
         <div class="card-body">
-            <ul>
-                <li>
-                    <strong>Nome: </strong> {{ $group->name}}
-                </li>
-                <li>
-                    <strong>Descrição: </strong> {{ $group->description}}
-                </li>
-            </ul>
-            
-            @include('admin.includes.alerts')
+            <h5 class="card-title mb-3"> <strong>{{ __("Name") }}: </strong> {{ $group->name }}</h5>
+            <p class="card-text"><strong>{{ __("Description") }}:</strong> {{ $group->description }}</p>
+        </div>
 
-            <form action="{{ route('groups.destroy', $group->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">
-                    Deletar o grupo ({{ $group->name }})
-                </button>
-            </form>
-
+        <div class="card-footer">
+            @include('admin.includes.button_delete', [
+                'pathDelete' => route('groups.destroy', $group->id)           
+            ])
         </div>
     </div>
 @stop

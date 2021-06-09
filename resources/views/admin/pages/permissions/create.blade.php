@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastrar Nova Permissão')
+@section('title', __('Register Permission'))
 
 @section('content_header')
     {{ Breadcrumbs::render('permissionsCreate') }}
-    <h1> Cadastrar Nova Permissão </h1>
+    <h1> {{ __('Register Permission') }} </h1>
 @stop
 
 @section('content')

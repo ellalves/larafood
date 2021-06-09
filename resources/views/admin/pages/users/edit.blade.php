@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Editar o usuário: $user->name ")
+@section('title', __("Edit User"))
 
 @section('content_header')
     {{ Breadcrumbs::render('usersEdit')}}
-    <h1> Editar o usuário </h1>
+    <h1> {{__("Edit User") }} </h1>
 @stop
 
 @section('content')

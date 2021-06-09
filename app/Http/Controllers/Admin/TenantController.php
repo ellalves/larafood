@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Plan;
 use App\Models\Tenant;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\TenantService;
@@ -93,9 +94,11 @@ class TenantController extends Controller
             return redirect()->back()->with('error', __('messages.empty_register'));
         }
 
+        $plans = $this->plan->latest()->get();
+
         $user = $tenant->users->first();
 
-        return view('admin.pages.tenants.edit', compact('tenant', 'user'));
+        return view('admin.pages.tenants.edit', compact('tenant', 'user', 'plans'));
     }
 
     /**
@@ -144,6 +147,12 @@ class TenantController extends Controller
         return redirect()->route('tenants.index')->with('message', __('messages.delete_success'));
     }
 
+    // public function categories(Request $request, $idTenant)
+    // {
+    //     $categories = Category::with('tenant')->get();
+    //     return $categories;
+    // }
+
     public function search(Request $request) 
     {
         $filters = $request->except('_token');
@@ -158,7 +167,7 @@ class TenantController extends Controller
     }
 
     public function verifyTenant($id) {
-        if (!$tenant = $this->repository->find($id)) {
+        if (!$tenant = $this->repository->with('categories')->find($id)) {
             return redirect()->back()->with('error', __('messages.empty_register'));
         }
 

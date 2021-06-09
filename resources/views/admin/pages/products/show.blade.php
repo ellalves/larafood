@@ -10,31 +10,39 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <ul>
-                <li>
-                    <img src="{{ url("storage/$product->image") }}" alt='{{ $product->image }}' width="100">
+            <ul class="products-list product-list-in-card pl-2 pr-2">
+                <li class="item">
+                    <div class="product-img">
+                        <img src="{{ !empty($product->image) ? url("storage/$product->image") : url("images/company_none.png") }}" alt='{{ $product->image }}' width="img-size-250">
+                    </div>
+                    <div class="product-info">
+                        <a href="{{ route('products.edit', $product->id) }}" class="product-title"> {{ $product->title }}
+                            <span class="badge badge-light float-right">
+                                R$ {{ $product->price_br }}
+                            </span>
+                        </a>
+                        <span class="product-description">
+                            {{ $product->description }}
+                        </span>
+                    </div>
                 </li>
                 <li>
-                    <strong>Nome: </strong> {{ $product->title}}
+                    <strong> {{ __("UUID") }}: </strong> {{ $product->uuid}}
                 </li>
                 <li>
-                    <strong>Price: </strong> {{ number_format($product->price, 2, ',', '.') }}
+                    <strong> {{ __("Created At") }}: </strong> {{ $product->created }}
                 </li>
                 <li>
-                    <strong>Descrição: </strong> {{ $product->description}}
+                    <strong> {{ __("Updated At") }}: </strong> {{ $product->updated}}
                 </li>
             </ul>
-            
-            @include('admin.includes.alerts')
 
-            <form action="{{ route('products.destroy', $product->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">
-                    Deletar o produto
-                </button>
-            </form>
+        </div>
 
+        <div class="card-footer">
+            @include('admin.includes.button_delete', [
+                'pathDelete' => route('products.destroy', $product->id)
+            ])
         </div>
     </div>
 @stop

@@ -1,45 +1,46 @@
 @extends('adminlte::page')
 
-@section('title', "Grupos da permissão {$permission->name} ")
+@section('title', __("Permission Groups") . ': ' . $permission->name )
 
 @section('content_header')
     {{ Breadcrumbs::render('permissionsGroup', $permission) }}
-    <h1>Grupos da permissão: <strong>{{$permission->name}}</strong> </h1>
+    <h1>{{ __("Permission Groups") }}: <strong>{{$permission->name}}</strong> </h1>
 @stop
 
 @section('content')
-    <div class="card">
+    <div class="card">    
 
-        @include('admin.includes.alerts')
-
-        <div class="div card-header">
+        <div class="div card-header px-4">
             @include('admin.includes.search', [
                 'route' => null,
                 'add' => route('permissions.groups.available', $permission->id),
-                'label' => 'VINCULAR',
+                'label' => __("Link"),
                 'icon' => 'link'
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
+        <div class="div card-body table-responsive">
+
+            @include('admin.includes.alerts')
+            
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Ações</th>
+                        <th>{{ __('Name') }}</th>
+                        <th scope="col" class="float-right mr-4">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($groups as $group)
                         <tr>
-                            <td>{{ $group->name }}</td>
-                            <td>
+                            <td class="align-middle">{{ $group->name }}</td>
+                            <td class="align-middle float-right">
                                 @each('admin.includes.forms_actions', ['items' =>                               
                                     [
                                         'route' => route('permissions.groups.detach', [$group->id, $permission->id]), 
                                         'color' => 'danger',
                                         'icon' => 'unlink',
-                                        'label' => 'Desvincular'
+                                        'label' => __('Unlink')
                                     ]
                                 ], 'item')
                              </td>

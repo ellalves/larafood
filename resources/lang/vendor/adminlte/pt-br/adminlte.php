@@ -15,7 +15,7 @@ return [
     'log_out'                     => 'Sair',
     'toggle_navigation'           => 'Trocar navegação',
     'login_message'               => 'Entre para iniciar uma nova sessão',
-    'register_message'            => 'Registrar um novo membro',
+    'register_message'            => 'Criar conta para administrar o plano',
     'password_reset_message'      => 'Recuperar senha',
     'reset_password'              => 'Recuperar senha',
     'send_password_reset_link'    => 'Enviar link de recuperação de senha',

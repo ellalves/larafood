@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastrar Produto')
+@section('title', __("Register Product"))
 
 @section('content_header')
     {{ Breadcrumbs::render('productsCreate') }}
-    <h1> Cadastrar Produto</h1>
+    <h1> {{ __("Register Product") }} </h1>
 @stop
 
 @section('content')

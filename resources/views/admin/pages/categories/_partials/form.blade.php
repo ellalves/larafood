@@ -1,19 +1,13 @@
-@include('admin.includes.alerts')
-
 @csrf
 
 <div class="form-group">
-    <label for="name"> Nome: </label>
-    <input type="text" name="name" value="{{ $category->name ?? old('name') }}" class="form-control" placeholder="Nome:">
+    <label for="name"> {{ __("Name") }}: </label>
+    <input type="text" name="name" value="{{ $category->name ?? old('name') }}" class="form-control" placeholder="{{ __("Name") }}:">
 </div>
 
 <div class="form-group">
-    <label for="description"> Descrição: </label>
-    <input type="text" name="description" value="{{ $category->description ?? old('description') }}" class="form-control" placeholder="Descrição:">
+    <label for="description"> {{ __("Description") }}: </label>
+    <input type="text" name="description" value="{{ $category->description ?? old('description') }}" class="form-control" placeholder="{{ __("Description") }}:">
 </div>
 
-<div class="form-group">
-    <button type="submit" class="btn btn-info"> 
-        <i class="fa fa-save"></i> Salvar 
-    </button>
-</div>
+@include('admin.includes.button_save')

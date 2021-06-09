@@ -1,14 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Pedidos')
+@section('title', __('Registered Orders'))
 
 @section('content_header')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('orders.index') }}" class="active">Pedidos</a></li>
-    </ol>
+    {{ Breadcrumbs::render('orders') }}
 
-    <h1>Pedidos</h1>
+    <h1> {{ __('Registered Orders') }} </h1>
 @stop
 
 @section('content')

@@ -24,20 +24,27 @@ class StoreUpdateTenant extends FormRequest
     public function rules()
     {
         $id = $this->segment(3);
-        return [
-            'name' => ['required', 'min:3', 'max:255', "unique:tenants,name,{$id},id"],
-            'email' => ['required', 'min:3', 'max:255', "unique:tenants,email,{$id},id"],
-            'document' => ['required', "unique:tenants,document,{$id},id"],
-            'logo' => ['nullable', 'image'],
-            'plan_id' => ['required', 'numeric'],
-            'active' => ['required', 'in:Y,N'],
 
-            // // subscription
-            // 'subscription' => ['nullable', 'date'],
-            // 'expires_at' => ['nullable', 'date'],
-            // 'subscription_id' => ['nullable', 'max:255'],
-            // 'subscription_active' => ['required', 'boolean'],
-            // 'subscription_suspended' => ['required', 'boolean'],
-        ];
+        if ($this->method() == 'PUT') {
+            $rules = [
+                'email' => ['required', 'min:3', 'max:255', "unique:tenants,email,{$id},id"],
+                'document' => ['required', "unique:tenants,document,{$id},id"],
+                'logo' => ['nullable', 'image'],
+                'bio' => ['required', 'min:3', 'max:1000'],
+                'active' => ['required', 'in:Y,N'],
+            ];
+        } else {
+            $rules =  [
+                'name' => ['required', 'min:3', 'max:255', "unique:tenants,name,{$id},id"],
+                'email' => ['required', 'min:3', 'max:255', "unique:tenants,email,{$id},id"],
+                'document' => ['required', "unique:tenants,document,{$id},id"],
+                'logo' => ['required', 'image'],
+                'plan_id' => ['required', 'numeric'],
+                'active' => ['required', 'in:Y,N'],
+    
+            ];
+        }
+
+        return $rules;
     }
 }

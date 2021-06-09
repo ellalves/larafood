@@ -1975,6 +1975,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -49092,7 +49108,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "div card-header px-4" }, [
         _c(
           "form",
           {
@@ -49100,66 +49116,70 @@ var render = function() {
             attrs: { action: "#", method: "POST" }
           },
           [
-            _c("label", { attrs: { for: "status" } }, [_vm._v("Status:")]),
+            _c("div", { staticClass: "input-group mb-3 mr-3" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.status,
+                      expression: "status"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "status", id: "status" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.status = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "all" } }, [_vm._v("Todos")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "open" } }, [
+                    _vm._v("Aberto")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "done" } }, [
+                    _vm._v("Completo")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "rejected" } }, [
+                    _vm._v("Rejeitados")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "working" } }, [
+                    _vm._v("Andamento")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "canceled" } }, [
+                    _vm._v("Cancelado")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "delivering" } }, [
+                    _vm._v("Em transito")
+                  ])
+                ]
+              )
+            ]),
             _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.status,
-                    expression: "status"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { name: "status" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.status = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "all" } }, [_vm._v("Todos")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "open" } }, [_vm._v("Aberto")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "done" } }, [
-                  _vm._v("Completo")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "rejected" } }, [
-                  _vm._v("Rejeitados")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "working" } }, [
-                  _vm._v("Andamento")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "canceled" } }, [
-                  _vm._v("Cancelado")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "delivering" } }, [
-                  _vm._v("Em transito")
-                ])
-              ]
-            ),
-            _vm._v(" |\n            "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "date" } }, [_vm._v("Data:")]),
+            _c("div", { staticClass: "input-group mb-3" }, [
+              _vm._m(1),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -49187,46 +49207,71 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("table", { staticClass: "table table-condensed" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.orders.data, function(order, index) {
-              return _c("tr", { key: index }, [
-                _c("td", [_vm._v(_vm._s(order.identify))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(order.status_label))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(order.date_br))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-info",
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.openDetails(order)
+      _c("div", { staticClass: "div card-body table-responsive" }, [
+        _c(
+          "table",
+          {
+            staticClass:
+              "table table-condensed table-dark table-striped table-hover table-borderless align-middle"
+          },
+          [
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.orders.data, function(order, index) {
+                return _c("tr", { key: index, staticClass: "align-middle" }, [
+                  _c("td", [_vm._v(_vm._s(order.identify))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(order.status_label))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(order.date_br))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-info",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.openDetails(order)
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Detalhes")]
-                  )
+                      },
+                      [_vm._v("Detalhes")]
+                    )
+                  ])
                 ])
-              ])
-            }),
-            0
-          )
-        ]),
+              }),
+              0
+            )
+          ]
+        ),
         _vm._v(" "),
         _vm.loadingOrders
-          ? _c("div", [_vm._v("Carregando seus pedidos")])
+          ? _c("div", { staticClass: "d-flex justify-content-center mt-4" }, [
+              _c("span", {
+                staticClass: "spinner-grow spinner-grow-lg",
+                attrs: { role: "status" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "align-middle px-1 pt-1" }, [
+                _vm._v(" Carregando Pedidos...")
+              ])
+            ])
           : _vm.orders.data.length == 0
-          ? _c("div", [_vm._v("Nenhum Pedido")])
+          ? _c("div", [
+              _c(
+                "div",
+                {
+                  staticClass: "alert alert-warning my-3",
+                  attrs: { role: "alert" }
+                },
+                [_vm._v("\n                Nenhum pedido ainda!\n            ")]
+              )
+            ])
           : _vm._e()
       ]),
       _vm._v(" "),
@@ -49243,8 +49288,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c(
+        "label",
+        { staticClass: "input-group-text", attrs: { for: "status" } },
+        [_vm._v("Estado:")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("label", { staticClass: "input-group-text", attrs: { for: "date" } }, [
+        _vm._v("Data:")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("tr", [
+      _c("tr", { staticClass: "align-middle" }, [
         _c("th", [_vm._v("Número")]),
         _vm._v(" "),
         _c("th", [_vm._v("Status")]),

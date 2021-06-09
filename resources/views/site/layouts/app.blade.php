@@ -27,7 +27,7 @@
     <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="{{ mix('css/site.css') }}" rel="stylesheet">
+    <link href="{{ url(mix('css/site.css')) }}" rel="stylesheet">
 
 </head>
 
@@ -111,7 +111,7 @@
     <script src="{{ asset('assets/vendor/owl.carousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
 
-    <script src="{{ mix('js/site.js') }}"></script>
+    <script src="{{ url(mix('js/site.js')) }}"></script>
    
     @stack('scripts')
 </body>

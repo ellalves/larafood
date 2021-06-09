@@ -8,4 +8,6 @@ return [
     'company_name'          => 'Nome da empresa',
     'company'               => 'Empresa',
     'phone'                 => 'Celular',
+    
+    'sign_plan_now'         => 'Quero assinar um plano agora!',
 ];

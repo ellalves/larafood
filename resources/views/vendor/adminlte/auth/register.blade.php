@@ -20,7 +20,7 @@
 
         {{-- Company field --}}
         <div class="input-group mb-3">
-            <input type="text" name="document" class="form-control {{ $errors->has('document') ? 'is-invalid' : '' }}"
+            <input id="document" type="text" name="document" class="form-control {{ $errors->has('document') ? 'is-invalid' : '' }}"
                    value="{{ old('document') }}" placeholder="{{ __('adminlte::messages.cpf_cnpj') }}" autofocus>
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -68,7 +68,7 @@
 
         {{-- Phone field --}}
         <div class="input-group mb-3">
-            <input type="text" name="phone" class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
+            <input id="phone" type="text" name="phone" class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
                    value="{{ old('phone') }}" placeholder="{{ __('adminlte::messages.phone') }}" autofocus>
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -148,3 +148,17 @@
         </a>
     </p>
 @stop
+
+@push('scripts')
+<script src="{{ asset('js/jquery.inputmask.min.js')}}"></script>
+<script>
+    $(function () {
+        $('#phone').inputmask('(99) 99999-9999', { 'placeholder': '(99) 99999-9999' })
+
+        $("input[id*='document']").inputmask({
+            mask: ['999.999.999-99', '99.999.999/9999-99'],
+            keepStatic: true
+        });
+    });
+</script>
+@endpush

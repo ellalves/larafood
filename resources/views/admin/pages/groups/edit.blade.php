@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Editar Grupo")
+@section('title', __("Edit Group"))
 
 @section('content_header')
     {{ Breadcrumbs::render('groupsEdit') }}
-    <h1> Editar Grupo
+    <h1> {{ __("Edit Group") }} </h1>
 @stop
 
 @section('content')

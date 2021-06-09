@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastrar Mesa')
+@section('title',  __("Register Table"))
 
 @section('content_header')
     {{ Breadcrumbs::render('tablesCreate') }}
-    <h1> Cadastrar Mesa </h1>
+    <h1> {{ __("Register Table") }} </h1>
 @stop
 
 @section('content')

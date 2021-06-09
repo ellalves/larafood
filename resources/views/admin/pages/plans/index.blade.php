@@ -1,68 +1,71 @@
 @extends('adminlte::page')
 
-@section('title', 'Planos Cadastrados')
+@section('title', __('Registered Plans'))
 
 @section('content_header')
     {{ Breadcrumbs::render('plans') }}
-    <h1>Planos Cadastrados</h1>
+    <h1>{{ __('Registered Plans') }}</h1>
 @stop
 
 @section('content')
     <div class="card">
         
-        @include('admin.includes.alerts')
-        
-        <div class="div card-header">
+        <div class="div card-header px-4">
             @include('admin.includes.search', [
                 'route' => route('plans.search'), 
                 'add' => route('plans.create')
             ])
         </div>
-        
-        <div class="div card-body">
-            <table class="table table-condensed">
+
+        <div class="div card-body table-responsive">
+
+            @include('admin.includes.alerts')
+
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Preço</th>
-                        <th>Ações</th>
+                        <th scope="col">{{ __('Name') }}</th>
+                        <th scope="col">{{ __('Price') }}</th>
+                        <th scope="col" class="float-right mr-4">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($plans as $plan)
+                    @forelse($plans as $plan)
                         <tr>
                             <td class="align-middle">{{ $plan->name }}</td>
                             <td class="align-middle">R$ {{ number_format($plan->price, 2, ',', '.') }}</td>
-                            <td class="align-middle">
+                            <td class="align-middle float-right">
                                 @each('admin.includes.forms_actions', ['items' => 
                                     [
                                         'route' => route('details.plan.index', $plan->url), 
                                         'color' => 'info',
                                         'icon' => 'plus',
-                                        'label' => 'Detalhes'
+                                        'label' => __('Details')
                                     ],                                
                                     [
                                         'route' => route('plans.groups', $plan->id), 
                                         'color' => 'dark',
                                         'icon' => 'layer-group',
-                                        'label' => 'Grupos'
+                                        'label' => __('Groups')
                                     ],
                                     [
                                         'route' => route('plans.show', $plan->url), 
                                         'color' => 'secondary',
                                         'icon' => 'eye',
-                                        'label' => 'Ver'
+                                        'label' => __('View')
                                     ],
                                     [
                                         'route' => route('plans.edit', $plan->url), 
                                         'color' => 'primary',
                                         'icon' => 'edit',
-                                        'label' => 'Editar'
+                                        'label' => __('Edit')
                                     ]
                                 ], 'item', 'admin.includes.forms_actions')
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        @include('admin.includes.alerts_messages', ['msg' => __('messages.empty_register') ])
+                    @endforelse
                 </tbody>
             </table>
         </div>

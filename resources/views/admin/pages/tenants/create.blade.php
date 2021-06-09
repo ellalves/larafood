@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastrar Empresa')
+@section('title', __("Register Company"))
 
 @section('content_header')
     {{ Breadcrumbs::render('tenantsCreate') }}
-    <h1> Cadastrar Empresa</h1>
+    <h1> {{  __("Register Company") }} </h1>
 @stop
 
 @section('content')

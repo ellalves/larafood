@@ -15,6 +15,7 @@ Route::prefix('admin')
          * Companies
          */
         Route::any('search', 'TenantController@search')->name('tenants.search');
+        // Route::get('tenants/{idTenant}/categories', 'TenantController@categories')->name('tenants.categories');
         Route::resource('tenants', 'TenantController');
 
         /**

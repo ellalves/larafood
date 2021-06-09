@@ -219,7 +219,7 @@ Breadcrumbs::for('permissionsEdit', function ($trail) {
 });
 
 
-// Admin > Permissions > edit
+// Admin > Permissions > view
 Breadcrumbs::for('permissionsView', function ($trail) {
     $trail->parent('admin');
     $trail->push('Permissões', route('permissions.index'));
@@ -421,4 +421,12 @@ Breadcrumbs::for('tenantsView', function ($trail) {
     $trail->parent('admin');
     $trail->push('Empresas', route('tenants.index'));
     $trail->push('Visualização');
+});
+
+
+// Admin > Tenants > view
+Breadcrumbs::for('orders', function ($trail) {
+    $trail->parent('admin');
+    $trail->push(__('Companies'), route('tenants.index'));
+    $trail->push(__("Orders"));
 });

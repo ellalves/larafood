@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Editar Empresa")
+@section('title',  __("Editar Company"))
 
 @section('content_header')
     {{ Breadcrumbs::render('tenantsEdit')}}
-    <h1> Editar Empresa</h1>
+    <h1> {{ __("Editar Company") }} </h1>
 @stop
 
 @section('content')

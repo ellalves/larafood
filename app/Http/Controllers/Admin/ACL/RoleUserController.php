@@ -76,7 +76,7 @@ class RoleUserController extends Controller
     {
         $role = $this->verifyRole($idRoles);
 
-        $users = $role->users()->paginate();
+        $users = $role->users()->where('tenant_id', auth()->user()->tenant_id)->paginate();
 
         return view('admin.pages.roles.users.index', compact('users', 'role'));
     }

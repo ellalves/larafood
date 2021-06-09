@@ -1,58 +1,59 @@
 @extends('adminlte::page')
 
-@section('title', 'Categorias Cadastradas')
+@section('title', __('Registered Tables'))
 
 @section('content_header')
     {{ Breadcrumbs::render('tables') }}
-    <h1>Categorias Cadastradas</h1>
+    <h1> {{ __('Registered Tables') }} </h1>
 @stop
 
 @section('content')
     <div class="card">
 
-        @include('admin.includes.alerts')
-
         <div class="div card-header">
             @include('admin.includes.search', [
-                'route' => route('tables.search'), 
-                'add' => route('tables.create')
+            'route' => route('tables.search'),
+            'add' => route('tables.create')
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
+        <div class="div card-body table-responsive">
+
+            @include('admin.includes.alerts')
+
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Ações</th>
+                        <th scope="col">{{ __('Name') }}</th>
+                        <th scope="col" class="float-right mr-4">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($tables as $table)
+                    @foreach ($tables as $table)
                         <tr>
-                            <td>{{ $table->name }}</td>
-                            <td class="align-middle">
-                                @each('admin.includes.forms_actions', ['items' => 
+                            <td class="align-middle">{{ $table->name }}</td>
+                            <td class="align-middle float-right">
+                                @each('admin.includes.forms_actions', ['items' =>
                                 [
-                                    'route' => route('tables.qrcode', $table->id), 
-                                    'color' => 'dark',
-                                    'icon' => 'qrcode',
-                                    'label' => '',
-                                    'target' => '_blank'
+                                'route' => route('tables.qrcode', $table->id),
+                                'color' => 'dark',
+                                'icon' => 'qrcode',
+                                'label' => __("QR Code"),
+                                'target' => '_blank'
                                 ],
                                 [
-                                    'route' => route('tables.show', $table->id), 
-                                    'color' => 'secondary',
-                                    'icon' => 'eye',
-                                    'label' => 'Ver'
+                                'route' => route('tables.show', $table->id),
+                                'color' => 'secondary',
+                                'icon' => 'eye',
+                                'label' => __("View")
                                 ],
                                 [
-                                    'route' => route('tables.edit', $table->id), 
-                                    'color' => 'primary',
-                                    'icon' => 'edit',
-                                    'label' => 'Editar'
+                                'route' => route('tables.edit', $table->id),
+                                'color' => 'primary',
+                                'icon' => 'edit',
+                                'label' => _("Edit")
                                 ]
-                            ], 'item', 'admin.includes.forms_actions')
+                                ], 'item', 'admin.includes.forms_actions')
                             </td>
                         </tr>
                     @endforeach

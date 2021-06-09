@@ -1,54 +1,54 @@
 @extends('adminlte::page')
 
-@section('title', "Permissões disponíveis para o grupo: {{ $permission->name }} ")
+@section('title', __('Permissions available for the group') . ': ' . $permission->name )
 
 @section('content_header')
     {{ Breadcrumbs::render('permissionGroups', $permission) }}
-    <h1>Permissões disponíveis para o grupo: <strong>{{$permission->name}}</strong>
+    <h1>{{ __('Permissions available for the group') }}: <strong>{{$permission->name}}</strong>
 @stop
 
 @section('content')
     <div class="card">
 
-        @include('admin.includes.alerts')
-
-        <div class="div card-header">
+        <div class="div card-header px-4">
             @include('admin.includes.search', [
                 'route' => route('permissions.groups.available', $permission->id)
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th width="50px">#</th>
-                        <th>Nome</th>
-                    </tr>
-                </thead>
+        <div class="div card-body table-responsive">
+
+            @include('admin.includes.alerts')
+
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <tbody>
                     <form action="{{ route('permissions.groups.attach', $permission->id)}}" method="post">
                         @csrf
 
-                        @foreach($groups as $group)
-                            <tr>
-                                <td><input id="{{$group->id}}" type="checkbox" name="groups[]" value="{{ $group->id }}"></td>
-                                <td>
-                                    <label for="{{$group->id}}">{{ $group->name }}</label>
+                        <tr class="row mx-0">
+                            @foreach ($groups as $group)
+                                <td class="align-middle">
+                                    <div class="form-group col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                                        <div class="custom-control custom-switch custom-switch-on-success">
+                                            <input type="checkbox" name="groups[]" value="{{ $group->id }}" class="custom-control-input" id="{{ $group->id }}">
+                                            <label class="custom-control-label" for="{{ $group->id }}">
+                                                {{ $group->name }}
+                                            </label>
+                                        </div>
+                                    </div>
+
                                 </td>
-                            </tr>
-                        @endforeach
+                            @endforeach
+                        </tr>
                         <tr>
-                            <td colspan="500">
+                            <td class="align-middle">
                                 @if (count($groups) > 0)
-                                    <button type="submit" class="btn btn-dark">
-                                        <i class="fas fa-link"></i> Vincular
-                                    </button>
+                                    @include('admin.includes.button_save', [
+                                        'btnIcon' => 'link',
+                                        'btnSave' => __('Link'),
+                                    ])
                                 @else
-                                    <p class="alert alert-warning">
-                                        <i class="icon fas fa-exclamation-triangle"></i>
-                                        Nenhum grupo disponível para essa permissão!
-                                    </p>
+                                    @include('admin.includes.alerts_messages', ['msg' => __('messages.no_options_available') ])
                                 @endif
                             </td>
                         </tr>                      

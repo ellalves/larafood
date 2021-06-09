@@ -1,34 +1,24 @@
 @extends('adminlte::page')
 
-@section('title', "Visualizar Categoria")
+@section('title', __("View Category"))
 
     @section('content_header')
     {{ Breadcrumbs::render('categoriesView')}}
-    <h1> Visualizar Categoria </h1>
+    <h1> {{ __("View Category") }} </h1>
 @stop
 
 @section('content')
     <div class="card">
+
         <div class="card-body">
-            <ul>
-                <li>
-                    <strong>Nome: </strong> {{ $category->name}}
-                </li>
-                <li>
-                    <strong>Descrição: </strong> {{ $category->description}}
-                </li>
-            </ul>
-            
-            @include('admin.includes.alerts')
+            <h5 class="card-title mb-3"> <strong>{{ __("Name") }}: </strong> {{ $category->name }}</h5>
+            <p class="card-text"><strong>{{ __("Description") }}:</strong> {{ $category->description }}</p>
+        </div>
 
-            <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">
-                    Deletar a categoria ({{ $category->name }})
-                </button>
-            </form>
-
+        <div class="card-footer">
+            @include('admin.includes.button_delete', [
+                'pathDelete' => route('categories.destroy', $category->id)          
+            ])
         </div>
     </div>
 @stop

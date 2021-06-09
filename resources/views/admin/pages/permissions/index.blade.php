@@ -1,61 +1,62 @@
 @extends('adminlte::page')
 
-@section('title', 'Permissões Cadastradas')
+@section('title', __('Registered Permissions'))
 
 @section('content_header')
     {{ Breadcrumbs::render('permissions') }}
-    <h1>Permissões Cadastradas</h1>
+    <h1>{{ __('Registered Permissions') }}</h1>
 @stop
 
 @section('content')
     <div class="card">
 
-        @include('admin.includes.alerts')
-
-        <div class="div card-header">
+        <div class="div card-header px-4">
             @include('admin.includes.search', [
                 'route' => route('permissions.search'), 
                 'add' => route('permissions.create')
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
+        <div class="div card-body table-responsive">
+
+            @include('admin.includes.alerts')
+
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Ações</th>
+                        <th scope="col">{{ __('Name') }}</th>
+                        <th scope="col" class="float-right mr-4">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($permissions as $permission)
                         <tr>
-                            <td>{{ $permission->name }}</td>
-                            <td>
+                            <td class="align-middle">{{ $permission->name }}</td>
+                            <td class="align-middle float-right">
                                 @each('admin.includes.forms_actions', ['items' => 
                                     [
                                         'route' => route('permissions.roles', $permission->id ), 
                                         'color' => 'info',
                                         'icon' => 'address-book',
-                                        'label' => 'Cargos'
+                                        'label' => __('Roles')
                                     ],
                                     [
                                         'route' => route('permissions.groups', $permission->id ), 
                                         'color' => 'dark',
                                         'icon' => 'layer-group',
-                                        'label' => 'Grupos'
+                                        'label' => __('Groups')
                                     ],
                                     [
                                         'route' => route('permissions.show', $permission->id ), 
                                         'color' => 'secondary',
                                         'icon' => 'eye',
-                                        'label' => 'Ver'
+                                        'label' => __('View')
                                     ],
                                     [
                                         'route' => route('permissions.edit', $permission->id ), 
                                         'color' => 'primary',
                                         'icon' => 'edit',
-                                        'label' => 'Editar'
+                                        'label' => __('Edit')
                                     ]
                                 ], 'item', 'admin.includes.forms_actions')
                             </td>

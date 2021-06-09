@@ -1,33 +1,25 @@
 @extends('adminlte::page')
 
-@section('title', "Visualizar Permissão")
+@section('title', __("View Permission"))
 
 @section('content_header')
-    <h1> Visualizar Permissão</h1>
+{{ Breadcrumbs::render('permissionsView')}}
+    <h1> {{ __("View Permission") }} </h1>
 @stop
 
 @section('content')
     <div class="card">
+
         <div class="card-body">
-            <ul>
-                <li>
-                    <strong>Nome: </strong> {{ $permission->name}}
-                </li>
-                <li>
-                    <strong>Descrição: </strong> {{ $permission->description}}
-                </li>
-            </ul>
-            
-            @include('admin.includes.alerts')
-
-            <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">
-                    Deletar a permissão ({{ $permission->name }})
-                </button>
-            </form>
-
+            <h5 class="card-title mb-3"> <strong>{{ __("Name") }}: </strong> {{ $permission->name }}</h5>
+            <p class="card-text"><strong>{{ __("Description") }}:</strong> {{ $permission->description }}</p>
         </div>
+
+        <div class="card-footer">
+            @include('admin.includes.button_delete', [
+                'pathDelete' => route('permissions.destroy', $permission->id)           
+            ])
+        </div>
+
     </div>
 @stop

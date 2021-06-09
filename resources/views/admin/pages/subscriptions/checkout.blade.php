@@ -1,17 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'Efetuar pagamento')
+@section('title', __("Make the payment") )
 
 @section('content_header')
     {{-- {{ Breadcrumbs::render('productsCreate') }} --}}
-    <h1>Efetuar pagamento</h1>
+    <h1> {{ __("Make the payment") }} </h1>
 @stop
 
 @section('content')
     <div class="card">
         <div class="div card-header">
             <div class="callout callout-info">
-                <h5>Você está assinando</h5>
+                <h5>{{ __("You are signing") }}</h5>
 
                 <p>{{ $plan->name }}</p>
             </div>
@@ -24,7 +24,7 @@
                 @csrf
                 <div class="input-group mb-3">
                     <input id="card-holder-name" type="text" class="form-control bg-white text-black"
-                        placeholder="Nome do titular como está no cartão">
+                        placeholder="{{ __("Holder's name, as it is on the card") }}">
                 </div>
 
                 <div id="card-element" class="rounded p-2 bg-white border-gray-100"></div>
@@ -32,7 +32,7 @@
                 <div class="input-group mt-3">
                     <button id="card-button" data-secret="{{ $intent->client_secret }}" type="submit"
                         class="btn btn-success">
-                        Confirmar pagamento
+                        {{ __("Confirm payment") }}
                     </button>
                 </div>
             </form>
@@ -62,7 +62,7 @@
 
             // Disable button
             cardButton.classList.add('cursor-not-allowed')
-            cardButton.firstChild.data = 'Conferindo os dados'
+            cardButton.firstChild.data = '{{ __("checking the data") }}'
             // reset errors
             showErrors.innerText = ''
             showErrors.style.display = 'none'
@@ -83,9 +83,9 @@
 
             if (error) {
                 console.log(error)
+                const errData = "{{__("Invalid data, please check and try again")}}"
                 showErrors.style.display = 'block'
-                showErrors.innerText = (error.type == 'validation_error') ? error.message :
-                    'Dados inválidos, verifique e tente novamente!'
+                showErrors.innerText = (error.type == 'validation_error') ? error.message : errData
 
                 cardButton.classList.remove('cursor-not-allowed')
 

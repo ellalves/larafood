@@ -13,7 +13,7 @@ class PermissionObserver
      * @param  \App\Models\Permission  $permission
      * @return void
      */
-    public function created(Permission $permission)
+    public function creating(Permission $permission)
     {
         $permission->uuid = Str::uuid();
     }
@@ -24,7 +24,7 @@ class PermissionObserver
      * @param  \App\Models\Permission  $permission
      * @return void
      */
-    public function updated(Permission $permission)
+    public function updating(Permission $permission)
     {
         //
     }

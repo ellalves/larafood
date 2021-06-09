@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastrar Categoria')
+@section('title', __("Register Category"))
 
 @section('content_header')
     {{ Breadcrumbs::render('categoriesCreate') }}
-    <h1> Cadastrar Categoria </h1>
+    <h1> {{ __("Register Category") }} </h1>
 @stop
 
 @section('content')

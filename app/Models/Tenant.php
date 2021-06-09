@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tenant extends Model
 {
     use HasFactory;
     
     protected $fillable = [
-        'document', 'name', 'url', 'email', 'logo', 'active', 'uuid',
-        'subscription', 'expires_at', 'subscription_id', 'subscription_active', 'subscription_suspended',
+        'document', 'name', 'url', 'email', 'logo', 'active', 'uuid', 'bio', 'phone'
     ];
 
     public function users()
@@ -42,5 +42,15 @@ class Tenant extends Model
     public function orders() 
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function getCreatedAttribute()
+    {
+        return Carbon::make($this->created_at)->format("d/m/Y à\s H:i:s");
+    }
+
+    public function getUpdatedAttribute()
+    {
+        return Carbon::make($this->updated_at)->format("d/m/Y à\s H:i:s");
     }
 }

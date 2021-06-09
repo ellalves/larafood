@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Minhas Faturas')
+@section('title', __("My Invoices"))
 
 @section('content_header')
     {{ Breadcrumbs::render('usersInvoices') }}
-    <h1>Minhas Faturas</h1>
+    <h1> {{ __("My Invoices") }} </h1>
 @stop
 
 @section('content')
@@ -18,35 +18,35 @@
                 'add' => null
             ])
            
-           <h5 class="badge badge-light float-lg-right"> Você está assinando o {{$user->plan()->name}}</h5>
+           <h5 class="badge badge-light float-lg-right"> {{ __("You are signing") }}: {{$user->plan()->name}}</h5>
 
             @if($subscription)
                 @if($subscription->cancelled() && $subscription->onGracePeriod())
                     <a href="{{ route('subscriptions.resume') }}" class="btn btn-outline-info">
-                        Reativar Assinatura
+                        {{ __("Reactivate Subscription") }}
                     </a>
-                    <span class="ml-2"> Seu acesso vai até: {{$user->access_end}}</span>
+                    <span class="ml-2"> {{ __("Your access goes to") }}: {{$user->access_end}}</span>
                 @elseif(!$subscription->cancelled())
                     <a href="{{ route('subscriptions.cancel') }}" class="btn btn-outline-danger">
-                        Cancelar assinatura
+                        {{ __("Unsubscribe") }} 
                     </a>
                 @endif
 
                 @if ($subscription->ended())
-                    Acabou
+                    {{ __("He finished") }}
                 @endif
             @else
-                [Não assinante]
+                [{{ __("Non-subscriber") }}]
             @endif
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
+        <div class="div card-body table-responsive">
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <thead>
                     <tr>
-                        <th>Data</th>
-                        <th>Valor</th>
-                        <th>Ações</th>
+                        <th>{{ __("Date") }}</th>
+                        <th>{{ __("Value") }}</th>
+                        <th>{{ __("Actions") }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,7 +60,7 @@
                                         'route' => route('subscriptions.invoice.download', $invoice->id), 
                                         'color' => 'info',
                                         'icon' => 'download',
-                                        'label' => 'Baixar'
+                                        'label' => __("Download")
                                     ],
 
                                 ], 'item', 'admin.includes.forms_actions')

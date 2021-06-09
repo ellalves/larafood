@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Usuários Cadastrados')
+@section('title', __('Registered Users'))
 
 @section('content_header')
     {{ Breadcrumbs::render('users') }}
-    <h1>Usuários Cadastrados</h1>
+    <h1> {{ __('Registered Users') }} </h1>
 @stop
 
 @section('content')
@@ -19,12 +19,15 @@
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
+        <div class="div card-body table-responsive">
+
+            @include('admin.includes.alerts')
+
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Ações</th>
+                        <th scope="col">{{ __('Name') }}</th>
+                        <th scope="col" class="float-right mr-4">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,19 +41,19 @@
                                         'route' => route('users.roles', $user->id ), 
                                         'color' => 'info',
                                         'icon' => 'address-book',
-                                        'label' => 'Cargos'
+                                        'label' => __('Roles')
                                     ],
                                     [
                                         'route' => route('users.show', $user->id ), 
                                         'color' => 'secondary',
                                         'icon' => 'eye',
-                                        'label' => 'Ver'
+                                        'label' => __('View')
                                     ],
                                     [
                                         'route' => route('users.edit', $user->id ), 
                                         'color' => 'primary',
                                         'icon' => 'edit',
-                                        'label' => 'Editar'
+                                        'label' => __('Edit')
                                     ]
                                 ], 'item', 'admin.includes.forms_actions')
                             </td>

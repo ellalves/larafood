@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Editar a Permissão: $permission->name")
+@section('title',  __('Edit Permission') . ': ' . $permission->name)
 
 @section('content_header')
     {{ Breadcrumbs::render('permissionsEdit')}}
-    <h1> Editar Permissão</strong></h1>
+    <h1> {{ __('Edit Permission') }}</strong></h1>
 @stop
 
 @section('content')

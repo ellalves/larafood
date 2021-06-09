@@ -1,49 +1,51 @@
 @extends('adminlte::page')
 
-@section('title', "Permissões disponíveis para o cargo: $role->name")
+@section('title', __('Permissions available for the role') . ': ' . $role->name )
 
 @section('content_header')
     {{ Breadcrumbs::render('RolePermissionAvailable', $role) }}
-    <h1>Permissões disponíveis para o cargo:  <strong>{{$role->name}}</strong>
+    <h1> {{ __('Permissions available for the role') }}:  <strong>{{$role->name}}</strong>
 @stop
 
 @section('content')
     <div class="card">
 
-        @include('admin.includes.alerts')
-
-        <div class="div card-header">
+        <div class="div card-header px-4">
             @include('admin.includes.search', [
                 'route' => route('roles.permissions.available', $role->id)
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th width="50px">#</th>
-                        <th>Nome</th>
-                    </tr>
-                </thead>
+        <div class="div card-body table-responsive">
+                
+            @include('admin.includes.alerts')
+
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <tbody>
                     <form action="{{ route('roles.permissions.attach', $role->id)}}" method="post">
                         @csrf
 
-                        @foreach($permissions as $permission)
-                            <tr>
-                                <td><input id="{{$permission->id}}" type="checkbox" name="permissions[]" value="{{ $permission->id }}"></td>
-                                <td><label  for="{{$permission->id}}">
-                                    {{ $permission->name }}
+                        <tr class="row mx-0">
+                            @foreach ($permissions as $permission)
+                                <td class="align-middle">
+                                    <div class="form-group col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                                        <div class="custom-control custom-switch custom-switch-on-success">
+                                            <input type="checkbox" name="permissions[]" value="{{ $permission->id }}" class="custom-control-input" id="{{ $permission->id }}">
+                                            <label class="custom-control-label" for="{{ $permission->id }}">
+                                                {{ $permission->name }}
+                                            </label>
+                                        </div>
+                                    </div>
                                 </td>
-                            </tr>
-                        @endforeach
+                            @endforeach
+                        </tr>
                         <tr>
-                            <td colspan="500">
+                            <td class="align-middle">
                                 @if (count($permissions) > 0)
-                                    <button type="submit" class="btn btn-dark">
-                                        <i class="fas fa-link"></i> Vincular
-                                    </button>
+                                    @include('admin.includes.button_save', [
+                                        'btnIcon' => 'link',
+                                        'btnSave' => __('Link'),
+                                    ])
                                 @else
                                     @include('admin.includes.alerts', ['msg' => __('messages.no_options_available') ])
                                 @endif

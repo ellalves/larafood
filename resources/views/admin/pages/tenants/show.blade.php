@@ -1,67 +1,62 @@
 @extends('adminlte::page')
 
-@section('title', "Detalhes da Empresa <strong>{{ $tenant->name }}")
+@section('title', __("View Company") )
 
     @section('content_header')
-    {{ Breadcrumbs::render('tenantsView') }}
-    <h1> Detalhes da Empresa <strong>{{ $tenant->name }}</strong></h1>
-@stop
+        {{ Breadcrumbs::render('tenantsView') }}
+        <h1> {{ __("View Company") }} </h1>
+    @stop
 
-@section('content')
-    <div class="card">
-        <div class="card-body">
-            <img src="{{ url("storage/$tenant->logo") }}" alt='{{ $tenant->logo }}' width="100">
-            <ul>
-                <li>
-                    <strong>Plano: </strong> {{ $tenant->plan->name}}
-                </li>                <li>
-                    <strong>Responsável: </strong> {{ $user->name}}
-                </li>
-                <li>
-                    <strong>Nome: </strong> {{ $tenant->name}}
-                </li>
-                <li>
-                    <strong>Url: </strong> {{ $tenant->url}}
-                </li>
-                <li>
-                    <strong>Documento: </strong> {{ $tenant->document }}
-                </li>
-                <li>
-                    <strong>E-mail: </strong> {{ $tenant->email}}
-                </li>
-                <li>
-                    <strong>Ativo: </strong> {{ $tenant->active == "Y" ? 'Sim' : 'Não'}}
-                </li>
-            </ul>
+    @section('content')
+        <div class="card">
+            <div class="card-body">
+                <ul class="products-list product-list-in-card pl-2 pr-2">
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="{{ !empty($tenant->logo) ? url("storage/$tenant->logo") : url("images/company_none.png") }}" alt="{{ $tenant->logo }}" class="img-size-250">
+                        </div>
+                        <div class="product-info">
+                            <a href="{{ route('tenants.index', $tenant->id) }}" class="product-title"> {{ $tenant->name }}
+                                <span class="badge badge-light float-right">
+                                    {{ $tenant->plan->name }}
+                                </span>
+                            </a>
+                            <span class="product-description">
+                                {{ $tenant->bio }}
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <strong>{{ __("Responsible") }}: </strong> {{ $user->name }}
+                    </li>
+                    <li>
+                        <strong>{{ __("Cellular phone") }}: </strong> {{ $tenant->phone }}
+                    </li>
+                    <li>
+                        <strong> {{ __("Document") }}: </strong> {{ $tenant->document }}
+                    </li>
+                    <li>
+                        <strong> {{ __("Email") }}: </strong> {{ $tenant->email }}
+                    </li>
+                    <li>
+                        <strong> {{ __("Active") }}: </strong> {{ $tenant->active == 'Y' ? __('yes') : __('no') }}
+                    </li>
+                    <li>
+                        <strong> {{ __("UUID") }}: </strong> {{ $tenant->uuid}}
+                    </li>
+                    <li>
+                        <strong> {{ __("Created At") }}: </strong> {{ $tenant->created }}
+                    </li>
+                    <li>
+                        <strong> {{ __("Updated At") }}: </strong> {{ $tenant->updated}}
+                    </li>
+                </ul>
+            </div>
 
-            <h3>Assinatura</h3>
-            <ul>
-                <li>
-                    <strong>Data Assinatura: </strong> {{ $tenant->subscription }}
-                </li>
-                <li>
-                    <strong>Data Expira: </strong> {{ $tenant->expires_at }}
-                </li>
-                <li>
-                    <strong>Identificador: </strong> {{ $tenant->subscription_id }}
-                </li>
-                <li>
-                    <strong>Ativo? </strong> {{ $tenant->subscription_active ? 'SIM' : 'NÃO' }}
-                </li>
-                <li>
-                    <strong>Cancelou? </strong> {{ $tenant->subscription_suspended ? 'SIM' : 'NÃO' }}
-                </li>
-            </ul>                
-            @include('admin.includes.alerts')
-
-            <form action="{{ route('tenants.destroy', $tenant->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">
-                    Deletar a empresa
-                </button>
-            </form>
-
+            <div class="card-footer">
+                @include('admin.includes.button_delete', [
+                'pathDelete' => route('tenants.destroy', $tenant->id)
+                ])
+            </div>
         </div>
-    </div>
-@stop
+    @stop

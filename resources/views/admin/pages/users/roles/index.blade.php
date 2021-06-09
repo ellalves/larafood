@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', "Cargos do usuário: $user->name")
+@section('title', __("User Roles") . ': ' . $user->name)
 
 @section('content_header')
     {{ Breadcrumbs::render('userRoles', $user) }}
-    <h1>Cargos da permissão: <strong>{{$user->name}}</strong> </h1>
+    <h1> {{ __("User Roles") }}: <strong>{{$user->name}}</strong> </h1>
 @stop
 
 @section('content')
@@ -16,30 +16,33 @@
             @include('admin.includes.search', [
                 'route' => null,
                 'add' => route('users.roles.available', $user->id),
-                'label' => 'VINCULAR',
+                'label' => __("Link"),
                 'icon' => 'link'
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
+        <div class="div card-body table-responsive">
+
+            @include('admin.includes.alerts')
+            
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Ações</th>
+                        <th>{{ __('Name') }}</th>
+                        <th scope="col" class="float-right mr-4">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($roles as $role)
                         <tr>
-                            <td>{{ $role->name }}</td>
-                            <td>
+                            <td class="align-middle">{{ $role->name }}</td>
+                            <td class="align-middle float-right">
                                 @each('admin.includes.forms_actions', ['items' =>                               
                                     [
                                         'route' => route('users.roles.detach', [$role->id, $user->id]), 
                                         'color' => 'danger',
                                         'icon' => 'unlink',
-                                        'label' => 'Desvincular'
+                                        'label' => __("Unlink")
                                     ]
                                 ], 'item')
                              </td>

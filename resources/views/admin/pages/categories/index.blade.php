@@ -1,49 +1,50 @@
 @extends('adminlte::page')
 
-@section('title', 'Categorias Cadastradas')
+@section('title', __('Registered Categories'))
 
 @section('content_header')
     {{ Breadcrumbs::render('categories') }}
-    <h1>Categorias Cadastradas</h1>
+    <h1>{{ __('Registered Categories') }}</h1>
 @stop
 
 @section('content')
     <div class="card">
 
-        @include('admin.includes.alerts')
-
-        <div class="div card-header">
+        <div class="div card-header px-4">
             @include('admin.includes.search', [
                 'route' => route('categories.search'), 
                 'add' => route('categories.create')
             ])
         </div>
 
-        <div class="div card-body">
-            <table class="table table-condensed">
+        <div class="div card-body table-responsive">
+
+            @include('admin.includes.alerts')
+
+            <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Ações</th>
+                        <th scope="col">{{ __('Name') }}</th>
+                        <th scope="col" class="float-right mr-4">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($categories as $category)
                         <tr>
-                            <td>{{ $category->name }}</td>
-                            <td class="align-middle">
+                            <td class="align-middle">{{ $category->name }}</td>
+                            <td class="align-middle float-right">
                                 @each('admin.includes.forms_actions', ['items' => 
                                 [
                                     'route' => route('categories.show', $category->id), 
                                     'color' => 'secondary',
                                     'icon' => 'eye',
-                                    'label' => 'Ver'
+                                    'label' => __('View')
                                 ],
                                 [
                                     'route' => route('categories.edit', $category->id), 
                                     'color' => 'primary',
                                     'icon' => 'edit',
-                                    'label' => 'Editar'
+                                    'label' => __('Edit')
                                 ]
                             ], 'item', 'admin.includes.forms_actions')
                             </td>

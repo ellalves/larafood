@@ -1,15 +1,25 @@
-<form action="{{ $route ?? '' }}" method="post" class="container form form-inline">
-    @if ($route)
-        <div class="form-group mx-sm-3 mb-2">
-            @csrf
-            <input type="text" name="filter" placeholder="Filtrar" value="{{ $filters['filter'] ?? '' }}" class="form-control">
-            <button type="submit" class="btn btn-dark">
-                <i class="fas fa-search"></i> 
-            </button>
-        </div>
-    @endif
+<div class="row">
+    <div class="col">
+        @if (!empty($add))
+            <a href="{{ $add ?? '#' }}" class="btn btn-success mb-2">
+                <i class="fas fa-{{ $icon ?? 'plus-square' }}"></i>
+                {{ Str::upper( $label ??  __('Novo') ) }}
+            </a>
+        @endif
+    </div>
 
-    @if (!empty($add))
-        <a href="{{ $add ?? '#' }}" class="btn btn-success mb-2"> <i class="fas fa-{{ $icon ?? 'plus-square'}}"></i> {{ $label ?? 'NOVO' }} </a>
-    @endif
-</form>
+    <div class="col float-right">
+        <form action="{{ $route ?? '' }}" method="post" class="form">
+            @if ($route)
+                <div class="input-group">
+                    @csrf
+                    <input type="text" name="filter" placeholder="{{__('Filter')}}" value="{{ $filters['filter'] ?? '' }}"
+                        class="form-control">
+                    <button type="submit" class="btn btn-outline-secondary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            @endif
+        </form>
+    </div>
+</div>
