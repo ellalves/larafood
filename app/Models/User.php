@@ -7,13 +7,14 @@ use Laravel\Cashier\Billable;
 use App\Models\Traits\UserACLTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
+use Lecturize\Addresses\Traits\HasAddresses;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, UserACLTrait, Billable;
+    use HasFactory, Notifiable, UserACLTrait, Billable, HasAddresses;
 
     /**
      * The attributes that are mass assignable.

@@ -16,10 +16,15 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('tenant_id');
+            $table->unsignedBigInteger('provider_id')->nullable();
             $table->uuid('uuid');
             $table->string('title');
             $table->string('url');
             $table->string('image')->nullable();
+            $table->double('quantity', 10, 2)->default(1);
+            $table->double('min_quantity', 10, 2)->default(0);
+            $table->double('lucre', 10, 2)->nullable();
+            $table->double('cost_price', 10, 2)->nullable();
             $table->double('price', 10, 2);
             $table->string('description')->nullable();
             $table->timestamps();
@@ -27,6 +32,7 @@ class CreateProductsTable extends Migration
             $table->foreign('tenant_id')
                     ->references('id')
                     ->on('tenants')
+                    ->onUpdate('cascade')
                     ->onDelete('cascade');
         });
 
