@@ -29,4 +29,14 @@ class TenantRepository implements TenantRepositoryInterface
 
         return $tenant;
     }
+
+    public function getTenantByFlag(string $flag)
+    {
+        $tenant = $this->entity->when($flag, function($q) use ($flag) {
+            $q->where('url', $flag);
+        })
+        ->firstOrFail();
+
+        return $tenant;
+    }
 }

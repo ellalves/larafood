@@ -83,7 +83,7 @@ class OrderService
     }
     
     /**
-     * Privados
+     * Privates
      */
 
     private function getIdentifyOrder(int $qtyCaracters = 8)

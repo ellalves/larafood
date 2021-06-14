@@ -1,6 +1,6 @@
 {
     "No groups available for this permission": "Nenhum grupo disponível para essa permissão",
-    
+    "Page not found. If the error persists, contact":"Página não encontrada. Se o erro persistir, entre em contato com",
     "Register Group": "Cadastrar Grupo",
     "Register Permission": "Cadastrar Permissão",
     "Register Role": "Cadastrar Cargo",
@@ -53,6 +53,8 @@
     "Plan Groups": "Grupos do plano",
     "Plan Details": "Detalhes do plano",
     "Product Categories": "Categorias do produto",
+
+    "User Profile": "Perfil de usuário",
 
     "Permissions available for the group": "Permissões disponíveis para o grupo",
     "Permissions available for the role": "Permissões disponíveis para o cargo",

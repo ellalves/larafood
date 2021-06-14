@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Repositories\{
+    AddressRepository,
     TableRepository,
     CategoryRepository,
     ClientRepository,
+    CouponRepository,
     EvaluationRepository,
     ProductRepository,
     TenantRepository,
@@ -13,9 +15,11 @@ use App\Repositories\{
 };
 
 use App\Repositories\Contracts\{
+    AddressRepositoryInterface,
     TableRepositoryInterface,
     CategoryRepositoryInterface,
     ClientRepositoryInterface,
+    CouponRepositoryInterface,
     EvaluationRepositoryInterface,
     ProductRepositoryInterface,
     TenantRepositoryInterface,
@@ -66,6 +70,16 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             EvaluationRepositoryInterface::class,
             EvaluationRepository::class
+        );
+
+        $this->app->bind(
+            AddressRepositoryInterface::class,
+            AddressRepository::class
+        );
+
+        $this->app->bind(
+            CouponRepositoryInterface::class,
+            CouponRepository::class
         );
     }
 

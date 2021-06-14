@@ -28,7 +28,6 @@ class OrderApiController extends ApiController
            //throw $e;
            return $this->errorResponse($e->getMessage());
        }
-
    }
 
    public function store(StoreOrder $request, $uuidTenant)
@@ -42,7 +41,6 @@ class OrderApiController extends ApiController
         } catch (\Throwable $e) {
            return $this->errorResponse($e->getMessage());
         }
-
    }
 
    public function show($identify)
@@ -51,7 +49,7 @@ class OrderApiController extends ApiController
            if (!$order = $this->orderService->getOrderByIdentify($identify)) {
                 return $this->errorResponse(__('messages.empty_register'), 404);
            }
-           return $this->successResponse(new OrderResource($order));
+           return new OrderResource($order);
        } catch (\Throwable $e) {
            //throw $e;
            return $this->errorResponse($e->getMessage());

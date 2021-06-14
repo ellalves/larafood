@@ -9,5 +9,3 @@ Route::group([
     Route::patch('/my-orders', 'Auth\OrderTenantController@update')->middleware(['auth']);
 
 });
-
-// Route::post('contact', 'Api\ContactController@sendContact');

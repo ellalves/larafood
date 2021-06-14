@@ -6,4 +6,5 @@ interface TenantRepositoryInterface
 {
     public function getAllTenants();
     public function getTenantByUuid(string $uuid);
+    public function getTenantByFlag(string $flag);
 }

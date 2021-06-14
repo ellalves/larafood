@@ -31,7 +31,7 @@ return [
          * Enable geocoding to add coordinates (lon/lat) to addresses.
          * Default: false
          */
-        'geocode' => false,
+        'geocode' => true,
     ],
 
     /*

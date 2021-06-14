@@ -33,7 +33,7 @@ class CreateAddressesTable extends Migration
     {
         Schema::create($this->table, function(Blueprint $table)
         {
-            $table->increments('id');
+            $table->id();
 
             $table->string('street',    60)->nullable();
             $table->string('city',      60)->nullable();

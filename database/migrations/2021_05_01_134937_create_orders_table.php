@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->integer('client_id')->nullable();
             $table->integer('table_id')->nullable();
             $table->double('total', 10, 2);
+            $table->double('total_discount', 10, 2)->default(0);
             $table->enum('status', ['open', 'done', 'rejected', 'working', 'canceled', 'delivering']);
             $table->text('comment')->nullable();
             $table->timestamps();
@@ -36,6 +37,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->integer('qty');
             $table->double('price', 10, 2);
+            $table->double('discount', 10, 2)->default(0);
 
             $table->foreign('order_id')
                         ->references('id')

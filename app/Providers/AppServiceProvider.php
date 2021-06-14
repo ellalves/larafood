@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\{
     Category,
     Client,
+    Coupon,
     DetailPlan,
     Plan,
     Tenant,
@@ -18,6 +19,7 @@ use App\Models\{
 use App\Observers\{
     CategoryObserver,
     ClientObserver,
+    CouponObserver,
     DetailPlanObserver,
     PlanObserver,
     ProductObserver,
@@ -64,6 +66,7 @@ class AppServiceProvider extends ServiceProvider
         Role::observe(RoleObserver::class);
         User::observe(UserObserver::class);
         DetailPlan::observe(DetailPlanObserver::class);
+        Coupon::observe(CouponObserver::class);
 
         /**
          * Custom If Statements

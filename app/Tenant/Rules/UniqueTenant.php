@@ -8,17 +8,25 @@ use Illuminate\Support\Facades\DB;
 
 class UniqueTenant implements Rule
 {
-    protected $table, $value, $column;
+    protected $table, $value, $column, $valueTenant, $columnTenant;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct(string $table, $value = null, $column = 'id')
+    public function __construct(
+        string $table, 
+        $value = null, 
+        $column = 'id',
+        $valueTenant = null, 
+        $columnTenant = 'id'
+    )
     {
         $this->table = $table;
         $this->column = $column;
         $this->value = $value;
+        $this->columnTenant = $columnTenant;
+        $this->valueTenant = $valueTenant;
     }
 
     /**
@@ -30,7 +38,13 @@ class UniqueTenant implements Rule
      */
     public function passes($attribute, $value)
     {
-        $tenantId = app(ManagerTenant::class)->getTenantIdentify();
+        if (!$tenantId = app(ManagerTenant::class)->getTenantIdentify()) 
+        {
+            $tenantId = DB::table('tenants')
+                                ->where("{$this->columnTenant}", $this->valueTenant)
+                                ->first()
+                                ->id;
+        }
 
         $register = DB::table($this->table)
                             ->where('tenant_id', $tenantId)

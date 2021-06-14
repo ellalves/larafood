@@ -142,7 +142,9 @@ class UserController extends Controller
             return redirect()->back()->with('error', __('messages.empty_register'));
        }
 
-       return view('admin.pages.users.profile', compact('user'));
+       $addresses = $user->addresses();
+
+       return view('admin.pages.users.profile', compact('user', 'addresses'));
     }
 
     /**

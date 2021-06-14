@@ -11,7 +11,15 @@ class Tenant extends Model
     use HasFactory;
     
     protected $fillable = [
-        'document', 'name', 'url', 'email', 'logo', 'active', 'uuid', 'bio', 'phone'
+        'document',
+        'name',
+        'url',
+        'email',
+        'logo',
+        'active',
+        'uuid',
+        'bio',
+        'phone'
     ];
 
     public function users()
@@ -22,11 +30,6 @@ class Tenant extends Model
     public function categories()
     {
         return $this->hasMany(Category::class);
-    }
-
-    public function plan()
-    {
-        return $this->belongsTo(Plan::class);
     }
 
     public function tables() 
@@ -42,6 +45,16 @@ class Tenant extends Model
     public function orders() 
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function coupons()
+    {
+        return $this->hasMany(Coupon::class);
+    }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
     }
 
     public function getCreatedAttribute()
