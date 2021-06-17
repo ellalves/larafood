@@ -10,7 +10,16 @@ class Order extends Model
 {
     use HasFactory, TenantTrait;
 
-    protected $fillable = ['tenant_id', 'identify', 'client_id', 'table_id', 'total', 'status', 'comment'];
+    protected $fillable = [
+        'tenant_id', 
+        'identify', 
+        'client_id', 
+        'table_id', 
+        'total', 
+        'total_paid', 
+        'total_discount', 
+        'status', 
+        'comment'];
 
     /**
      * Options status
@@ -41,7 +50,7 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot(['price', 'qty']);
+        return $this->belongsToMany(Product::class)->withPivot(['price', 'qty', 'coupon', 'discount', 'paid']);
     }
     
     public function evaluations()

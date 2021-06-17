@@ -59,19 +59,11 @@ class CouponRepository implements CouponRepositoryInterface
 
     public function verifyCouponUrlByTenantId($idTenant, $coupon)
     {
-        $coupon = $this->entity
-                            ->where([
-                                'tenant_id' => $idTenant,
-                                'url' => $coupon
-                            ])
-                            ->where('start_validity', '<', now())
-                            ->where('end_validity', '>', now())
-                            ->orWhere([
-                                'name' => $coupon,
-                                'uuid' => $coupon
-                            ])
-                            ->first();
-
-        return $coupon;
+        return $this->entity
+                        ->where('tenant_id', $idTenant)
+                        ->where('start_validity', '<', now())
+                        ->where('end_validity', '>', now())
+                        ->where('url', '=', $coupon)
+                        ->first();
     }
 }

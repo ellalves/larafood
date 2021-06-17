@@ -35,6 +35,7 @@ class ProductRepository implements ProductRepositoryInterface
     {
         $product = $this->entity
                             ->where('uuid', $uuidProduct)
+                            ->with('orders')
                             ->where('tenant_id', $idTenant)
                             ->withoutGlobalScope(TenantScope::class)
                             ->firstOrFail();

@@ -9,4 +9,5 @@ interface CouponRepositoryInterface
     public function getCouponUrlByTenantId(int $idTenant, string $flagCoupon);
     public function deleteCouponByTenantId(int $idTenant, string $flagCoupon);
     public function verifyCouponUrlByTenantId(int $idTenant, string $coupon);
+    // public function verifyCouponUrlByTenantUuid(string $uuidTenant, string $coupon);
 }

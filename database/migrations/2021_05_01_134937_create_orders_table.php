@@ -21,8 +21,10 @@ class CreateOrdersTable extends Migration
             $table->integer('table_id')->nullable();
             $table->double('total', 10, 2);
             $table->double('total_discount', 10, 2)->default(0);
+            $table->double('total_paid', 10, 2);
             $table->enum('status', ['open', 'done', 'rejected', 'working', 'canceled', 'delivering']);
             $table->text('comment')->nullable();
+            $table->text('address')->nullable();
             $table->timestamps();
 
             $table->foreign('tenant_id')
@@ -35,9 +37,11 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_id');
+            $table->string('coupon')->nullable();
             $table->integer('qty');
             $table->double('price', 10, 2);
             $table->double('discount', 10, 2)->default(0);
+            $table->double('paid', 10, 2);
 
             $table->foreign('order_id')
                         ->references('id')

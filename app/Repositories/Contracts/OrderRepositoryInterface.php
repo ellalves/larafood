@@ -6,6 +6,8 @@ interface OrderRepositoryInterface
     public function newOrder(
         string $identify,
         float $total,
+        float $totalPaid,
+        float $totalDiscount,
         string $status,
         int $tenantId,
         string $comment = '',
@@ -17,4 +19,5 @@ interface OrderRepositoryInterface
     public function getOrdersByClientId(int $idClient);
     public function getOrdersByTenantId(int $idTenant, string $status, string $date = null);
     public function updateStatusOrder(string $identify, string $status);
+    public function verifyLimitMode($coupon);
 }

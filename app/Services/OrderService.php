@@ -2,43 +2,54 @@
 namespace App\Services;
 
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\Contracts\OrderRepositoryInterface;
-use App\Repositories\Contracts\ProductRepositoryInterface;
 use App\Repositories\Contracts\TableRepositoryInterface;
+use App\Repositories\Contracts\CouponRepositoryInterface;
 use App\Repositories\Contracts\TenantRepositoryInterface;
+use App\Repositories\Contracts\ProductRepositoryInterface;
 
 class OrderService
 {
-    protected $orderRepository, $tenantRepository, $tableRepository, $productRepository;
+    protected $orderRepository, $tenantRepository, $tableRepository, $productRepository, $couponRepository;
 
     public function __construct(
         OrderRepositoryInterface $orderRepository,
         TenantRepositoryInterface $tenantRepository,
         TableRepositoryInterface $tableRepository,
-        ProductRepositoryInterface $productRepository
+        ProductRepositoryInterface $productRepository,
+        CouponRepositoryInterface $couponRepository
     )
     {
         $this->orderRepository = $orderRepository;
         $this->tenantRepository = $tenantRepository;
         $this->tableRepository = $tableRepository;
         $this->productRepository = $productRepository;
+        $this->couponRepository = $couponRepository;
     }
 
     public function newOrder(array $order, $uuidTenant)
     {
         $identify = $this->getIdentifyOrder();
-        // dd($order);
+        // dd($order['products'][0]);
         $status = 'open';
         $tenantId = $this->getTenantIdByOrder($uuidTenant);
         $productsOrder = $this->getProductsByOrder($tenantId, $order['products'] ?? []);
         $total = $this->getTotalOrder($productsOrder);
+        $totalPaid = $this->getTotalPaidOrder($productsOrder);
+        $totalDiscount = $this->getTotalDiscountOrder($productsOrder);
         $comment = isset($order['comment']) ? $order['comment'] : '';
         $clientId = $this->getClientOrder();
         $tableId = $this->getTableIdByOrder($tenantId, $order['table'] ?? '');
 
+        //begin Database Transaction
+        // DB::beginTransaction();
+
         $order = $this->orderRepository->newOrder(
             $identify,
             $total,
+            $totalPaid,
+            $totalDiscount,
             $status,
             $tenantId,
             $comment,
@@ -49,6 +60,19 @@ class OrderService
         $this->orderRepository->registerProductsOrder($order->id, $productsOrder);
 
         return $order;
+
+        // if ($order && $products)
+        // {
+        //     //Success
+        //     DB::commit();
+            
+        //     return $order;
+        // }
+
+        //Fail, undo database changes
+        // DB::rollBack();
+
+        // return false;
     }
 
     public function getOrderByIdentify($identify)
@@ -130,26 +154,105 @@ class OrderService
         $total = 0;
 
         foreach ($products as $product) {
-            $total += ($product['price'] * $product['qty']); 
+            $total += ($product['price'] * $product['qty']);
         }
 
         return $total;
     }
 
-    private function getProductsByOrder($uuidTenant, array $productsOrder): array
+    private function getTotalPaidOrder(array $products)
     {
+        $totalPaid = 0;
+
+        foreach ($products as $product) {
+            $totalPaid += ($product['price'] - $product['discount']);
+        }
+
+        return $totalPaid;
+    }
+
+    private function getTotalDiscountOrder($products)
+    {
+        $totalDiscount= 0;
+
+        foreach ($products as $product) {
+            $totalDiscount += $product['discount'];
+        }
+
+        return $totalDiscount;
+    }
+
+    private function getProductsByOrder($idTenant, array $productsOrder): array
+    {
+        if (array_key_exists('coupon', $productsOrder[0])) 
+        {
+            $coupon = $this->couponRepository->verifyCouponUrlByTenantId($idTenant, $productsOrder[0]['coupon']);
+        }
+
+        if(!empty($coupon))
+        {
+            $numberOfCouponsUsed = $this->orderRepository->verifyLimitMode($coupon);
+
+            $limitCoupons = $this->getCouponLimitOrder($coupon, $numberOfCouponsUsed);
+        }
+ 
         $products = [];
         foreach ($productsOrder as $productOrder) {
-            $product = $this->productRepository->getProductByUuid($uuidTenant, $productOrder['identify']);
+            $product = $this->productRepository->getProductByUuid($idTenant, $productOrder['identify']);
+
+            if (!empty($coupon))
+            {
+                $discount = $this->getDiscountOrder($coupon, $product, $productOrder['qty']);
+                $paid = $product->price - $discount;
+            }
 
             array_push($products, [
                 'id' => $product->id,
                 'qty' => $productOrder['qty'],
                 'price' => $product->price,
+                'paid' =>  $paid ?? "0.00",
+                'discount' => $discount ?? "0.00",
+                'coupon' => $coupon->url ?? null,
             ]);
         }
 
         return $products;
     }
     
+    private function getDiscountOrder($coupon, $product, $qty)
+    {
+        switch ($coupon->discount_mode)
+        {
+            case 'percentage':
+                $discount = $qty * ($coupon->discount * $product->price) / 100;
+                break;
+            
+            case 'price':
+                $discount = ($product->price > $coupon->discount) ? $coupon->discount : $product->price;
+                break;
+            
+            default: 
+                $discount = 0.00;
+        }
+
+        return $discount;
+    }
+
+    private function getCouponLimitOrder($coupon, $numberOfCouponsUsed)
+    {
+        switch ($coupon->limit_mode)
+        {
+            case 'quantity':
+                if( count( $numberOfCouponsUsed['coupons'] ) >= $coupon->limit ) {
+                    return false;
+                }
+                break;
+                
+            case 'price':
+                if( array_sum( $numberOfCouponsUsed['discounts'] ) > $coupon->limit ) {
+                    return false;
+                }                
+                break;
+        }
+    }
 }

@@ -71,6 +71,21 @@ class CouponService
 
     }
 
+
+    public function verifyCouponOrder($uuidTenant, $coupon)
+    {
+        $coupon = $this->couponRepository->verifyCouponUrlByTenantUuid($uuidTenant, $coupon);
+
+        switch ($coupon->limit_mode)
+        {
+            case 'quantity':
+
+                break;
+
+            case 'price':
+        }
+    }
+
     public function getTenant($flagTenant)
     {
         if (!$tenant = $this->tenantRepository->getTenantByFlag($flagTenant))

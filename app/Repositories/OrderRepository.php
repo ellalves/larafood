@@ -16,6 +16,8 @@ class OrderRepository implements OrderRepositoryInterface
     public function newOrder(
         string $identify,
         float $total,
+        float $totalPaid,
+        float $totalDiscount,
         string $status,
         int $tenantId,
         string $comment = '',
@@ -26,6 +28,8 @@ class OrderRepository implements OrderRepositoryInterface
         $data = [
             'identify' => $identify,
             'total' => $total,
+            'total_paid' => $totalPaid,
+            'total_discount' => $totalDiscount,
             'status' => $status,
             'tenant_id' => $tenantId,
             'comment' => $comment,
@@ -51,14 +55,19 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function registerProductsOrder(int $orderId, array $products)
     {
+        
         $order = $this->entity->find($orderId);
-
+        
         foreach($products as $product) {
-            $order->products()->attach($product['id'], [
-                'price' => $product['price'], 
-                'qty'   => $product['qty']
+            $data[] = $order->products()->attach($product['id'], [
+                'price'     => $product['price'], 
+                'qty'       => $product['qty'],
+                'discount'  => $product['discount'],
+                'paid'      => $product['paid'],
+                'coupon'    => $product['coupon'] ?? null, 
             ]);
         }
+
     }
 
     public function getOrdersByClientId(int $idClient)
@@ -93,5 +102,24 @@ class OrderRepository implements OrderRepositoryInterface
         $this->entity->where('identify', $identify)->update(['status' => $status]);
 
         return $this->entity->where('identify', $identify)->first();
+    }
+
+    public function verifyLimitMode($coupon)
+    {
+        $orders = $this->entity->whereIn('status', ['done', 'working', 'open'])->get();
+
+        $coupons = $discounts = [];
+        foreach ($orders as $order) {
+            foreach ($order->products as $product) {
+                $coupons[] = $product->pivot->coupon;
+                $discounts[] = $product->pivot->discount;
+            }
+            
+        }
+        
+        return [
+            'coupons' => $coupons, 
+            'discounts' => $discounts
+        ];
     }
 }

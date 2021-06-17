@@ -18,6 +18,7 @@ class OrderResource extends JsonResource
         return [
             'identify' => $this->identify,
             'total' => $this->total,
+            'total_discount' => $this->total_discount,
             'status' => $this->status,
             'status_label' => $this->statusOptions[$this->status],
             'message' => $this->comment,

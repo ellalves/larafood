@@ -28,6 +28,8 @@ class OrderFactory extends Factory
         return [
             'tenant_id' => $tenant != null ? $tenant : Tenant::factory()->create(),
             'identify' => uniqid() . Str::random(10),
+            'total_paid' => 60.0,
+            'total_discount' => 20.0,
             'total' => 80.0,
             'status' => 'open',
         ];

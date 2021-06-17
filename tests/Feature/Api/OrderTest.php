@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\Order;
 use App\Models\Table;
 use App\Models\Client;
+use App\Models\Coupon;
 use App\Models\Tenant;
 use App\Models\Product;
 use Illuminate\Support\Str;
@@ -257,7 +258,7 @@ class OrderTest extends TestCase
                             ->has(Product::factory()->count(10))
                             ->has(Table::factory()->count(3))
                             ->create();
-
+        
         $uuidTenant = $tenant->uuid;
         $products = $tenant->products()->get();
 
@@ -279,7 +280,46 @@ class OrderTest extends TestCase
 
         $response->assertStatus(201);
     }
-    
+
+    /**
+     * Create Order Coupon Authenticated
+     *
+     * @return void
+     */
+    public function testCreateOrderCouponAuthenticated()
+    {
+        $client = Client::factory()->create();
+
+        $token = $client->createToken(Str::random(10))->plainTextToken;
+        
+        $tenant = Tenant::factory()
+                            ->has(Product::factory()->count(10))
+                            ->has(Table::factory()->count(3))
+                            ->create();
+        
+        $uuidTenant = $tenant->uuid;
+        $products = $tenant->products()->get();
+        $coupon = Coupon::factory()->create();
+        
+        $payload = [
+            'products' => [],
+            'table' => $tenant->tables()->first()->uuid
+        ];
+
+        foreach ($products as $product) {
+            array_push($payload['products'], [
+                'identify' => $product->uuid,
+                'qty' => 1,
+            ]);
+        }
+
+        $response = $this->postJson("/api/auth/tenants/{$uuidTenant}/orders", $payload, [
+            'Authorization' => "Bearer {$token}"
+        ]);
+
+        $response->assertStatus(201);
+    }
+
     /**
      * Get My Orders
      *
