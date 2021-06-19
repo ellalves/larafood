@@ -19,7 +19,9 @@ class Order extends Model
         'total_paid', 
         'total_discount', 
         'status', 
-        'comment'];
+        'address',
+        'comment',
+    ];
 
     /**
      * Options status

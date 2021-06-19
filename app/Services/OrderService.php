@@ -31,13 +31,13 @@ class OrderService
     public function newOrder(array $order, $uuidTenant)
     {
         $identify = $this->getIdentifyOrder();
-        // dd($order['products'][0]);
         $status = 'open';
         $tenantId = $this->getTenantIdByOrder($uuidTenant);
         $productsOrder = $this->getProductsByOrder($tenantId, $order['products'] ?? []);
         $total = $this->getTotalOrder($productsOrder);
         $totalPaid = $this->getTotalPaidOrder($productsOrder);
         $totalDiscount = $this->getTotalDiscountOrder($productsOrder);
+        $address = $order['address'];
         $comment = isset($order['comment']) ? $order['comment'] : '';
         $clientId = $this->getClientOrder();
         $tableId = $this->getTableIdByOrder($tenantId, $order['table'] ?? '');
@@ -52,6 +52,7 @@ class OrderService
             $totalDiscount,
             $status,
             $tenantId,
+            $address,
             $comment,
             $clientId,
             $tableId,

@@ -21,6 +21,7 @@ class OrderResource extends JsonResource
             'total_discount' => $this->total_discount,
             'status' => $this->status,
             'status_label' => $this->statusOptions[$this->status],
+            'address' => $this->address,
             'message' => $this->comment,
             'create' => Carbon::make($this->created_at)->format('Y-m-d H:i:s'),
             'products' => ProductResource::collection($this->products),

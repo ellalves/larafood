@@ -34,6 +34,11 @@ class StoreOrder extends FormRequest
                 'nullable',
                 'exists:tables,uuid',
             ],
+            'address' => [
+                'required',
+                'min:10',
+                'max:5000',
+            ],
             'comment' => [
                 'nullable',
                 'min:3',
@@ -41,7 +46,7 @@ class StoreOrder extends FormRequest
             ],
             'products' => ['required'],
             'products.*.identify' => ['required','exists:products,uuid'],
-            'products.*.qty' => ['required','integer']
+            'products.*.qty' => ['required','integer', 'regex:/^[1-9][0-9]*$/']
         ];
     }
 }

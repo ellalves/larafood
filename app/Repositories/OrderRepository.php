@@ -20,6 +20,7 @@ class OrderRepository implements OrderRepositoryInterface
         float $totalDiscount,
         string $status,
         int $tenantId,
+        string $address,
         string $comment = '',
         $clientId = '',
         $tableId = ''
@@ -32,6 +33,7 @@ class OrderRepository implements OrderRepositoryInterface
             'total_discount' => $totalDiscount,
             'status' => $status,
             'tenant_id' => $tenantId,
+            'address' => $address,
             'comment' => $comment,
             // 'client_id' => $clientId,
             // 'table_id' => $tableId,

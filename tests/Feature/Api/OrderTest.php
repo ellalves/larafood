@@ -70,7 +70,8 @@ class OrderTest extends TestCase
         $payload = [
             'products' => [],
             'table' => 'fake_value',
-            'comment' => 'Um comentário'
+            'comment' => 'Um comentário',
+            'address' => 'Teste de endereço',
         ];
         foreach($products as $product) {
             array_push($payload['products'],[
@@ -101,6 +102,7 @@ class OrderTest extends TestCase
         $products = $tenant->products()->get();
 
         $payload = [
+            'address' => 'Teste de endereço',
             'products' => []
         ];
         foreach($products as $product) {
@@ -133,7 +135,8 @@ class OrderTest extends TestCase
         $payload = [
             'products' => [],
             'table' => $table->uuid,
-            'comment' => 'Um comentário'
+            'comment' => 'Um comentário',
+            'address' => 'Teste de endereço',
         ];
         foreach($products as $product) {
             array_push($payload['products'],[
@@ -161,6 +164,7 @@ class OrderTest extends TestCase
         $products = $tenant->products()->get();
 
         $payload = [
+            'address' => 'Teste de endereço',
             'products' => []
         ];
         foreach($products as $product) {
@@ -263,6 +267,7 @@ class OrderTest extends TestCase
         $products = $tenant->products()->get();
 
         $payload = [
+            'address' => 'Teste de endereço',
             'products' => [],
             'table' => $tenant->tables()->first()->uuid
         ];
@@ -302,6 +307,7 @@ class OrderTest extends TestCase
         $coupon = Coupon::factory()->create();
         
         $payload = [
+            'address' => 'Teste de endereço',
             'products' => [],
             'table' => $tenant->tables()->first()->uuid
         ];

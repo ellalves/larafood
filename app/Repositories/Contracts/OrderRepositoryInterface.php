@@ -10,6 +10,7 @@ interface OrderRepositoryInterface
         float $totalDiscount,
         string $status,
         int $tenantId,
+        string $address,
         string $comment = '',
         $clientId = '',
         $tableId = ''
