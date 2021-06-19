@@ -11,7 +11,8 @@ use App\Repositories\{
     EvaluationRepository,
     ProductRepository,
     TenantRepository,
-    OrderRepository
+    OrderRepository,
+    ProviderRepository
 };
 
 use App\Repositories\Contracts\{
@@ -23,7 +24,8 @@ use App\Repositories\Contracts\{
     EvaluationRepositoryInterface,
     ProductRepositoryInterface,
     TenantRepositoryInterface,
-    OrderRepositoryInterface
+    OrderRepositoryInterface,
+    ProviderRepositoryInterface
 };
 
 use Illuminate\Support\ServiceProvider;
@@ -80,6 +82,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             CouponRepositoryInterface::class,
             CouponRepository::class
+        );
+
+        $this->app->bind(
+            ProviderRepositoryInterface::class,
+            ProviderRepository::class
         );
     }
 

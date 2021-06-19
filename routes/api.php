@@ -33,15 +33,26 @@ Route::group([
         Route::get('clients/my-orders', 'OrderApiController@myOrders');
 
         Route::apiResource('addresses', "AddressApiController");
+
+        Route::apiResource('providers', "ProviderApiController");
+
+    
     });
 
+    // Providers
+    Route::get('tenants/{flagTenant}/providers/{flagProvider}', 'ProviderApiController@show');
+    Route::put('tenants/{flagTenant}/providers/{flagProvider}', 'ProviderApiController@update');
+    Route::get('tenants/{flagTenant}/providers', 'ProviderApiController@index');
+    Route::post('tenants/{flagTenant}/providers', 'ProviderApiController@store');
+    Route::delete('tenants/{flagTenant}/providers/{flagProvider}', 'ProviderApiController@destroy');
+
     //Coupon
-    Route::get('tenants/{flagTenant}/verify/{coupon}', 'CouponController@verify');
-    Route::get('tenants/{flagTenant}/coupons/{flagCoupon}', 'CouponController@show');
-    Route::put('tenants/{flagTenant}/coupons/{flagCoupon}', 'CouponController@update');
-    Route::get('tenants/{flagTenant}/coupons', 'CouponController@index');
-    Route::post('tenants/{flagTenant}/coupons', 'CouponController@store');
-    Route::delete('tenants/{flagTenant}/coupons/{flagCoupon}', 'CouponController@destroy');
+    Route::get('tenants/{flagTenant}/verify/{coupon}', 'CouponApiController@verify');
+    Route::get('tenants/{flagTenant}/coupons/{flagCoupon}', 'CouponApiController@show');
+    Route::put('tenants/{flagTenant}/coupons/{flagCoupon}', 'CouponApiController@update');
+    Route::get('tenants/{flagTenant}/coupons', 'CouponApiController@index');
+    Route::post('tenants/{flagTenant}/coupons', 'CouponApiController@store');
+    Route::delete('tenants/{flagTenant}/coupons/{flagCoupon}', 'CouponApiController@destroy');
 
     // Tenants
     Route::get('tenants/{uuid}', 'TenantApiController@show');

@@ -22,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'pĺan_id',
+        'plan_id',
         'tenant_id',
         'uuid',
         'name',

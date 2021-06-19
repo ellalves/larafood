@@ -72,9 +72,9 @@ class CouponService
     }
 
 
-    public function verifyCouponOrder($uuidTenant, $coupon)
+    public function verifyCouponOrder($idTenant, $coupon)
     {
-        $coupon = $this->couponRepository->verifyCouponUrlByTenantUuid($uuidTenant, $coupon);
+        $coupon = $this->couponRepository->verifyCouponUrlByTenantId($idTenant, $coupon);
 
         switch ($coupon->limit_mode)
         {

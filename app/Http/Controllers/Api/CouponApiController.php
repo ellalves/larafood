@@ -8,7 +8,7 @@ use App\Http\Resources\CouponResource;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\Api\StoreUpdateCoupon;
 
-class CouponController extends ApiController
+class CouponApiController extends ApiController
 {
     protected $serviceCoupon;
 

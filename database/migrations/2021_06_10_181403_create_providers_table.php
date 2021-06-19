@@ -15,13 +15,22 @@ class CreateProvidersTable extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
+            $table->unsignedBigInteger('tenant_id');
+            $table->string('uuid')->unique();
+            $table->string('name');
+            $table->string('url');
             $table->string('document')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->text('about')->nullable();
             $table->text('address')->nullable();
             $table->timestamps();
+
+            $table->foreign('tenant_id')
+                    ->references('id')
+                    ->on('tenants')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 

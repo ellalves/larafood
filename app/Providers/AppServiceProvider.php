@@ -14,7 +14,8 @@ use App\Models\{
     User,
     Role,
     Permission,
-    Group
+    Group,
+    Provider
 };
 use App\Observers\{
     CategoryObserver,
@@ -28,7 +29,8 @@ use App\Observers\{
     UserObserver,
     RoleObserver,
     PermissionObserver,
-    GroupObserver
+    GroupObserver,
+    ProviderObserver
 };
 
 use Illuminate\Pagination\Paginator;
@@ -67,6 +69,7 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         DetailPlan::observe(DetailPlanObserver::class);
         Coupon::observe(CouponObserver::class);
+        Provider::observe(ProviderObserver::class);
 
         /**
          * Custom If Statements
