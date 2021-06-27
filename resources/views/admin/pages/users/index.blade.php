@@ -10,8 +10,6 @@
 @section('content')
     <div class="card">
 
-        @include('admin.includes.alerts')
-
         <div class="div card-header">
             @include('admin.includes.search', [
                 'route' => route('users.search'), 

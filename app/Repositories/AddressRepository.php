@@ -33,12 +33,15 @@ class AddressRepository implements AddressRepositoryInterface
 
     public function addAddressByClient($data, $client) 
     {
-        $address = $client->addresses()->first();
+
+        $this->verifyIsPrimary($data['is_primary'], $client);
         return $client->addAddress($data);
     }
 
     public function updateAddressByClient($data, $uuidAddress, $client) 
     {
+        $this->verifyIsPrimary($data['is_primary'], $client);
+
         $address = $client->addresses()->where('uuid', $uuidAddress)->first();
         $client->updateAddress($address, $data);
         return $address;        
@@ -47,11 +50,19 @@ class AddressRepository implements AddressRepositoryInterface
     public function deleteAddressByClient($uuidAddress, $client) 
     {
         $address = $client->addresses()->where('uuid', $uuidAddress)->first();
-        return $client->deleteAddress($address);
+        return $address->forceDelete(); // $client->deleteAddress($address);
     }
 
     public function deleteAllAddressByClient($uuidAddress, $client) 
     {
         return $client->flushAddresses();
+    }
+
+    private function verifyIsPrimary($flag, $client)
+    {
+        if(!empty($flag) && $flag == 1) {
+            $client->addresses()->where('is_primary', 1)
+                    ->update(['is_primary' => 0]);
+        }
     }
 }

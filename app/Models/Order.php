@@ -11,7 +11,8 @@ class Order extends Model
     use HasFactory, TenantTrait;
 
     protected $fillable = [
-        'tenant_id', 
+        'tenant_id',
+        'form_payment_id',
         'identify', 
         'client_id', 
         'table_id', 
@@ -38,6 +39,11 @@ class Order extends Model
     public function tenant()
     {
         return $this->belongsTo(Tenant::class);
+    }
+
+    public function formPayment()
+    {
+        return $this->belongsTo(FormPayment::class);
     }
 
     public function client()

@@ -59,7 +59,13 @@
                     <li><a href="#pricing">Planos</a></li>
 
                     <li><a href="#contact">Contato</a></li>
-                    <li><a href="/login">Entre</a></li>
+
+                    @if (auth()->check())
+                        <li><a href="/admin">Painel</a></li>
+                    @else
+                        <li><a href="/login">Entre</a></li>
+                    @endif
+                    
 
                 </ul>
             </nav><!-- .nav-menu -->

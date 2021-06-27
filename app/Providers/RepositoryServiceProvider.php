@@ -9,6 +9,7 @@ use App\Repositories\{
     ClientRepository,
     CouponRepository,
     EvaluationRepository,
+    FormPaymentRepository,
     ProductRepository,
     TenantRepository,
     OrderRepository,
@@ -22,6 +23,7 @@ use App\Repositories\Contracts\{
     ClientRepositoryInterface,
     CouponRepositoryInterface,
     EvaluationRepositoryInterface,
+    FormPaymentRepositoryInterface,
     ProductRepositoryInterface,
     TenantRepositoryInterface,
     OrderRepositoryInterface,
@@ -87,6 +89,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ProviderRepositoryInterface::class,
             ProviderRepository::class
+        );
+
+        $this->app->bind(
+            FormPaymentRepositoryInterface::class,
+            FormPaymentRepository::class
         );
     }
 

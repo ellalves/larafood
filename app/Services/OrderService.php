@@ -38,6 +38,7 @@ class OrderService
         $totalPaid = $this->getTotalPaidOrder($productsOrder);
         $totalDiscount = $this->getTotalDiscountOrder($productsOrder);
         $address = $order['address'];
+        $formPaymentId = $order['form_payment_id'];
         $comment = isset($order['comment']) ? $order['comment'] : '';
         $clientId = $this->getClientOrder();
         $tableId = $this->getTableIdByOrder($tenantId, $order['table'] ?? '');
@@ -53,6 +54,7 @@ class OrderService
             $status,
             $tenantId,
             $address,
+            $formPaymentId,
             $comment,
             $clientId,
             $tableId,

@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Table;
 use App\Models\Client;
 use App\Models\Coupon;
+use App\Models\FormPayment;
 use App\Models\Tenant;
 use App\Models\Product;
 use Illuminate\Support\Str;
@@ -97,13 +98,15 @@ class OrderTest extends TestCase
     {
         $tenant = Tenant::factory()
                         ->has(Product::factory()->count(10))
+                        ->has(FormPayment::factory()->count(1))
                         ->create();
         
         $products = $tenant->products()->get();
 
         $payload = [
             'address' => 'Teste de endereço',
-            'products' => []
+            'products' => [],
+            'form_payment_id' => $tenant->formPayments()->first()->id
         ];
         foreach($products as $product) {
             array_push($payload['products'],[
@@ -113,6 +116,8 @@ class OrderTest extends TestCase
         }
 
         $response = $this->postJson("{$this->url}/{$tenant->uuid}/orders", $payload);
+
+        // $response->dump();
 
         $response->assertStatus(201);
     }
@@ -127,6 +132,7 @@ class OrderTest extends TestCase
         $tenant = Tenant::factory()
                         ->has(Product::factory()->count(10))
                         ->has(Table::factory()->count(1))
+                        ->has(FormPayment::factory()->count(3))
                         ->create();
         
         $products = $tenant->products()->get();
@@ -137,6 +143,7 @@ class OrderTest extends TestCase
             'table' => $table->uuid,
             'comment' => 'Um comentário',
             'address' => 'Teste de endereço',
+            'form_payment_id' => $tenant->formPayments()->first()->id
         ];
         foreach($products as $product) {
             array_push($payload['products'],[
@@ -159,13 +166,15 @@ class OrderTest extends TestCase
     {
         $tenant = Tenant::factory()
                         ->has(Product::factory()->count(2))
+                        ->has(FormPayment::factory()->count(2))
                         ->create();
         
         $products = $tenant->products()->get();
 
         $payload = [
             'address' => 'Teste de endereço',
-            'products' => []
+            'products' => [],
+            'form_payment_id' => $tenant->formPayments()->first()->id
         ];
         foreach($products as $product) {
             array_push($payload['products'],[
@@ -244,6 +253,8 @@ class OrderTest extends TestCase
 
         $response = $this->getJson("api/v1/orders/{$identify}");
 
+        // $response->dump();
+
         $response->assertStatus(200);
     }
 
@@ -261,6 +272,7 @@ class OrderTest extends TestCase
         $tenant = Tenant::factory()
                             ->has(Product::factory()->count(10))
                             ->has(Table::factory()->count(3))
+                            ->has(FormPayment::factory()->count(3))
                             ->create();
         
         $uuidTenant = $tenant->uuid;
@@ -269,7 +281,8 @@ class OrderTest extends TestCase
         $payload = [
             'address' => 'Teste de endereço',
             'products' => [],
-            'table' => $tenant->tables()->first()->uuid
+            'table' => $tenant->tables()->first()->uuid,
+            'form_payment_id' => $tenant->formPayments()->first()->id
         ];
 
         foreach ($products as $product) {
@@ -300,6 +313,7 @@ class OrderTest extends TestCase
         $tenant = Tenant::factory()
                             ->has(Product::factory()->count(10))
                             ->has(Table::factory()->count(3))
+                            ->has(FormPayment::factory()->count(3))
                             ->create();
         
         $uuidTenant = $tenant->uuid;
@@ -309,7 +323,8 @@ class OrderTest extends TestCase
         $payload = [
             'address' => 'Teste de endereço',
             'products' => [],
-            'table' => $tenant->tables()->first()->uuid
+            'table' => $tenant->tables()->first()->uuid,
+            'form_payment_id' => $tenant->formPayments()->first()->id
         ];
 
         foreach ($products as $product) {
@@ -339,6 +354,7 @@ class OrderTest extends TestCase
                             ->count(15)
                             ->for(Tenant::factory()->create())
                             ->for(Client::factory()->create())
+                            ->for(FormPayment::factory()->create())
                             ->create();
 
         $client = $orders->first()->client;

@@ -57,6 +57,11 @@ class Tenant extends Model
         return $this->belongsTo(Plan::class);
     }
 
+    public function formPayments()
+    {
+        return $this->hasMany(FormPayment::class);
+    }
+
     public function getCreatedAttribute()
     {
         return Carbon::make($this->created_at)->format("d/m/Y à\s H:i:s");

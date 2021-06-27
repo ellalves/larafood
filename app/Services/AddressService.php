@@ -39,6 +39,6 @@ class AddressService
 
     public function client()
     {
-        return $user = auth()->user();
+        return auth()->user();
     }
 }

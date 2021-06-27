@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -98,14 +99,21 @@ class UserController extends Controller
     {
         $user = $this->verifyUser($id);
 
-        $data = $request->only('name', 'email');
+        $data = $request->all();
+        
         if ($request->password) {
             $data['password'] = bcrypt($request->password);
         }
 
+        if ($request->birth) {
+            $data['birth'] = implode('-', array_reverse(explode('/', $request->birth)));
+        }
+
         $user->update($data);
 
-        return redirect()->route('users.index')->with('message', __('messages.update_success'));
+       $routeBack = $request->user()->isAdmin() ? 'users.index' : 'users.profile';
+
+        return redirect()->route($routeBack)->with('message', __('messages.update_success'));
     }
 
     /**

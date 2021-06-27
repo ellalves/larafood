@@ -99,7 +99,7 @@ class AddressApiController extends ApiController
         try {
 
             $address = $this->addressService->deleteAddressByClient($uuidAddress);
-            return new AddressResource($address);
+            return $this->successResponse($address);
 
         } catch (\Throwable $e) {
             return $this->errorResponse($e->getMessage());

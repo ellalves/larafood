@@ -99,6 +99,11 @@ class User extends Authenticatable
     {
         return Carbon::make($this->updated_at)->format("d/m/Y à\s H:i:s");
     }
+
+    public function getBirthDateAttribute()
+    {
+        return Carbon::make($this->birth)->format("d/m/Y");
+    }
     
     public function plan()
     {

@@ -44,7 +44,16 @@ trait ApiResponser {
 	 */
 	public function errorResponse($message = null, $code = Response::HTTP_BAD_REQUEST): JsonResponse
 	{
-		$code = ($code == 0 || $code == '') ? 500: $code;
+		if (config('app.debug'))
+		{
+			$code = ($code == 0 || $code == '') ? 404: $code;
+		}
+		else
+		{
+			$code = 404;
+		}
+
+		$message = config('app.debug') ? $message : 'Not Found';
 
 		return response()->json([
 			'message' => $message,

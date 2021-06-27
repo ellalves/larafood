@@ -1,11 +1,18 @@
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete">
+@php
+$btnClass = empty($noBtnBack) ? '' : 'btn-block' 
+@endphp
+
+<button type="button" class="btn btn-danger {{$btnClass}}" data-toggle="modal" data-target="#modal-delete">
     <i class="fas fa-trash"></i>
-    {{__("Delete")}}
+    {{$btnDelete ?? __("Delete")}}
 </button>
 
-<a href="javascript:history.back()" class="btn btn-default"> 
-    <i class="fa fa-reply-all"></i> {{ __("Exit without saving") }} 
-</a>
+@if (empty($noBtnBack))
+    <a href="javascript:history.back()" class="btn btn-default"> 
+        <i class="fa fa-reply-all"></i> {{ __("Exit without saving") }} 
+    </a>   
+@endif
+
 
 <div class="modal modal-xl fade" id="modal-delete" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">

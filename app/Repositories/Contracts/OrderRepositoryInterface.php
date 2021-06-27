@@ -11,6 +11,7 @@ interface OrderRepositoryInterface
         string $status,
         int $tenantId,
         string $address,
+        int $formPaymentId,
         string $comment = '',
         $clientId = '',
         $tableId = ''

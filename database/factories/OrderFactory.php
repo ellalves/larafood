@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\FormPayment;
 use App\Models\Order;
 use App\Models\Tenant;
 use Illuminate\Support\Str;
@@ -24,9 +25,11 @@ class OrderFactory extends Factory
     public function definition()
     {
         $tenant = Tenant::first();
+        $payment = FormPayment::first();
 
         return [
             'tenant_id' => $tenant != null ? $tenant : Tenant::factory()->create(),
+            'form_payment_id' => $payment != null ? $tenant : FormPayment::factory()->create(),
             'identify' => uniqid() . Str::random(10),
             'address' => $this->faker->address(),
             'total_paid' => 60.0,

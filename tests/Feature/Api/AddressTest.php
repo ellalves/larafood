@@ -127,15 +127,19 @@ class AddressTest extends TestCase
 
         $payload = [
             "street" => "Rua rubens F Dias, 2000",
+            "street_extra" => "Papagaio",
             "city" => "Fsa",
             "state" => "Bahia",
             "post_code" => "44059-370",
             "country" => "BR",
-            "country_id" => 1           
+            "country_id" => 1,
+            "is_primary" => 1         
         ];
 
         $response = $this->postJson("{$this->url}/addresses", $payload, $headers);
 
+        // $response->dump();
+        
         $response->assertStatus(201)->assertJsonStructure(['data']);
     }
 }

@@ -21,6 +21,7 @@ class OrderRepository implements OrderRepositoryInterface
         string $status,
         int $tenantId,
         string $address,
+        int $formPaymentId,
         string $comment = '',
         $clientId = '',
         $tableId = ''
@@ -34,6 +35,7 @@ class OrderRepository implements OrderRepositoryInterface
             'status' => $status,
             'tenant_id' => $tenantId,
             'address' => $address,
+            'form_payment_id' => $formPaymentId,
             'comment' => $comment,
             // 'client_id' => $clientId,
             // 'table_id' => $tableId,

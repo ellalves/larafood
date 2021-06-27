@@ -28,15 +28,16 @@ Route::group([
     Route::group([
         'middleware' => ['auth:sanctum']
     ], function() {
+
         Route::post('orders/{identify}/evaluations', 'EvaluationApiController@store');
 
         Route::get('clients/my-orders', 'OrderApiController@myOrders');
 
         Route::apiResource('addresses', "AddressApiController");
 
-        Route::apiResource('providers', "ProviderApiController");
+        // Route::apiResource('providers', "ProviderApiController");
 
-    
+        // Route::apiResource('form-payments', "FormPaymentApiController");
     });
 
     // Providers

@@ -14,15 +14,17 @@ return [
          * Flag columns to be added to table.
          */
         'flags' => ['public', 'primary', 'billing', 'shipping'],
+        
+        // 'columns' => ['public', 'primary', 'billing', 'shipping'],
 
         /*
          * The validation rules for an address.
          */
         'rules' => [
             'street'       => 'required|string|min:3|max:60',
-            'street_extra' => 'nullable|string|min:3|max:60',
+            'street_extra' => 'required|string|min:3|max:60',
             'city'         => 'required|string|min:3|max:60',
-            'state'        => 'nullable|string|min:3|max:60',
+            'state'        => 'required|string|min:3|max:60',
             'post_code'    => 'required|min:4|max:10|AlphaDash',
             'country_id'   => 'required|integer',
         ],
@@ -31,7 +33,7 @@ return [
          * Enable geocoding to add coordinates (lon/lat) to addresses.
          * Default: false
          */
-        'geocode' => true,
+        'geocode' => false,
     ],
 
     /*

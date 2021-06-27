@@ -16,16 +16,17 @@ class AddressResource extends JsonResource
     {
         return [
             "identify" => $this->uuid,
-            "street" => $this->route,
+            "route" => $this->route,
+            "street" => $this->street,
             "number" => $this->street_number,
             "city" => $this->city,
             "state" => $this->state,
-            "district" => $this->street_extra,
-            "complement" => $this->notes,
+            "street_extra" => $this->street_extra,
+            "notes" => $this->notes,
             "lat" => $this->lat,
             "lng" => $this->lng,
-            "cep" => $this->post_code,
-            "country" => $this->country_name,
+            "post_code" => $this->post_code,
+            "country" => $this->country_code,
             "is_primary" => $this->is_primary
         ];
     }

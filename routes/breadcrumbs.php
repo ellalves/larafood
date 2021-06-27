@@ -423,10 +423,15 @@ Breadcrumbs::for('tenantsView', function ($trail) {
     $trail->push('Visualização');
 });
 
-
 // Admin > Tenants > view
 Breadcrumbs::for('orders', function ($trail) {
     $trail->parent('admin');
     $trail->push(__('Companies'), route('tenants.index'));
     $trail->push(__("Orders"));
+});
+
+// Admin > Tenants > view
+Breadcrumbs::for('salesPDV', function ($trail) {
+    $trail->parent('admin');
+    $trail->push(__("Point of Sale"));
 });

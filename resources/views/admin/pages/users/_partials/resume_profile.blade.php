@@ -11,17 +11,22 @@
 
         <ul class="list-group list-group-unbordered mb-3">
             <li class="list-group-item">
-                <b>Followers</b> <a class="float-right">1,322</a>
+                <b>{{__("Identify")}}</b> <a class="float-right">{{$user->uuid}}</a>
             </li>
+            {{-- <li class="list-group-item">
+                <b>{{__("identify")}}</b> <a class="float-right">{{$user->email}}</a>
+            </li> --}}
             <li class="list-group-item">
-                <b>Following</b> <a class="float-right">543</a>
-            </li>
-            <li class="list-group-item">
-                <b>Friends</b> <a class="float-right">13,287</a>
+                <b>{{__("Active")}}</b> <a class="float-right">{{__("{$user->active}")}}</a>
             </li>
         </ul>
 
-        <a href="{{ route('subscriptions.invoices') }}" class="btn btn-primary btn-block"><b>Minhas faturas</b></a>
+        @if (auth()->user()->subscription('default'))
+            <a href="{{ route('subscriptions.invoices') }}" class="btn btn-primary btn-block">
+                <b>Minhas faturas</b>
+            </a>            
+        @endif
+
     </div>
     <!-- /.card-body -->
 </div>
@@ -34,37 +39,45 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <strong><i class="fas fa-book mr-1"></i> Education</strong>
+        <strong><i class="fas fa-building mr-1"></i> Empresa</strong>
 
         <p class="text-muted">
-            B.S. in Computer Science from the University of Tennessee at Knoxville
+            {{$user->tenant->name}}
         </p>
 
         <hr>
 
-        <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
-
-        <p class="text-muted">Malibu, California</p>
-
-        <hr>
-
-        <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+        <strong><i class="fas fa-pencil-alt mr-1"></i> Meus Cargos </strong>
 
         <p class="text-muted">
-            <span class="tag tag-danger">UI Design</span>
-            <span class="tag tag-success">Coding</span>
-            <span class="tag tag-info">Javascript</span>
-            <span class="tag tag-warning">PHP</span>
-            <span class="tag tag-primary">Node.js</span>
+            @foreach($user->roles as $role)
+                <span class="badge badge-light">{{$role->name}} </span>
+            @endforeach
         </p>
 
         <hr>
 
-        <strong><i class="far fa-file-alt mr-1"></i> Bio</strong>
+        <strong><i class="far fa-clock mr-1"></i> Cadastro </strong>
 
         <p class="text-muted">
-            {{$user->bio}}
+            {{$user->created}}
         </p>
+
+        <hr>
+
+        <strong><i class="far fa-clock mr-1"></i> Última Atualização </strong>
+
+        <p class="text-muted">
+            {{$user->updated}}
+        </p>
+
+        <hr>
+
+        @include('admin.includes.button_delete', [
+            'pathDelete' => route('users.destroy', $user->id),
+            'btnDelete' => __('Delete my account'),
+            'noBtnBack' => true
+            ])
     </div>
     <!-- /.card-body -->
 </div>

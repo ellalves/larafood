@@ -7,6 +7,7 @@ use App\Models\{
     Client,
     Coupon,
     DetailPlan,
+    FormPayment,
     Plan,
     Tenant,
     Product,
@@ -22,6 +23,7 @@ use App\Observers\{
     ClientObserver,
     CouponObserver,
     DetailPlanObserver,
+    FormPaymentObserver,
     PlanObserver,
     ProductObserver,
     TableObserver,
@@ -70,6 +72,7 @@ class AppServiceProvider extends ServiceProvider
         DetailPlan::observe(DetailPlanObserver::class);
         Coupon::observe(CouponObserver::class);
         Provider::observe(ProviderObserver::class);
+        FormPayment::observe(FormPaymentObserver::class);
 
         /**
          * Custom If Statements

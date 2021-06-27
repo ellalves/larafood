@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastrar Plano')
+@section('title', __("Control Panel"))
 
 @section('content_header')
     {{ Breadcrumbs::render('admin') }}
-    <h1> Painel </h1>
+    <h1> {{__("Control Panel")}} </h1>
 @stop
 
 @section('content')
@@ -15,13 +15,13 @@
                 <div class="inner">
                     <h3>{{$totalUsers}}</h3>
 
-                    <p>Usuários</p>
+                    <p>{{__("Users")}}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-users"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                    Acessar <i class="fas fa-arrow-circle-right"></i>
+                <a href="{{route('users.index')}}" class="small-box-footer">
+                    {{__("Access")}} <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>
@@ -32,13 +32,13 @@
                 <div class="inner">
                     <h3>{{$totalTables}}</h3>
 
-                    <p>Mesas</p>
+                    <p>{{__("Table")}}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-border-all"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                    Acessar <i class="fas fa-arrow-circle-right"></i>
+                <a href="{{route('tables.index')}}" class="small-box-footer">
+                    {{__("Access")}} <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>
@@ -49,13 +49,13 @@
                 <div class="inner">
                     <h3>{{$totalProducts}}</h3>
 
-                    <p>Podutos</p>
+                    <p>{{__("Products")}}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-boxes"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                    Acessar <i class="fas fa-arrow-circle-right"></i>
+                <a href="{{route('products.index')}}" class="small-box-footer">
+                    {{__("Access")}} <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>
@@ -66,13 +66,13 @@
                 <div class="inner">
                     <h3>{{$totalCategories}}</h3>
 
-                    <p>Categorias</p>
+                    <p>{{__("Categories")}}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-archive"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                    Acessar <i class="fas fa-arrow-circle-right"></i>
+                <a href="{{route('categories.index')}}" class="small-box-footer">
+                    {{__("Access")}} <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>
@@ -87,13 +87,13 @@
                 <div class="inner">
                     <h3>{{$totalTenants}}</h3>
 
-                    <p>Empresas</p>
+                    <p>{{__("Companies")}}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-building"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                    Acessar <i class="fas fa-arrow-circle-right"></i>
+                <a href="{{route('tenants.index')}}" class="small-box-footer">
+                    {{__("Access")}} <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>
@@ -104,13 +104,13 @@
                 <div class="inner">
                     <h3>{{$totalPlans}}</h3>
 
-                    <p>Planos</p>
+                    <p>{{__("Plans")}}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-map"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                    Acessar <i class="fas fa-arrow-circle-right"></i>
+                <a href="{{route('plans.index')}}" class="small-box-footer">
+                    {{__("Access")}} <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>
@@ -121,13 +121,13 @@
                 <div class="inner">
                     <h3>{{$totalRoles}}</h3>
 
-                    <p>Cargos</p>
+                    <p>{{__("Roles")}}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-address-book"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                    Acessar <i class="fas fa-arrow-circle-right"></i>
+                <a href="{{route('roles.index')}}" class="small-box-footer">
+                    {{__("Access")}} <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>
@@ -138,13 +138,13 @@
                 <div class="inner">
                     <h3>{{$totalGroups}}</h3>
 
-                    <p>Grupos</p>
+                    <p>{{__("Groups")}}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-layer-group"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                    Acessar <i class="fas fa-arrow-circle-right"></i>
+                <a href="{{route('groups.index')}}" class="small-box-footer">
+                    {{__("Access")}} <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>
@@ -160,13 +160,13 @@
                 <div class="inner">
                     <h3>{{$totalPermissions}}</h3>
 
-                    <p>Permissões</p>
+                    <p>{{__("Permissions")}}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-lock-open"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                    Acessar <i class="fas fa-arrow-circle-right"></i>
+                <a href="{{route('permissions.index')}}" class="small-box-footer">
+                    {{__("Access")}} <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>

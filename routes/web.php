@@ -11,6 +11,9 @@ Route::prefix('admin')
         //Orders
         Route::get('orders', 'OrderController@index')->name('orders.index');
 
+        //Sales
+        Route::get('sales', 'SaleController@pdv')->name('sales.pdv');
+
         /**
          * Companies
          */

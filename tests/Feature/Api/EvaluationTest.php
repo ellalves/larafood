@@ -5,6 +5,7 @@ namespace Tests\Feature\Api;
 use Tests\TestCase;
 use App\Models\Order;
 use App\Models\Client;
+use App\Models\FormPayment;
 use App\Models\Tenant;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -25,6 +26,7 @@ class EvaluationTest extends TestCase
                         ->count(3)
                         ->for(Tenant::factory()->create())
                         ->for(Client::factory()->create())
+                        ->for(FormPayment::factory()->create())
                         ->create();
         
         $order = $orders->first();
@@ -62,6 +64,7 @@ class EvaluationTest extends TestCase
                         ->count(3)
                         ->for(Tenant::factory()->create())
                         ->for(Client::factory()->create())
+                        ->for(FormPayment::factory()->create())
                         ->create();
         
         $order = $orders->first();
@@ -99,6 +102,7 @@ class EvaluationTest extends TestCase
                         ->count(3)
                         ->for(Tenant::factory()->create())
                         ->for(Client::factory()->create())
+                        ->for(FormPayment::factory()->create())
                         ->create();
         
         $order = $orders->first();
@@ -136,6 +140,7 @@ class EvaluationTest extends TestCase
                         ->count(3)
                         ->for(Tenant::factory()->create())
                         ->for(Client::factory()->create())
+                        ->for(FormPayment::factory()->create())
                         ->create();
         
         $order = $orders->first();
