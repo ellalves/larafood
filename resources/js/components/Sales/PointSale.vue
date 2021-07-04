@@ -1,0 +1,277 @@
+<template>
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title"></h5>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                    <i class="fas fa-wrench"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                    <a href="#" class="dropdown-item">Action</a>
+                    <a href="#" class="dropdown-item">Another action</a>
+                    <a href="#" class="dropdown-item">Something else here</a>
+                    <a class="dropdown-divider"></a>
+                    <a href="#" class="dropdown-item">Separated link</a>
+                </div>
+            </div>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 p-0">
+                <div class="input-group col-md-12 mb-3">
+                    <select class="custom-select input-group-prepend">
+                        <option selected>Escolha um cliente</option>
+                        <option value="1">João de Deus</option>
+                        <option value="2">Maria Amaro</option>
+                        <option value="3">Jhon Three</option>
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticBackdropClient">
+                            <i class="fas fa-plus-square"></i> NOVO
+                        </button>
+                    </div>
+                </div>
+
+                <div style="height: 250px;" class="table-responsive">
+                    <table class="table table-condensed table-dark table-striped table-hover table-borderless align-middle table-head-fixed">
+                        <thead>
+                            <tr>
+                                <th>Produtos</th>
+                                <th>Preço</th>
+                                <th>Quantidade</th>
+                                <th>Desconto</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-toggle="modal" 
+                                data-target="#staticBackdrop"
+                                v-for="product in order.products" :key="product.identify"
+                                @click.prevent="openDetailProduct(product, 'edit')"
+                            >
+                                <td>{{product.title}}</td>
+                                <td>{{product.price | currency('R$ ', 2, {decimalSeparator: ','})}}</td>
+                                <td>{{product.qty}}</td>
+                                <td>{{ product.discount | currency('R$ ', 2, {decimalSeparator: ','}) }}</td>
+                                <td>
+                                    {{ round(product.price * product.qty - product.discount, 2) | currency('R$ ', 2, {decimalSeparator: ','}) }}
+                                </td>
+                                <!-- <td title="Excluir item" @click.prevent="openDetailProduct(product, 'remove')">
+                                    <i class="fas fa-trash text-danger"></i>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 col-6">
+                        <div class="description-block border-right">
+                            <h5 class="description-header text-warning">
+                                {{order.total_discount | currency('R$ ', 2, {decimalSeparator: ','}) }}
+                            </h5>
+                            <span class="description-text"> Desconto</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-3 col-6">
+                        <div class="description-block border-right">
+                            <h5 class="description-header"> {{total_items}} </h5>
+                            <span class="description-text">Total de itens</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-3 col-6">
+                        <div class="description-block border-right">
+                            <h5 class="description-header text-warning"> {{'R$ 0,00'}} </h5>
+                            <span class="description-text">Taxa de Entrega</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-3 col-6">
+                        <div class="description-block">
+                            <h5 class="description-header text-success"> {{round(order.total, 2) | currency('R$ ', 2, {decimalSeparator: ','}) }}</h5>
+                            <span class="description-text">Total a pagar</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-success btn-block" data-toggle="modal" data-target="#staticBackdropSale">
+                            <strong>Finalizar venda</strong>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-6">
+                <div class="input-group col-md-12 mb-3 mt-4 mt-md-0">
+                    <input @keyup="getProducts()" v-model="search" type="text" class="form-control" placeholder="Pesquise pelo nome, codigo ou descrição do produto">
+                </div>
+
+                <ul class="products-list product-list-in-card pl-2 pr-2">
+                    <li class="item" v-for="(product, index) in products.data " :key="index"
+                        @click.prevent="openDetailProduct(product, 'add')"
+                         data-toggle="modal" data-target="#staticBackdrop"
+                    >
+                        <div class="product-img">
+                            <img v-if ="product.image" :src="product.image" :alt='product.title'>
+                            <img v-else src="/images/company_none.png" :alt='product.title'>
+                        </div>
+                        <div class="product-info">
+                            <a href="#" class="product-title">
+                                {{product.title}}
+                                <span class="badge badge-light float-right">
+                                    {{product.price | currency('R$ ', 2, {decimalSeparator: ','}) }}
+                                </span>
+                            </a>
+                            <span class="product-description">
+                                {{product.description}}
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- ./card-body -->
+
+    <details-product 
+        :product="product"
+        :option="option"
+        :titleModal="titleModal"
+        @operationProductOrder="operationProductOrder"
+    >
+    </details-product>
+</div>
+</template>
+<script>
+import Vue2Filters from 'vue2-filters'
+import DetailsProduct from './_partials/DetailsProduct.vue'
+export default {
+    mounted() {
+        if (!localStorage.getItem('products')) {
+            this.getProducts()
+        }
+
+        let products = localStorage.getItem('productsLocal')
+
+        console.log('productsLocal', JSON.parse(products))
+    },
+
+    data() {
+        return {
+            product: {
+                qty:  1,
+                identify: '',
+                title: '',
+                descprition: '',
+                image: '',
+                price: 0.00,
+                discount: 0.00,                
+            },
+            products: [],
+            order: {
+                products:'',
+                total_discount: 0.00,
+                total_paid: 0.00,
+                total_change: 0.00,
+                total: 0.00,
+                status: 'open',
+                address: '',
+                shipping: 0.00,
+                comment: '',
+                client_id: '',
+                table_id: '',
+                deliveryman: '',
+                form_payment_id: ''
+            },
+            total_items: 0,
+            option: 'add',
+            titleModal: 'Adicionar produto',
+            search: '',
+        }
+    },
+
+    methods: {
+        getProducts () {
+            axios.get(`/api/v1/products?filter=${this.search}`)
+                    .then(res => {
+                        // console.log(res.data)
+                        this.products = res.data
+                        //localStorage.setItem('productsLocal', JSON.stringify(this.products))
+                    })
+                    .catch(err => {
+                        console.error('error', err.response)
+                    })
+        },
+
+        getClients () {
+            axios.get(`/api/v1/clients?filter=${this.search}`)
+                    .then(res => {
+                        // console.log(res.data)
+                        this.products = res.data
+                        //localStorage.setItem('productsLocal', JSON.stringify(this.products))
+                    })
+                    .catch(err => {
+                        console.error('error', err.response)
+                    })
+        },
+
+        openDetailProduct (product, option) {
+            this.option = option
+            this.titleModal = option == 'add' ? "Adicionar produto" : "Editar produto"
+            product.qty = product.qty ? product.qty : 1
+            product.discount = product.discount ? product.discount : 0.00
+            this.product = product
+        },
+
+        operationProductOrder (products) {
+            // console.log('products', products)
+            this.order.products = products
+            this.order.total_discount = products.reduce((n, {discount}) => n + discount, 0)
+            let price = products.reduce((n, p) => n + (p.qty * p.price - p.discount), 0)
+            this.total_items = products.reduce((n, {qty}) => n + qty, 0)
+            this.order.total = price
+        },
+
+        totalDiscount () {
+            // this.order.products
+        },
+
+        round (num, places) {
+            if (!("" + num).includes("e")) {
+                return +(Math.round(num + "e+" + places)  + "e-" + places);
+            } else {
+                let arr = ("" + num).split("e");
+                let sig = ""
+                if (+arr[1] + places > 0) {
+                    sig = "+";
+                }
+
+                return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + places)) + "e-" + places);
+            }
+        }
+    },
+    
+    mixins: [Vue2Filters.mixin],
+    
+    components: {
+        DetailsProduct
+    }
+}
+</script>

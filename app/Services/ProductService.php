@@ -24,6 +24,13 @@ class ProductService
         return $products;
     }
 
+    public function getProductsFilterByTenantUuid($uuidTenant, $filter = null)
+    {
+        $tenant = $this->tenantRepository->getTenantByUuid($uuidTenant);
+        $products = $this->productRepository->getProductsFilterByTenantId($tenant->id, $filter);
+        return $products;
+    }
+
     public function getProductByFlag($uuidTenant, $uuidProduct)
     {
         $tenant = $this->tenantRepository->getTenantByUuid($uuidTenant);

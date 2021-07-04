@@ -31,4 +31,15 @@ class Client extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+
+    public function search($filter)
+    {
+        return $this->when($filter, function ($query) use ($filter) {
+            $query->where('name', $filter);
+            $query->orWhere('email', $filter);
+            $query->orWhere('username', $filter);
+            $query->orWhere('phone', $filter);
+            $query->orWhere('document', $filter);
+        });
+    }
 }

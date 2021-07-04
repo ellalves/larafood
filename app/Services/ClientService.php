@@ -16,4 +16,9 @@ class ClientService
     {
         return $this->clientRepository->createClient($data);
     }
+
+    public function searchClient($filter)
+    {
+        return $this->clientRepository->searchClient($filter);
+    }
 }

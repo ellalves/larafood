@@ -13,6 +13,11 @@ class ClientRepository implements ClientRepositoryInterface
         $this->entity = $client;
     }
 
+    public function searchClient(string $filter)
+    {
+        return $this->entity->search($filter);
+    }
+
     public function createClient(array $data)
     {
         return $this->entity->create($data);

@@ -8,250 +8,16 @@
 @stop
 
 @section('content')
-    <div class="row">
+    <div class="row" id="app">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title"></h5>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                                <i class="fas fa-wrench"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <a href="#" class="dropdown-item">Action</a>
-                                <a href="#" class="dropdown-item">Another action</a>
-                                <a href="#" class="dropdown-item">Something else here</a>
-                                <a class="dropdown-divider"></a>
-                                <a href="#" class="dropdown-item">Separated link</a>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 p-0">
-                            <div class="input-group col-md-12 mb-3">
-                                <select class="custom-select input-group-prepend">
-                                    <option selected>Escolha um cliente</option>
-                                    <option value="1">João de Deus</option>
-                                    <option value="2">Maria Amaro</option>
-                                    <option value="3">Jhon Three</option>
-                                </select>
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
-                                        data-target="#staticBackdropClient">
-                                        <i class="fas fa-plus-square"></i> NOVO
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div style="height: 250px;" class="table-responsive">
-                                <table
-                                    class="table table-condensed table-dark table-striped table-hover table-borderless align-middle table-head-fixed">
-                                    <thead>
-                                        <tr>
-                                            <th>Produtos</th>
-                                            <th>Preço</th>
-                                            <th>Quantidade</th>
-                                            <th>Subtotal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr data-toggle="modal" data-target="#staticBackdrop">
-                                            <td>Hamburger Gourmet</td>
-                                            <td>R$ 15,99</td>
-                                            <td>2</td>
-                                            <td>R$ 31,98</td>
-                                        </tr>
-                                        <tr data-toggle="modal" data-target="#staticBackdrop">
-                                            <td>Coca-cola 1L</td>
-                                            <td>R$ 8,00</td>
-                                            <td>1</td>
-                                            <td>R$ 8,00</td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-3 col-6">
-                                    <div class="description-block border-right">
-                                        <h5 class="description-header text-warning">R$ 3,98</h5>
-                                        <span class="description-text"> Desconto</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-3 col-6">
-                                    <div class="description-block border-right">
-                                        <h5 class="description-header"> 3 </h5>
-                                        <span class="description-text">Total de itens</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-3 col-6">
-                                    <div class="description-block border-right">
-                                        <h5 class="description-header text-warning"> R$ 0,00 </h5>
-                                        <span class="description-text">Entrega</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-3 col-6">
-                                    <div class="description-block">
-                                        <h5 class="description-header text-success">R$ 36,00</h5>
-                                        <span class="description-text">Total a pagar</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <div class="col-md-12">
-                                    <button class="btn btn-success btn-block" data-toggle="modal"
-                                        data-target="#staticBackdropSale">
-                                        <strong>Finalizar venda</strong>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-md-6">
-                            <div class="input-group col-md-12 mb-3 mt-4 mt-md-0">
-                                <input type="text" class="form-control"
-                                    placeholder="Pesquise pelo nome, codigo ou descrição do produto">
-                            </div>
-
-                            <ul class="products-list product-list-in-card pl-2 pr-2">
-                                <li class="item">
-                                    <div class="product-img">
-                                        <img src="/imgs/hamburger.jpeg" alt='Produto' width="img-size-250">
-                                    </div>
-                                    <div class="product-info">
-                                        <a href="#" class="product-title" data-toggle="modal" data-target="#staticBackdrop">
-                                            Hamburger Gourmet
-                                            <span class="badge badge-light float-right">
-                                                R$ 15,99
-                                            </span>
-                                        </a>
-                                        <span class="product-description">
-                                            Pão, carne de hamburger, salada e batata palha
-                                        </span>
-                                    </div>
-                                </li>
-                                <li class="item">
-                                    <div class="product-img">
-                                        <img src="/imgs/cocacola.jpeg" alt='Produto' width="img-size-250">
-                                    </div>
-                                    <div class="product-info">
-                                        <a href="#" class="product-title" data-toggle="modal" data-target="#staticBackdrop">
-                                            Coca-cola 1L
-                                            <span class="badge badge-light float-right">
-                                                R$ 8,00
-                                            </span>
-                                        </a>
-                                        <span class="product-description">
-                                            Coca-cola de um litro light
-                                        </span>
-                                    </div>
-                                </li>
-                            </ul>
-
-                            {{-- <div class="row row-cols-1 row-cols-md-3">
-                                <div class="col mb-2" data-toggle="modal" data-target="#staticBackdrop">
-                                    <div class="card">
-                                        <img src="/imgs/hamburger.jpeg" class="card-img-top" alt="Imagem Hamburger">
-                                        <div class="card-body">
-                                            <p class="card-title float-left">
-                                                Hamburger Gourmet
-                                            </p>
-                                            <span class="badge badge-light float-right">
-                                                R$ 15,99
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col mb-2">
-                                    <div class="card">
-                                        <img src="/imgs/cocacola.jpeg" class="card-img-top" alt="Imagem Coca-cola">
-                                        <div class="card-body">
-                                            <p class="card-title float-left">
-                                                Coca-cola 1L
-                                            </p>
-                                            <span class="badge badge-light float-right">
-                                                R$ 8,00
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- ./card-body -->
-                <div class="card-footer">
-                    {{-- <div class="row">
-                        <div class="col-sm-3 col-6">
-                            <div class="description-block border-right">
-                                <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
-                                <h5 class="description-header">$35,210.43</h5>
-                                <span class="description-text">TOTAL REVENUE</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-3 col-6">
-                            <div class="description-block border-right">
-                                <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
-                                    0%</span>
-                                <h5 class="description-header">$10,390.90</h5>
-                                <span class="description-text">TOTAL COST</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-3 col-6">
-                            <div class="description-block border-right">
-                                <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
-                                <h5 class="description-header">$24,813.53</h5>
-                                <span class="description-text">TOTAL PROFIT</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-3 col-6">
-                            <div class="description-block">
-                                <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
-                                    18%</span>
-                                <h5 class="description-header">1200</h5>
-                                <span class="description-text">GOAL COMPLETIONS</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                    </div> --}}
-                    <!-- /.row -->
-                </div>
-                <!-- /.card-footer -->
-            </div>
-            <!-- /.card -->
+            <point-sale></point-sale>
         </div>
         <!-- /.col -->
     </div>
     <!-- /.row -->
 
     <!-- Modal Products -->
-    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    {{-- <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -312,7 +78,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Modal Client -->
     <div class="modal fade" id="staticBackdropClient" data-backdrop="static" data-keyboard="false" tabindex="-1"
@@ -552,3 +318,14 @@
         </div>
     </div>
 @stop
+@section('adminlte_js')
+<script src="{{ asset('js/app.js') }}"></script>
+@stop
+
+@push('scripts-header')
+<script>
+    window.Laravel = {!! json_encode([
+        'tenantId' => auth()->check() ? auth()->user()->tenant_id : ''
+    ]) !!}
+</script>
+@endpush

@@ -17,6 +17,16 @@ class ClientController extends ApiController
         $this->clientService = $clientService;
     }
 
+    public function search(StoreClient $request)
+    {
+        try {
+            $client = $this->clientService->searchClient($request->filter);
+            return new ClientResource($client);
+        } catch (\Throwable $e) {
+            return $this->errorResponse($e->getMessage());
+        }
+    }
+
     public function store(StoreClient $request)
     {
         try {

@@ -31,6 +31,28 @@ class ProductRepository implements ProductRepositoryInterface
         return $products;
     }
 
+
+    public function getProductsFilterByTenantId(int $idTenant, string $filter = null)
+    {
+        $products = $this->entity
+                            ->select('products.*')
+                            ->with('categories')
+                            ->when($filter, function ($query) use ($filter, $idTenant) {
+                                $query->where('title', 'LIKE',  "%{$filter}%")
+                                        ->orWhere('description', 'LIKE', "%{$filter}%")
+                                        ->orWhere('uuid', 'LIKE', "%{$filter}%");
+
+                                        $query->whereHas('categories', function($q) use ($filter, $idTenant) {
+                                            $q->where('categories.tenant_id', $idTenant);
+                                            $q->orWhere('categories.name', 'LIKE', "%{$filter}%");
+                                        });
+                            })
+                            ->where('products.tenant_id', $idTenant)
+                            ->withoutGlobalScope(TenantScope::class)
+                            ->paginate(5);
+        return $products;
+    }
+
     public function getProductByUuid(int $idTenant, string $uuidProduct)
     {
         $product = $this->entity

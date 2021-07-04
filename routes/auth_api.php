@@ -5,9 +5,21 @@ Route::group([
     'prefix' => 'v1',
     'namespace' => 'Api'
 ], function () {
-    Route::get('/my-orders', 'Auth\OrderTenantController@index')->middleware(['auth']);
-    Route::patch('/my-orders', 'Auth\OrderTenantController@update')->middleware(['auth']);
+ 
     Route::apiResource('users/addresses', "AddressApiController")->middleware(['auth']);
+
+    Route::group([
+        'namespace' => 'Auth',
+        'middleware' => 'auth'
+    ], function () {
+        Route::get('/my-orders', 'OrderTenantController@index');
+        Route::patch('/my-orders', 'OrderTenantController@update');
+ 
+        Route::get('/products/{flag}', 'OrderTenantController@product');
+        Route::get('/products', 'OrderTenantController@products');
+        
+        Route::get('/clients', 'ClientController@products');
+    });
 
     // Form Payments
     Route::get('tenants/{flagTenant}/form-payments/{FormPayment}', 'FormPaymentApiController@show');

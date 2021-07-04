@@ -94,7 +94,7 @@
             maxFileSize: 1500,
             maxFileCount: 1,
             showClose: false,
-            showRemove: false,
+            showRemove: true,
             showCaption: false,
             showBrowse: false,
             browseOnZoneClick: true,
@@ -110,7 +110,7 @@
             layoutTemplates: {
                 main2: '{preview} {remove} {browse}'
             },
-            allowedFileExtensions: ["jpg", "png", "gif"]
+            allowedFileExtensions: ["jpg", "jpeg", "png", "gif"]
         });
 
     </script>

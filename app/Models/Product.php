@@ -69,7 +69,8 @@ class Product extends Model
     public function search($filter = null) 
     {
         $results = $this->where('title', 'LIKE',  "%{$filter}%")
-                        ->orWhere('description', 'LIKE', "%{$filter}%");
+                        ->orWhere('description', 'LIKE', "%{$filter}%")
+                        ->orWhere('uuid', 'LIKE', "%{$filter}%");
 
         return $results;
     }
