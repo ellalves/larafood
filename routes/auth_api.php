@@ -10,7 +10,7 @@ Route::group([
 
     Route::group([
         'namespace' => 'Auth',
-        'middleware' => 'auth'
+        // 'middleware' => 'auth'
     ], function () {
         Route::get('/my-orders', 'OrderTenantController@index');
         Route::patch('/my-orders', 'OrderTenantController@update');
@@ -18,7 +18,8 @@ Route::group([
         Route::get('/products/{flag}', 'OrderTenantController@product');
         Route::get('/products', 'OrderTenantController@products');
         
-        Route::get('/clients', 'ClientController@products');
+        Route::get('/clients', 'ClientController@search');
+        Route::post('/clients', 'ClientController@store');
     });
 
     // Form Payments

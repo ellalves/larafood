@@ -17,10 +17,10 @@ class CreateClientsTable extends Migration
             $table->id();
             $table->uuid('uuid');
             $table->string('name');
-            $table->string('document')->nullable();
-            $table->string('username')->nullable();
-            $table->string('email');
-            $table->string('phone');
+            $table->string('document')->unique()->nullable();
+            $table->string('username')->unique()->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('phone')->unique()->nullable();
             $table->string('password');
             $table->string('birth')->nullable();
             $table->enum('sex', ['M', 'F', 'O'])->default('O');

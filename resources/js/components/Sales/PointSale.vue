@@ -29,14 +29,20 @@
         <div class="row">
             <div class="col-md-6 p-0">
                 <div class="input-group col-md-12 mb-3">
-                    <select class="custom-select input-group-prepend">
-                        <option selected>Escolha um cliente</option>
-                        <option value="1">João de Deus</option>
-                        <option value="2">Maria Amaro</option>
-                        <option value="3">Jhon Three</option>
-                    </select>
+                    <autocomplete style="z-index: 100; width:85%;"
+                        :baseClass="'form-control'"
+                        :search="getClients"
+                        :get-result-value="getResultValue"
+                        @submit="handleSubmit"
+                        placeholder="Pesquise pelo nome, codigo ou descrição do cliente"
+                        aria-label="Pesquise pelo nome, codigo ou descrição do cliente"
+                    ></autocomplete>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticBackdropClient">
+                        <button class="btn btn-outline-secondary" 
+                            data-toggle="modal" 
+                            data-target="#staticBackdropClient"
+                            @click="openClient"
+                        >
                             <i class="fas fa-plus-square"></i> NOVO
                         </button>
                     </div>
@@ -150,6 +156,8 @@
     </div>
     <!-- ./card-body -->
 
+    <add-client @costumerSaved="costumerSaved"></add-client>
+
     <details-product 
         :product="product"
         :option="option"
@@ -161,16 +169,14 @@
 </template>
 <script>
 import Vue2Filters from 'vue2-filters'
+import FinalizeSale from './_partials/FinalizeSale.vue'
 import DetailsProduct from './_partials/DetailsProduct.vue'
+import AddClient from './_partials/AddClient.vue'
+import Autocomplete from '@trevoreyre/autocomplete-vue'
+
 export default {
     mounted() {
-        if (!localStorage.getItem('products')) {
-            this.getProducts()
-        }
-
-        let products = localStorage.getItem('productsLocal')
-
-        console.log('productsLocal', JSON.parse(products))
+        this.getProducts()
     },
 
     data() {
@@ -204,6 +210,7 @@ export default {
             option: 'add',
             titleModal: 'Adicionar produto',
             search: '',
+            searchClient: '',
         }
     },
 
@@ -211,7 +218,7 @@ export default {
         getProducts () {
             axios.get(`/api/v1/products?filter=${this.search}`)
                     .then(res => {
-                        // console.log(res.data)
+                        // console.log('', res.data)
                         this.products = res.data
                         //localStorage.setItem('productsLocal', JSON.stringify(this.products))
                     })
@@ -220,16 +227,39 @@ export default {
                     })
         },
 
-        getClients () {
-            axios.get(`/api/v1/clients?filter=${this.search}`)
-                    .then(res => {
-                        // console.log(res.data)
-                        this.products = res.data
-                        //localStorage.setItem('productsLocal', JSON.stringify(this.products))
-                    })
-                    .catch(err => {
-                        console.error('error', err.response)
-                    })
+        getClients(input) {
+            const url = `/api/v1/clients?filter=${input}`
+
+            return new Promise(resolve => {
+                if (input.length < 3) {
+                    return resolve([])
+                }
+
+                fetch(url)
+                .then(response => response.json())
+                .then(res => {
+                    // console.log('data', res.data)
+                    resolve(res.data)
+                })
+                .catch(err => console.error(err))
+            })
+
+        },
+
+        getResultValue(result) {
+            // console.log(result)
+            return result.name
+        },
+
+        handleSubmit(result) {
+            this.order.client_id = result.id
+            // console.log(this.order.client_id)
+        },
+
+        costumerSaved ($client) {
+            console.log('costumerSaved', $client)
+            this.getClients($client.name)
+            this.client = client
         },
 
         openDetailProduct (product, option) {
@@ -265,13 +295,116 @@ export default {
 
                 return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + places)) + "e-" + places);
             }
+        },
+
+        openClient () {
+
         }
     },
     
     mixins: [Vue2Filters.mixin],
     
     components: {
-        DetailsProduct
+        FinalizeSale,
+        DetailsProduct,
+        AddClient,
+        Autocomplete
     }
 }
 </script>
+
+<style>
+.form-control-input {
+  border: none;
+  width: 100%;
+  padding: 0px 0px 0px 48px;
+  margin: 0px;
+  box-sizing: inherit;
+  position: relative;
+  font-size: 16px;
+  line-height: 1.5;
+  flex: 1;
+  color: #fff;
+  background-color: transparent;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+');
+  background-repeat: no-repeat;
+  background-position: 12px left;
+}
+
+.form-control-input:focus,
+.form-control-input[aria-expanded="true"] {
+  border: none;
+  color: #fff;
+  outline: none;
+  /* box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16); */
+}
+
+[data-position="below"] .form-control-input[aria-expanded="true"] {
+  border-bottom-color: transparent;
+  /* border-radius: 8px 8px 0 0; */
+}
+
+[data-position="above"] .form-control-input[aria-expanded="true"] {
+  /* border-top-color: transparent;
+  border-radius: 0 0 8px 8px; */
+  z-index: 2;
+}
+
+/* Loading spinner */
+.form-control[data-loading="true"]::after {
+  content: "";
+  border: 3px solid rgba(0, 0, 0, 0.12);
+  border-right: 3px solid rgba(0, 0, 0, 0.48);
+  border-radius: 20%;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: rotate 1s infinite linear;
+}
+
+.form-control-result-list {
+  margin: -13px;
+  width: 85%;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 0;
+  box-sizing: border-box;
+  max-height: 296px;
+  overflow-y: auto;
+  background: #fff;
+  list-style: none;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16);
+}
+
+[data-position="below"] .form-control-result-list,
+[data-position="above"] .form-control-result-list  {
+  margin-top: -1px;
+  border-top-color: transparent;
+  border-radius: 0 0 2px 2px;
+  padding-bottom: 1px;
+}
+
+/* [data-position="above"] .form-control-result-list {
+  margin-bottom: -1px;
+  border-bottom-color: transparent;
+  border-radius: 8px 8px 0 0;
+  padding-top: 4px;
+} */
+
+/* Single result item */
+.form-control-result {
+  color: #000;
+  cursor: default;
+  padding: 12px 12px 12px 48px;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+');
+  background-repeat: no-repeat;
+  background-position: 12px center;
+}
+
+.form-control-result:hover,
+.form-control-result[aria-selected="true"] {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+</style>

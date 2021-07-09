@@ -19,6 +19,7 @@ class ClientResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
+            'addresses' => new AddressResource($this->addresses()->first())
         ];
     }
 }

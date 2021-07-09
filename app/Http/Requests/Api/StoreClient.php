@@ -23,11 +23,20 @@ class StoreClient extends FormRequest
      */
     public function rules()
     {
+        // $rules = config('lecturize.addresses.rules');
+
         return [
             'name' => 'required|min:3|max:60',
-            'phone' => 'required|min:11|max:15, unique:clients',
-            'email' => 'required|email|min:3|max:60',
-            'password' => 'required|min:3|max:60',
+            'phone' => 'required|min:11|max:15|unique:clients',
+            'email' => 'required|email|min:3|max:60|unique:clients',
+            'document' => 'nullable|max:11|unique:clients,document',
+            'password' => 'null|min:3|max:60',
+            'address.street'       => 'required|string|min:3|max:60',
+            'address.street_extra' => 'required|string|min:3|max:60',
+            'address.city'         => 'required|string|min:3|max:60',
+            'address.state'        => 'required|string|min:3|max:60',
+            'address.post_code'    => 'required|min:4|max:10|AlphaDash',
+            'address.country_id'   => 'required|integer',
         ];
     }
 }

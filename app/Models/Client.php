@@ -34,12 +34,12 @@ class Client extends Authenticatable
 
     public function search($filter)
     {
-        return $this->when($filter, function ($query) use ($filter) {
-            $query->where('name', $filter);
-            $query->orWhere('email', $filter);
-            $query->orWhere('username', $filter);
-            $query->orWhere('phone', $filter);
-            $query->orWhere('document', $filter);
-        });
+        $results = $this->where('name', 'LIKE',  "%{$filter}%")
+                        ->orWhere('phone', 'LIKE', "%{$filter}%")
+                        ->orWhere('email', 'LIKE', "%{$filter}%")
+                        ->orWhere('username', 'LIKE', "%{$filter}%")
+                        ->orWhere('document', 'LIKE', "%{$filter}%");
+
+        return $results->paginate(5);
     }
 }

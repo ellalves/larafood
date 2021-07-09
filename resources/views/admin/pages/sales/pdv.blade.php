@@ -81,7 +81,7 @@
     </div> --}}
 
     <!-- Modal Client -->
-    <div class="modal fade" id="staticBackdropClient" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    {{-- <div class="modal fade" id="staticBackdropClient" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropClientLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -140,10 +140,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Modal Sale -->
-    <div class="modal fade" id="staticBackdropSale" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    {{-- <div class="modal fade" id="staticBackdropSale" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropSaleLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -306,17 +306,9 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        Cancelar
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                        Salvar
-                    </button>
-                </div> --}}
-            </div>
+             </div>
         </div>
-    </div>
+    </div> --}}
 @stop
 @section('adminlte_js')
 <script src="{{ asset('js/app.js') }}"></script>
