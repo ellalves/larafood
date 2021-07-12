@@ -31,4 +31,11 @@ class TableService
         $table = $this->tableRepository->getTableIdentifyByTenantId($tenant->id, $identify);
         return $table;
     }
+
+    public function getTablesSearch($request)
+    {
+        $idTenant = $request->user()->tenant->id;
+
+        return $this->tableRepository->getTablesSearch($idTenant, $request->filter);
+    }
 }

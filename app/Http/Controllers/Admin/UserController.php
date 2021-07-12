@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateUser;
@@ -54,7 +55,7 @@ class UserController extends Controller
         if ($request->password) {
             $data['password'] = bcrypt($request->password);
         } else {
-            $data['password'] = bcrypt('secret');
+            $data['password'] = bcrypt( Str::random(8) );
         }
 
         $user = $this->user->create($data);

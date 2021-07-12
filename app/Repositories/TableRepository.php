@@ -32,4 +32,13 @@ class TableRepository implements TableRepositoryInterface
 
         return $table;
     }
+
+    public function getTablesSearch(int $idTenant, string $filter)
+    {
+        return $this->entity
+                        ->where('tenant_id', $idTenant)
+                        ->where('name', 'LIKE' , "%{$filter}%")
+                        ->withoutGlobalScope(TenantScope::class)
+                        ->paginate(10);        
+    }
 }

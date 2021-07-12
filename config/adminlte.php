@@ -280,6 +280,20 @@ return [
             'can'  => 'groups'
         ],
         [
+            'text' => 'Ponto de Venda',
+            'route'  => 'sales.pdv',
+            'icon' => 'fas fa-cash-register',
+            'can' => 'pdv'
+        ],
+
+        [
+            'text' => 'Pedidos',
+            'route'  => 'orders.index',
+            'icon' => 'fas fa-utensils',
+            'can' => 'orders'
+        ],
+
+        [
             'text' => 'Permissões',
             'icon' => 'fas fa-lock',
             'submenu' => [
@@ -363,12 +377,6 @@ return [
                 ]
             ],
             'can' => 'categories'
-        ],
-        [
-            'text' => 'Pedidos',
-            'route'  => 'orders.index',
-            'icon' => 'fas fa-utensils',
-            'can' => 'orders'
         ],
         // [
         //     'text'        => 'pages',

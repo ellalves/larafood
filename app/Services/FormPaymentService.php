@@ -17,10 +17,12 @@ class FormPaymentService
         $this->tenantRepository = $tenantRepository;
     }
 
-    public function listFormPayment($flagTenant)
+    public function listFormPayment()
     {
-        $tenant = $this->tenantRepository->getTenantByFlag($flagTenant);
-        return $this->formPaymentRepository->getFormPaymentsByTenantId($tenant->id);
+        $idTenant = $this->tenantId();
+
+        // $tenant = $this->tenantRepository->getTenantByFlag($flagTenant);
+        return $this->formPaymentRepository->getFormPaymentsByTenantId($idTenant);
     }
 
     public function storeFormPayment(string $flagTenant, array $data)
@@ -48,5 +50,10 @@ class FormPaymentService
         $tenant = $this->tenantRepository->getTenantByFlag($flagTenant);
         return $this->formPaymentRepository->deleteFormPaymentUrlByTenantId($tenant->id, $flagFormPayment);
 
+    }
+
+    public function tenantId()
+    {
+        return auth()->user()->tenant->id;
     }
 }

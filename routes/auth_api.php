@@ -8,6 +8,8 @@ Route::group([
  
     Route::apiResource('users/addresses', "AddressApiController")->middleware(['auth']);
 
+    Route::get('tables', 'TableApiController@search');
+    
     Route::group([
         'namespace' => 'Auth',
         // 'middleware' => 'auth'
@@ -20,13 +22,16 @@ Route::group([
         
         Route::get('/clients', 'ClientController@search');
         Route::post('/clients', 'ClientController@store');
+
+        Route::get('/users/deliverymen', 'UserApiController@deliverymen');
     });
 
     // Form Payments
-    Route::get('tenants/{flagTenant}/form-payments/{FormPayment}', 'FormPaymentApiController@show');
-    Route::put('tenants/{flagTenant}/form-payments/{FormPayment}', 'FormPaymentApiController@update');
-    Route::get('tenants/{flagTenant}/form-payments', 'FormPaymentApiController@index');
-    Route::post('tenants/{flagTenant}/form-payments', 'FormPaymentApiController@store');
-    Route::delete('tenants/{flagTenant}/form-payments/{flagFormPayment}', 'FormPaymentApiController@destroy');
+    Route::get('form-payments/{FormPayment}', 'FormPaymentApiController@show');
+    Route::put('form-payments/{FormPayment}', 'FormPaymentApiController@update');
+    Route::get('form-payments', 'FormPaymentApiController@index');
+    Route::post('form-payments', 'FormPaymentApiController@store');
+    Route::delete('form-payments/{flagFormPayment}', 'FormPaymentApiController@destroy');
+
 
 });

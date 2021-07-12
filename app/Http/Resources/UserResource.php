@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FormPaymentResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,10 +15,11 @@ class FormPaymentResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id" => $this->id,
-            "name" => $this->name,
-            "flag" => $this->url,
-            "description" => $this->url,
+            'identify' => $this->uuid,
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'addresses' => new AddressResource($this->addresses()->first())
         ];
     }
 }

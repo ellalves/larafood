@@ -27,7 +27,7 @@ class StoreUpdateUser extends FormRequest
         $rules = [
             'name' => 'required|string|min:3, max:255',
             'email' => "required|string|email|min:3, max:255|unique:users,email,{$id},id",
-            'password' => 'required|string|min:8',
+            'password' => 'nullable|string|min:8',
         ];
 
         if ($this->method() == 'PUT') {

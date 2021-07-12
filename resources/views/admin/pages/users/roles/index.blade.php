@@ -10,8 +10,6 @@
 @section('content')
     <div class="card">
 
-        @include('admin.includes.alerts')
-
         <div class="div card-header">
             @include('admin.includes.search', [
                 'route' => null,
@@ -39,7 +37,7 @@
                             <td class="align-middle float-right">
                                 @each('admin.includes.forms_actions', ['items' =>                               
                                     [
-                                        'route' => route('users.roles.detach', [$role->id, $user->id]), 
+                                        'route' => route('users.roles.detach', [$user->id, $role->id]), 
                                         'color' => 'danger',
                                         'icon' => 'unlink',
                                         'label' => __("Unlink")

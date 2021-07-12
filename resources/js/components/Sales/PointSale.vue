@@ -2,7 +2,6 @@
 <div class="card">
     <div class="card-header">
         <h5 class="card-title"></h5>
-
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
@@ -34,14 +33,13 @@
                         :search="getClients"
                         :get-result-value="getResultValue"
                         @submit="handleSubmit"
-                        placeholder="Pesquise pelo nome, codigo ou descrição do cliente"
-                        aria-label="Pesquise pelo nome, codigo ou descrição do cliente"
+                        placeholder="Pesquise pelo nome, código ou cpf do cliente"
+                        aria-label="Pesquise pelo nome, código ou cpf do cliente"
                     ></autocomplete>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" 
                             data-toggle="modal" 
                             data-target="#staticBackdropClient"
-                            @click="openClient"
                         >
                             <i class="fas fa-plus-square"></i> NOVO
                         </button>
@@ -70,7 +68,7 @@
                                 <td>{{product.qty}}</td>
                                 <td>{{ product.discount | currency('R$ ', 2, {decimalSeparator: ','}) }}</td>
                                 <td>
-                                    {{ round(product.price * product.qty - product.discount, 2) | currency('R$ ', 2, {decimalSeparator: ','}) }}
+                                    {{ sumSubtotal(product) | currency('R$ ', 2, {decimalSeparator: ','}) }}
                                 </td>
                                 <!-- <td title="Excluir item" @click.prevent="openDetailProduct(product, 'remove')">
                                     <i class="fas fa-trash text-danger"></i>
@@ -80,7 +78,7 @@
                     </table>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3 col-6">
+                    <div class="col-sm-4 col-6">
                         <div class="description-block border-right">
                             <h5 class="description-header text-warning">
                                 {{order.total_discount | currency('R$ ', 2, {decimalSeparator: ','}) }}
@@ -90,7 +88,7 @@
                         <!-- /.description-block -->
                     </div>
                     <!-- /.col -->
-                    <div class="col-sm-3 col-6">
+                    <div class="col-sm-4 col-6">
                         <div class="description-block border-right">
                             <h5 class="description-header"> {{total_items}} </h5>
                             <span class="description-text">Total de itens</span>
@@ -98,15 +96,8 @@
                         <!-- /.description-block -->
                     </div>
                     <!-- /.col -->
-                    <div class="col-sm-3 col-6">
-                        <div class="description-block border-right">
-                            <h5 class="description-header text-warning"> {{'R$ 0,00'}} </h5>
-                            <span class="description-text">Taxa de Entrega</span>
-                        </div>
-                        <!-- /.description-block -->
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-3 col-6">
+
+                    <div class="col-sm-4 col-6">
                         <div class="description-block">
                             <h5 class="description-header text-success"> {{round(order.total, 2) | currency('R$ ', 2, {decimalSeparator: ','}) }}</h5>
                             <span class="description-text">Total a pagar</span>
@@ -114,8 +105,15 @@
                         <!-- /.description-block -->
                     </div>
                     <div class="col-md-12">
-                        <button class="btn btn-success btn-block" data-toggle="modal" data-target="#staticBackdropSale">
-                            <strong>Finalizar venda</strong>
+                        <button v-if="order.products.length > 0 && client.length != ''" class="btn btn-success btn-block" 
+                            data-toggle="modal"
+                            data-target="#staticBackdropSale"
+                        >
+                            <strong> <i class="fas fa-credit-card"></i> Finalizar venda</strong>
+                        </button>
+
+                        <button v-else class="btn btn-success btn-block" disabled title="Escolha o cliente e os produtos pimeiro!">
+                            <strong> <i class="fas fa-credit-card"></i> Finalizar venda</strong>
                         </button>
                     </div>
                 </div>
@@ -128,7 +126,7 @@
                 </div>
 
                 <ul class="products-list product-list-in-card pl-2 pr-2">
-                    <li class="item" v-for="(product, index) in products.data " :key="index"
+                    <li class="item" v-for="(product, index) in products.data" :key="index"
                         @click.prevent="openDetailProduct(product, 'add')"
                          data-toggle="modal" data-target="#staticBackdrop"
                     >
@@ -157,6 +155,8 @@
     <!-- ./card-body -->
 
     <add-client @costumerSaved="costumerSaved"></add-client>
+
+    <finalize-sale :client="client" :order="order"></finalize-sale>
 
     <details-product 
         :product="product"
@@ -191,8 +191,9 @@ export default {
                 discount: 0.00,                
             },
             products: [],
+            client: [],
             order: {
-                products:'',
+                products:[],
                 total_discount: 0.00,
                 total_paid: 0.00,
                 total_change: 0.00,
@@ -201,8 +202,8 @@ export default {
                 address: '',
                 shipping: 0.00,
                 comment: '',
-                client_id: '',
-                table_id: '',
+                client: '',
+                table: '',
                 deliveryman: '',
                 form_payment_id: ''
             },
@@ -218,9 +219,7 @@ export default {
         getProducts () {
             axios.get(`/api/v1/products?filter=${this.search}`)
                     .then(res => {
-                        // console.log('', res.data)
                         this.products = res.data
-                        //localStorage.setItem('productsLocal', JSON.stringify(this.products))
                     })
                     .catch(err => {
                         console.error('error', err.response)
@@ -238,7 +237,6 @@ export default {
                 fetch(url)
                 .then(response => response.json())
                 .then(res => {
-                    // console.log('data', res.data)
                     resolve(res.data)
                 })
                 .catch(err => console.error(err))
@@ -247,18 +245,16 @@ export default {
         },
 
         getResultValue(result) {
-            // console.log(result)
             return result.name
         },
 
         handleSubmit(result) {
-            this.order.client_id = result.id
-            // console.log(this.order.client_id)
+            this.client = result
+            console.log(result)
+            this.order.client = result.identify
         },
 
-        costumerSaved ($client) {
-            console.log('costumerSaved', $client)
-            this.getClients($client.name)
+        costumerSaved (client) {
             this.client = client
         },
 
@@ -271,16 +267,22 @@ export default {
         },
 
         operationProductOrder (products) {
-            // console.log('products', products)
             this.order.products = products
             this.order.total_discount = products.reduce((n, {discount}) => n + discount, 0)
-            let price = products.reduce((n, p) => n + (p.qty * p.price - p.discount), 0)
+
+            let totalPrice = products.reduce((n, p) => n + (p.qty * p.price - p.discount), 0)
+
             this.total_items = products.reduce((n, {qty}) => n + qty, 0)
-            this.order.total = price
+
+            this.order.total = totalPrice + this.order.shipping
+
+            this.order.total_paid = this.order.total + this.order.shipping - this.order.total_discount
+            
+            this.order.total_change = this.order.total_paid - this.order.total
         },
 
-        totalDiscount () {
-            // this.order.products
+        sumSubtotal (product) {
+            return this.round(product.price * product.qty - product.discount, 2)
         },
 
         round (num, places) {
@@ -296,10 +298,6 @@ export default {
                 return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + places)) + "e-" + places);
             }
         },
-
-        openClient () {
-
-        }
     },
     
     mixins: [Vue2Filters.mixin],

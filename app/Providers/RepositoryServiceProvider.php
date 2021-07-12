@@ -13,7 +13,8 @@ use App\Repositories\{
     ProductRepository,
     TenantRepository,
     OrderRepository,
-    ProviderRepository
+    ProviderRepository,
+    UserRepository
 };
 
 use App\Repositories\Contracts\{
@@ -27,7 +28,8 @@ use App\Repositories\Contracts\{
     ProductRepositoryInterface,
     TenantRepositoryInterface,
     OrderRepositoryInterface,
-    ProviderRepositoryInterface
+    ProviderRepositoryInterface,
+    UserRepositoryInterface
 };
 
 use Illuminate\Support\ServiceProvider;
@@ -94,6 +96,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             FormPaymentRepositoryInterface::class,
             FormPaymentRepository::class
+        );
+
+        $this->app->bind(
+            UserRepositoryInterface::class,
+            UserRepository::class
         );
     }
 

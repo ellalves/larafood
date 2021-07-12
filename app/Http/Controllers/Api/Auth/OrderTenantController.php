@@ -49,12 +49,12 @@ class OrderTenantController extends ApiController
             return ProductResource::collection($products);
         } catch (\Throwable $e) {
             return $this->errorResponse($e->getMessage());
-        }        
+        }
 
         // return OrderResource::collection($orders);
     }
 
-    public function Product($flag)
+    public function product($flag)
     {
         $tenant = Auth::guard('web')->user()->tenant;
 

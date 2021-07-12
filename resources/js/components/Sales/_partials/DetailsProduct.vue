@@ -29,19 +29,23 @@
                         </div>
 
                         <div class="row">
-                            <label class="col-md-6">Quantidade</label>
-                            <div class="input-group text-center col-md-6">
+                            <label class="col-md-5">Quantidade</label>
+                            <div class="input-group text-center col-md-7">
                                 <div class="input-group-append">
-                                    <span class="input-group-text"> - </span>
+                                    <a href="#" class="input-group-text" @click.prevent="removeQty">
+                                        <i class="fas fa-minus"></i> 
+                                    </a>
                                 </div>
-                                <input v-model="product.qty" type="number" min="1" max="99" class="form-control">
+                                <input v-model="qty" type="number" min="1" max="99" class="form-control">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"> + </span>
+                                    <a href="#" class="input-group-text" @click.prevent="addQty">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
                                 </div>
                             </div>
 
-                            <label class="col-md-6">Desconto</label>
-                            <div class="input-group text-center col">
+                            <label class="col-md-5">Desconto</label>
+                            <div class="input-group text-center col-md-7">
                                 <div class="input-group-append">
                                     <span class="input-group-text"> R$ </span>
                                 </div>
@@ -96,6 +100,7 @@ export default {
             order: {
                 products: []
             },
+            qty: 1,
             money: {
                 decimal: ',',
                 thousands: '.',
@@ -109,6 +114,7 @@ export default {
 
     methods: {
         operationProductOrder(product, option) {
+            this.product.qty = this.qty
             switch (option) {
                 case 'add':
                     this.addProductOrder(product)
@@ -134,7 +140,6 @@ export default {
                     price: parseFloat(product.price),
                     discount: product.discount,
                 })
-                console.log(product.discount)
             } else {
                 this.order.products.filter(function (el) {
                     el.qty = parseInt(el.qty) + parseInt(product.qty)
@@ -157,6 +162,14 @@ export default {
             this.order.products.splice(index, 1)
             this.$emit('operationProductOrder', this.order.products)
         },
+
+        addQty () {
+            return this.qty++
+        },
+
+        removeQty () {
+            return this.qty > 0 ? this.qty-- : 0 
+        }
 
     },
 

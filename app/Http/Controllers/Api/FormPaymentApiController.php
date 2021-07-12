@@ -22,10 +22,10 @@ class FormPaymentApiController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($flagTenant)
+    public function index()
     {
         try {
-            $formPayment =  $this->formPaymentService->listFormPayment($flagTenant);
+            $formPayment =  $this->formPaymentService->listFormPayment();
             return FormPaymentResource::collection($formPayment);
         } catch (\Throwable $e) {
             return $this->errorResponse($e->getMessage());

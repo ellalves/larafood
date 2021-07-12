@@ -25,7 +25,6 @@ class TableApiController extends ApiController
             //throw $th;
             return $this->errorResponse($e->getMessage());
         }
-
     }
 
     public function tableByTenant($uuidTenant, $identify)
@@ -37,6 +36,16 @@ class TableApiController extends ApiController
             //throw $e;
             return $this->errorResponse($e->getMessage());
         }
+    }
 
+    public function search(Request $request)
+    {
+        try {
+            $table = $this->tableService->getTablesSearch($request);
+            return TableResource::collection($table);
+        } catch (\Throwable $e) {
+            //throw $th;
+            return $this->errorResponse($e->getMessage());
+        }
     }
 }

@@ -37,7 +37,11 @@ Route::group([
 
         // Route::apiResource('providers', "ProviderApiController");
 
-        // Route::apiResource('form-payments', "FormPaymentApiController");
+        Route::get('tenants/{flagTenant}/form-payments/{FormPayment}', 'FormPaymentApiController@show');
+        Route::put('tenants/{flagTenant}/form-payments/{FormPayment}', 'FormPaymentApiController@update');
+        Route::get('tenants/{flagTenant}/form-payments', 'FormPaymentApiController@index');
+        Route::post('tenants/{flagTenant}/form-payments', 'FormPaymentApiController@store');
+        Route::delete('tenants/{flagTenant}/form-payments/{flagFormPayment}', 'FormPaymentApiController@destroy');
     });
 
     // Providers
