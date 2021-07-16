@@ -32,13 +32,13 @@ class AddressTest extends TestCase
         $countryFactory = new CountryFactory();
 
         $addressFactory = new AddressFactory();
-        
-        Countries::insert($countryFactory->definition());
+
+        Countries::create($countryFactory->definition());
 
         $address = $client->addAddress($addressFactory->definition());
-        
+
         $token = $client->createToken(Str::random(10))->plainTextToken;
-    
+
         $header = [
             'Authentication' => `Bearer {$token}`
         ];
@@ -57,15 +57,15 @@ class AddressTest extends TestCase
     {
         $countryFactory = new CountryFactory();
         Countries::insert($countryFactory->definition());
-        
+
         $client = Client::factory()->create();
         $addressFactory = new AddressFactory();
         $address = $client->addAddress($addressFactory->definition());
-        
+
         $uuidAddress = $address->uuid;
-        
+
         $token = $client->createToken(Str::random(10))->plainTextToken;
-    
+
         $header = [
             'Authorization' => "Bearer {$token}"
         ];
@@ -84,9 +84,9 @@ class AddressTest extends TestCase
     {
         $countryFactory = new CountryFactory();
         Countries::insert($countryFactory->definition());
-        
+
         $client = Client::factory()->create();
-        
+
         $token = $client->createToken(Str::random(10))->plainTextToken;
 
         $headers = [
@@ -99,7 +99,7 @@ class AddressTest extends TestCase
             // "state" => "Bahia",
             // "post_code" => "44059-370",
             // "country" => "BR",
-            // "country_id" => 1           
+            // "country_id" => 1
         ];
 
         $response = $this->postJson("{$this->url}/addresses", $payload, $headers);
@@ -116,9 +116,9 @@ class AddressTest extends TestCase
     {
         $countryFactory = new CountryFactory();
         Countries::insert($countryFactory->definition());
-        
+
         $client = Client::factory()->create();
-        
+
         $token = $client->createToken(Str::random(10))->plainTextToken;
 
         $headers = [
@@ -133,13 +133,13 @@ class AddressTest extends TestCase
             "post_code" => "44059-370",
             "country" => "BR",
             "country_id" => 1,
-            "is_primary" => 1         
+            "is_primary" => 1
         ];
 
         $response = $this->postJson("{$this->url}/addresses", $payload, $headers);
 
         // $response->dump();
-        
+
         $response->assertStatus(201)->assertJsonStructure(['data']);
     }
 }
