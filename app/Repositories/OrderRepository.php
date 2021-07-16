@@ -51,7 +51,7 @@ class OrderRepository implements OrderRepositoryInterface
         if($deliverymanId != '') $data['deliveryman'] = $deliverymanId;
         if($sellerId != '') $data['seller'] = $sellerId;
         if($totalChange != 0) $data['total_change'] = $totalChange;
-
+// dd($data);
         $order = $this->entity->create($data);
 
         return $order;
@@ -67,16 +67,16 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function registerProductsOrder(int $orderId, array $products)
     {
-        
+
         $order = $this->entity->find($orderId);
-        
+
         foreach($products as $product) {
             $data[] = $order->products()->attach($product['id'], [
-                'price'     => $product['price'], 
+                'price'     => $product['price'],
                 'qty'       => $product['qty'],
                 'discount'  => $product['discount'],
                 'paid'      => $product['paid'],
-                'coupon'    => $product['coupon'] ?? null, 
+                'coupon'    => $product['coupon'] ?? null,
             ]);
         }
 
@@ -126,11 +126,11 @@ class OrderRepository implements OrderRepositoryInterface
                 $coupons[] = $product->pivot->coupon;
                 $discounts[] = $product->pivot->discount;
             }
-            
+
         }
-        
+
         return [
-            'coupons' => $coupons, 
+            'coupons' => $coupons,
             'discounts' => $discounts
         ];
     }

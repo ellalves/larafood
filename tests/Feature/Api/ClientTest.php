@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Api;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Webpatser\Countries\Countries;
+use Database\Factories\CountryFactory;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ClientTest extends TestCase
 {
@@ -39,11 +41,22 @@ class ClientTest extends TestCase
     public function testGetCreateClient()
     {
 
+        $countryFactory = new CountryFactory();
+
+        Countries::insert($countryFactory->definition());
+
         $payload = [
             'name' => 'Everton Alves',
             'phone' => '(75) 99189-6668',
             'email' => 'ellalvesdev@gmail.com',
             'password' => 'ellalvesdev@gmail.com',
+            'street'       => 'rua, 200',
+            'street_extra' => 'bairro',
+            'city'         => 'cidade',
+            'state'        => 'estado',
+            'post_code'    => 'cod-postal',
+            'country'      => Countries::first()->iso_3166_2,
+            'country_id'   => Countries::first()->id,
         ];
 
         $response = $this->postJson("{$this->url}/clients", $payload);

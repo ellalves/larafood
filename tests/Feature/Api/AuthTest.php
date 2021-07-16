@@ -102,6 +102,7 @@ class AuthTest extends TestCase
                             'email' => $client->email,
                             'identify' => $client->uuid,
                             'phone' => $client->phone,
+                            'addresses' => null
                         ]
                     ]);
     }

@@ -30,7 +30,7 @@ class ClientController extends ApiController
     public function store(StoreClient $request)
     {
         $data = $request->only('name', 'email', 'phone','document', 'sex');
-        $data['address'] = $request->except('name', 'email', 'phone','document', 'sex');
+        $data['address'] = $request->except('name', 'email', 'password', 'phone','document', 'sex');
 
         try {
             $client = $this->clientService->newClient($data);

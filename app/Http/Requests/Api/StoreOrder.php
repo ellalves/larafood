@@ -54,6 +54,10 @@ class StoreOrder extends FormRequest
                 'min:3',
                 'max:1000',
             ],
+            'shipping' => [
+                'required',
+                'numeric',
+            ],
             'form_payment_id' => [
                 'required',
                 'exists:form_payments,id',

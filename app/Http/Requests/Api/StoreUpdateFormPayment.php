@@ -24,15 +24,15 @@ class StoreUpdateFormPayment extends FormRequest
      */
     public function rules()
     {
-        $flag = $this->segment(4);
-        $url = $this->segment(6) ?? null;
+        // $flag = $this->segment(4);
+        $url = $this->segment(4) ?? null;
         // dd($flag, $url);
         return [
             "name" => [
                 "required",
                 "min:3",
                 "max:255",
-                new UniqueTenant('form_payments', $url,'url', $flag, 'url')
+                new UniqueTenant('form_payments', $url,'url')
             ]
         ];
     }

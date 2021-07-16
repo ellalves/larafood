@@ -28,13 +28,14 @@ class StoreClient extends FormRequest
             'phone' => 'required|string|min:11|max:15|unique:clients',
             'email' => 'nullable|email|min:3|max:60|unique:clients',
             'document' => 'nullable|string|min:11|max:14|unique:clients,document',
-            'password' => 'null|min:3|max:60',
+            'password' => 'nullable|min:3|max:60',
             'street'       => 'required|string|min:3|max:60',
             'street_extra' => 'required|string|min:3|max:60',
             'city'         => 'required|string|min:3|max:60',
             'state'        => 'required|string|min:3|max:60',
             'post_code'    => 'required|min:4|max:10|AlphaDash',
             'country_id'   => 'required|integer',
+            'country'       => 'required|string',
         ];
     }
 }

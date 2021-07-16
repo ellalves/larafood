@@ -7,7 +7,7 @@ use App\Repositories\Contracts\TenantRepositoryInterface;
 class FormPaymentService
 {
     protected $formPaymentRepository, $tenantRepository;
-    
+
     public function __construct(
         FormPaymentRepositoryInterface $formPaymentRepository,
         TenantRepositoryInterface $tenantRepository
@@ -25,35 +25,42 @@ class FormPaymentService
         return $this->formPaymentRepository->getFormPaymentsByTenantId($idTenant);
     }
 
-    public function storeFormPayment(string $flagTenant, array $data)
+    public function storeFormPayment(array $data)
     {
-        $tenant = $this->tenantRepository->getTenantByFlag($flagTenant);
-        return $this->formPaymentRepository->createFormPaymentTenantId($tenant->id, $data);
+        $idTenant = $this->tenantId();
+        // $tenant = $this->tenantRepository->getTenantByFlag($flagTenant);
+        return $this->formPaymentRepository->createFormPaymentTenantId($idTenant, $data);
     }
 
-    public function showFormPayment(string $flagTenant, string $flagFormPayment)
+    public function showFormPayment(string $flagFormPayment)
     {
-        if( !$tenant = $this->tenantRepository->getTenantByFlag($flagTenant) )
-            return false;
+        $idTenant = $this->tenantId();
 
-        return $this->formPaymentRepository->getFormPaymentUrlByTenantId($tenant->id, $flagFormPayment);
-    } 
-    
-    public function updateFormPayment(string $flagTenant, string $flagFormPayment, array $data)
-    {
-        $tenant = $this->tenantRepository->getTenantByFlag($flagTenant);
-        return $this->formPaymentRepository->updateFormPaymentUrlByTenantId($tenant->id, $flagFormPayment, $data);
+        // if( !$tenant = $this->tenantRepository->getTenantByFlag($flagTenant) )
+        //     return false;
+
+        return $this->formPaymentRepository->getFormPaymentUrlByTenantId($idTenant, $flagFormPayment);
     }
 
-    public function deleteFormPayment(string $flagTenant, string $flagFormPayment)
+    public function updateFormPayment(string $flagFormPayment, array $data)
     {
-        $tenant = $this->tenantRepository->getTenantByFlag($flagTenant);
-        return $this->formPaymentRepository->deleteFormPaymentUrlByTenantId($tenant->id, $flagFormPayment);
+        $idTenant = $this->tenantId();
+
+        // $tenant = $this->tenantRepository->getTenantByFlag($flagTenant);
+        return $this->formPaymentRepository->updateFormPaymentUrlByTenantId($idTenant, $flagFormPayment, $data);
+    }
+
+    public function deleteFormPayment(string $flagFormPayment)
+    {
+        $idTenant = $this->tenantId();
+
+        // $tenant = $this->tenantRepository->getTenantByFlag($flagTenant);
+        return $this->formPaymentRepository->deleteFormPaymentUrlByTenantId($idTenant, $flagFormPayment);
 
     }
 
     public function tenantId()
     {
-        return auth()->user()->tenant->id;
+        return auth('web')->user()->tenant->id;
     }
 }

@@ -33,13 +33,14 @@ class OrderService
 
     public function newOrder(array $order, $uuidTenant)
     {
+        // dd($order);
         $identify = $this->getIdentifyOrder();
         $status = 'open';
         $tenantId = $this->getTenantIdByOrder($uuidTenant);
         $productsOrder = $this->getProductsByOrder($tenantId, $order['products'] ?? []);
-        $total = $order['total'] != 0 ? $order['total'] : $this->getTotalOrder($productsOrder);
-        $totalPaid = $order['total_paid'] != 0 ? $order['total_paid'] : $this->getTotalPaidOrder($productsOrder);
-        $totalDiscount = $order['total_discount'] != 0 ? $order['total_discount'] : $this->getTotalDiscountOrder($productsOrder);
+        $total = (isset($order['total']) && $order['total'] != 0) ? $order['total'] : $this->getTotalOrder($productsOrder);
+        $totalPaid = (isset($order['total_paid']) && $order['total_paid'] != 0) ? $order['total_paid'] : $this->getTotalPaidOrder($productsOrder);
+        $totalDiscount = (isset($order['total_discount']) && $order['total_discount'] != 0) ? $order['total_discount'] : $this->getTotalDiscountOrder($productsOrder);
         $address = $order['address'];
         $formPaymentId = $order['form_payment_id'];
         $shipping = $order['shipping'];
@@ -48,7 +49,7 @@ class OrderService
         $clientId = $this->getClientOrder();
         $tableId = $this->getTableIdByOrder($tenantId, $order['table'] ?? '');
         $deliverymanId = $this->getDeliverymanIdByOrder($tenantId, $order['deliveryman'] ?? '');
-        $sellerId = $this->getSellerOrder(); 
+        $sellerId = $this->getSellerOrder();
 
         $order = $this->orderRepository->newOrder(
             $identify,
@@ -103,7 +104,7 @@ class OrderService
     {
         return $this->orderRepository->updateStatusOrder($identify, $status);
     }
-    
+
     /**
      * Privates
      */
@@ -200,7 +201,7 @@ class OrderService
 
     private function getProductsByOrder($idTenant, array $productsOrder): array
     {
-        if (array_key_exists('coupon', $productsOrder[0])) 
+        if (array_key_exists('coupon', $productsOrder[0]))
         {
             $coupon = $this->couponRepository->verifyCouponUrlByTenantId($idTenant, $productsOrder[0]['coupon']);
         }
@@ -211,7 +212,7 @@ class OrderService
 
             $limitCoupons = $this->getCouponLimitOrder($coupon, $numberOfCouponsUsed);
         }
- 
+
         $products = [];
         foreach ($productsOrder as $productOrder) {
             $product = $this->productRepository->getProductByUuid($idTenant, $productOrder['identify']);
@@ -238,7 +239,7 @@ class OrderService
 
         return $products;
     }
-    
+
     private function getDiscountOrder($coupon, $product, $qty)
     {
         switch ($coupon->discount_mode)
@@ -246,12 +247,12 @@ class OrderService
             case 'percentage':
                 $discount = $qty * ($coupon->discount * $product->price) / 100;
                 break;
-            
+
             case 'price':
                 $discount = ($product->price > $coupon->discount) ? $coupon->discount : $product->price;
                 break;
-            
-            default: 
+
+            default:
                 $discount = 0.00;
         }
 
@@ -267,11 +268,11 @@ class OrderService
                     return false;
                 }
                 break;
-                
+
             case 'price':
                 if( array_sum( $numberOfCouponsUsed['discounts'] ) > $coupon->limit ) {
                     return false;
-                }                
+                }
                 break;
         }
     }

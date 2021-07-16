@@ -43,7 +43,7 @@ class FormPaymentApiController extends ApiController
         $flagTenant = empty($flagTenant) ? auth('web')->user()->tenant->url : $flagTenant;
 
         try {
-            $formPayment =  $this->formPaymentService->storeFormPayment($flagTenant, $request->all());
+            $formPayment =  $this->formPaymentService->storeFormPayment($request->all());
             return new FormPaymentResource($formPayment);
         } catch (\Throwable $e) {
             return $this->errorResponse($e->getMessage());
@@ -56,10 +56,10 @@ class FormPaymentApiController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($flagTenant, $flagFormPayment)
+    public function show($flagFormPayment)
     {
         try {
-            $formPayment =  $this->formPaymentService->showFormPayment($flagTenant, $flagFormPayment);
+            $formPayment =  $this->formPaymentService->showFormPayment($flagFormPayment);
             return $this->successResponse(new FormPaymentResource($formPayment));
         } catch (\Throwable $e) {
             return $this->errorResponse($e->getMessage());
@@ -73,10 +73,10 @@ class FormPaymentApiController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreUpdateFormPayment $request, $flagTenant, $flagFormPayment)
+    public function update(StoreUpdateFormPayment $request, $flagFormPayment)
     {
         try {
-            $formPayment =  $this->formPaymentService->updateFormPayment($flagTenant, $flagFormPayment, $request->all());
+            $formPayment =  $this->formPaymentService->updateFormPayment($flagFormPayment, $request->all());
             return new FormPaymentResource($formPayment);
         } catch (\Throwable $e) {
             return $this->errorResponse($e->getMessage());
@@ -89,10 +89,10 @@ class FormPaymentApiController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($flagTenant, $flagFormPayment)
+    public function destroy($flagFormPayment)
     {
         try {
-            $formPayment =  $this->formPaymentService->deleteFormPayment($flagTenant, $flagFormPayment);
+            $formPayment =  $this->formPaymentService->deleteFormPayment($flagFormPayment);
             return new FormPaymentResource($formPayment);
         } catch (\Throwable $e) {
             return $this->errorResponse($e->getMessage());
