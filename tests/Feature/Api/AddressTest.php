@@ -74,7 +74,7 @@ class AddressTest extends TestCase
 
         $response = $this->getJson("{$this->url}/addresses/{$uuidAddress}", $header);
 
-        $response->dump();
+        // $response->dump();
 
         $response->assertStatus(200);
     }
