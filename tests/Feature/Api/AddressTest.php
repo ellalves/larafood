@@ -5,11 +5,9 @@ namespace Tests\Feature\Api;
 use Tests\TestCase;
 use App\Models\Client;
 use Illuminate\Support\Str;
-use Webpatser\Countries\Countries;
+use App\Models\Countries;
 use Database\Factories\AddressFactory;
 use Database\Factories\CountryFactory;
-use Lecturize\Addresses\Models\Address;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AddressTest extends TestCase
