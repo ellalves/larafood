@@ -22,9 +22,13 @@ class OrderRepository implements OrderRepositoryInterface
         int $tenantId,
         string $address,
         int $formPaymentId,
+        float $shipping,
+        float $totalChange = 0,
         string $comment = '',
         $clientId = '',
-        $tableId = ''
+        $tableId = '',
+        $deliverymanId = '',
+        $sellerId = ''
     )
     {
         $data = [
@@ -36,6 +40,7 @@ class OrderRepository implements OrderRepositoryInterface
             'tenant_id' => $tenantId,
             'address' => $address,
             'form_payment_id' => $formPaymentId,
+            'shipping' => $shipping,
             'comment' => $comment,
             // 'client_id' => $clientId,
             // 'table_id' => $tableId,
@@ -43,6 +48,9 @@ class OrderRepository implements OrderRepositoryInterface
 
         if($clientId != 0) $data['client_id'] = $clientId;
         if($tableId != '') $data['table_id'] = $tableId;
+        if($deliverymanId != '') $data['deliveryman'] = $deliverymanId;
+        if($sellerId != '') $data['seller'] = $sellerId;
+        if($totalChange != 0) $data['total_change'] = $totalChange;
 
         $order = $this->entity->create($data);
 

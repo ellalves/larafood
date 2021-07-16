@@ -49,8 +49,11 @@ class UserRepository implements UserRepositoryInterface
     //     DB::rollBack();
     // }
 
-    // public function getUser(string $uuid)
-    // {
-
-    // }
+    public function getUserUuidByTenantId(int $idTenant, string $uuidUser)
+    {
+        return $this->entity->where('tenant_id', $idTenant)
+                            ->where('uuid', $uuidUser)
+                            ->withoutGlobalScope(TenantScope::class)
+                            ->first();
+    }
 }

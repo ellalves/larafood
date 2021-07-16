@@ -8,17 +8,19 @@ use App\Repositories\Contracts\TableRepositoryInterface;
 use App\Repositories\Contracts\CouponRepositoryInterface;
 use App\Repositories\Contracts\TenantRepositoryInterface;
 use App\Repositories\Contracts\ProductRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
 
 class OrderService
 {
-    protected $orderRepository, $tenantRepository, $tableRepository, $productRepository, $couponRepository;
+    protected $orderRepository, $tenantRepository, $tableRepository, $productRepository, $couponRepository, $userRepository;
 
     public function __construct(
         OrderRepositoryInterface $orderRepository,
         TenantRepositoryInterface $tenantRepository,
         TableRepositoryInterface $tableRepository,
         ProductRepositoryInterface $productRepository,
-        CouponRepositoryInterface $couponRepository
+        CouponRepositoryInterface $couponRepository,
+        UserRepositoryInterface $userRepository,
     )
     {
         $this->orderRepository = $orderRepository;
@@ -26,6 +28,7 @@ class OrderService
         $this->tableRepository = $tableRepository;
         $this->productRepository = $productRepository;
         $this->couponRepository = $couponRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function newOrder(array $order, $uuidTenant)
@@ -34,17 +37,18 @@ class OrderService
         $status = 'open';
         $tenantId = $this->getTenantIdByOrder($uuidTenant);
         $productsOrder = $this->getProductsByOrder($tenantId, $order['products'] ?? []);
-        $total = $this->getTotalOrder($productsOrder);
-        $totalPaid = $this->getTotalPaidOrder($productsOrder);
-        $totalDiscount = $this->getTotalDiscountOrder($productsOrder);
+        $total = $order['total'] != 0 ? $order['total'] : $this->getTotalOrder($productsOrder);
+        $totalPaid = $order['total_paid'] != 0 ? $order['total_paid'] : $this->getTotalPaidOrder($productsOrder);
+        $totalDiscount = $order['total_discount'] != 0 ? $order['total_discount'] : $this->getTotalDiscountOrder($productsOrder);
         $address = $order['address'];
         $formPaymentId = $order['form_payment_id'];
+        $shipping = $order['shipping'];
+        $totalChange = (isset($order['total_change']) && $order['total_change'] != 0) ? $order['total_change'] : 0;
         $comment = isset($order['comment']) ? $order['comment'] : '';
         $clientId = $this->getClientOrder();
         $tableId = $this->getTableIdByOrder($tenantId, $order['table'] ?? '');
-
-        //begin Database Transaction
-        // DB::beginTransaction();
+        $deliverymanId = $this->getDeliverymanIdByOrder($tenantId, $order['deliveryman'] ?? '');
+        $sellerId = $this->getSellerOrder(); 
 
         $order = $this->orderRepository->newOrder(
             $identify,
@@ -55,27 +59,18 @@ class OrderService
             $tenantId,
             $address,
             $formPaymentId,
+            $shipping,
+            $totalChange,
             $comment,
             $clientId,
             $tableId,
+            $deliverymanId,
+            $sellerId
         );
-        
+
         $this->orderRepository->registerProductsOrder($order->id, $productsOrder);
 
         return $order;
-
-        // if ($order && $products)
-        // {
-        //     //Success
-        //     DB::commit();
-            
-        //     return $order;
-        // }
-
-        //Fail, undo database changes
-        // DB::rollBack();
-
-        // return false;
     }
 
     public function getOrderByIdentify($identify)
@@ -134,15 +129,33 @@ class OrderService
         return $identify;
     }
 
-    private function getTableIdByOrder(int $uuidTenant, string $identify)
+    private function getTableIdByOrder(int $idTenant, string $identify)
     {
-        if ($uuidTenant && $identify) {
-            $table = $this->tableRepository->getTableIdentifyByTenantId($uuidTenant, $identify);
+        if ($idTenant && $identify) {
+            $table = $this->tableRepository->getTableIdentifyByTenantId($idTenant, $identify);
 
             return $table->id;
         }
 
         return 0;
+    }
+
+    private function getDeliverymanIdByOrder(int $idTenant, string $identify)
+    {
+        if ($idTenant && $identify) {
+            $user = $this->userRepository->getUserUuidByTenantId($idTenant, $identify);
+
+            return $user->id;
+        }
+
+        return 0;
+    }
+
+    private function getSellerOrder()
+    {
+        $seller = auth('web')->check() ? auth('web')->user()->id : null;
+
+        return $seller;
     }
 
     private function getClientOrder()
@@ -207,6 +220,10 @@ class OrderService
             {
                 $discount = $this->getDiscountOrder($coupon, $product, $productOrder['qty']);
                 $paid = $product->price - $discount;
+            }
+            else
+            {
+                $paid = $product->price - $product->discount;
             }
 
             array_push($products, [

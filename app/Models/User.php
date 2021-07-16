@@ -41,10 +41,15 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Tenant::class);
     }
-
+    
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
     public function userProfile($username)

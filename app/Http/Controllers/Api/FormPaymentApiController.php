@@ -16,7 +16,7 @@ class FormPaymentApiController extends ApiController
     {
         $this->formPaymentService = $formPaymentService;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -38,8 +38,10 @@ class FormPaymentApiController extends ApiController
      * @param  \Illuminate\Http\StoreUpdateFormPayment  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUpdateFormPayment $request, $flagTenant)
+    public function store(StoreUpdateFormPayment $request, $flagTenant = null)
     {
+        $flagTenant = empty($flagTenant) ? auth('web')->user()->tenant->url : $flagTenant;
+
         try {
             $formPayment =  $this->formPaymentService->storeFormPayment($flagTenant, $request->all());
             return new FormPaymentResource($formPayment);

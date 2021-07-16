@@ -1,26 +1,17 @@
 <template>
 <div class="card">
     <div class="card-header">
-        <h5 class="card-title"></h5>
+        <h5 class="card-title">
+            <button class="btn btn-success" @click="costumerSavedOrder">
+                <i class="fas fa-cash-register"></i> Nova venda
+            </button>
+        </h5>
         <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-            </button>
             <div class="btn-group">
-                <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                    <i class="fas fa-wrench"></i>
+                <button type="button" class="btn btn-light">
+                    <i class="fas fa-wrench"></i> Configuração
                 </button>
-                <div class="dropdown-menu dropdown-menu-right" role="menu">
-                    <a href="#" class="dropdown-item">Action</a>
-                    <a href="#" class="dropdown-item">Another action</a>
-                    <a href="#" class="dropdown-item">Something else here</a>
-                    <a class="dropdown-divider"></a>
-                    <a href="#" class="dropdown-item">Separated link</a>
-                </div>
             </div>
-            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-            </button>
         </div>
     </div>
     <!-- /.card-header -->
@@ -37,8 +28,8 @@
                         aria-label="Pesquise pelo nome, código ou cpf do cliente"
                     ></autocomplete>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" 
-                            data-toggle="modal" 
+                        <button class="btn btn-outline-secondary"
+                            data-toggle="modal"
                             data-target="#staticBackdropClient"
                         >
                             <i class="fas fa-plus-square"></i> NOVO
@@ -58,7 +49,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-toggle="modal" 
+                            <tr data-toggle="modal"
                                 data-target="#staticBackdrop"
                                 v-for="product in order.products" :key="product.identify"
                                 @click.prevent="openDetailProduct(product, 'edit')"
@@ -105,7 +96,7 @@
                         <!-- /.description-block -->
                     </div>
                     <div class="col-md-12">
-                        <button v-if="order.products.length > 0 && client.length != ''" class="btn btn-success btn-block" 
+                        <button v-if="order.products.length > 0 && client.length != ''" class="btn btn-success btn-block"
                             data-toggle="modal"
                             data-target="#staticBackdropSale"
                         >
@@ -156,9 +147,14 @@
 
     <add-client @costumerSaved="costumerSaved"></add-client>
 
-    <finalize-sale :client="client" :order="order"></finalize-sale>
+    <finalize-sale
+        :client="client"
+        :order="order"
+        @costumerSavedOrder="costumerSavedOrder"
+    >
+    </finalize-sale>
 
-    <details-product 
+    <details-product
         :product="product"
         :option="option"
         :titleModal="titleModal"
@@ -188,7 +184,7 @@ export default {
                 descprition: '',
                 image: '',
                 price: 0.00,
-                discount: 0.00,                
+                discount: 0.00,
             },
             products: [],
             client: [],
@@ -258,6 +254,13 @@ export default {
             this.client = client
         },
 
+        costumerSavedOrder () {
+            this.resetOrder()
+            this.resetClient()
+            // this.resetProducts()
+            this.resetProduct()
+        },
+
         openDetailProduct (product, option) {
             this.option = option
             this.titleModal = option == 'add' ? "Adicionar produto" : "Editar produto"
@@ -277,7 +280,7 @@ export default {
             this.order.total = totalPrice + this.order.shipping
 
             this.order.total_paid = this.order.total + this.order.shipping - this.order.total_discount
-            
+
             this.order.total_change = this.order.total_paid - this.order.total
         },
 
@@ -298,10 +301,48 @@ export default {
                 return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + places)) + "e-" + places);
             }
         },
+
+        resetOrder () {
+            this.order = {
+                products:[],
+                total_discount: 0.00,
+                total_paid: 0.00,
+                total_change: 0.00,
+                total: 0.00,
+                status: 'open',
+                address: '',
+                shipping: 0.00,
+                comment: '',
+                client: '',
+                table: null,
+                deliveryman: null,
+                form_payment_id: ''
+            }
+        },
+
+        resetClient () {
+            this.client = []
+        },
+
+        resetProducts () {
+            this.products = []
+        },
+
+        resetProduct () {
+            this.product = {
+                qty:  1,
+                identify: '',
+                title: '',
+                descprition: '',
+                image: '',
+                price: 0.00,
+                discount: 0.00,
+            }
+        }
     },
-    
+
     mixins: [Vue2Filters.mixin],
-    
+
     components: {
         FinalizeSale,
         DetailsProduct,

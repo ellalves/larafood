@@ -9,7 +9,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                {{order}}
                 <div class="row">
                     <div class="col-md-6 border-right-light">
                         <div class="card">
@@ -23,7 +22,7 @@
                                             <input @click="isDelivery" type="checkbox" class="custom-control-input" id="mode">
                                             <label class="custom-control-label" for="mode">Entrega</label>
                                         </div>
-                                        
+
                                         <autocomplete v-show="delivery"  style="z-index: 100; width:76%;"
                                             :baseClass="'form-control'"
                                             :search="getDeliverymen"
@@ -45,16 +44,25 @@
                                 </div>
 
                                 <div class="form-row mt-md-3">
-                                    <div class="input-group col-md-6">
+                                    <div class="input-group col-md-7">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary"
+                                                data-toggle="modal"
+                                                data-target="#staticBackdropAddPayment"
+                                                title="Adicionar forma de pagamento"
+                                            >
+                                                <i class="fas fa-plus-square"></i> NOVA
+                                            </button>
+                                        </div>
                                         <select v-model="order.form_payment_id" class="custom-select input-group-prepend">
-                                            <option value="" selected>Forma de pagamento</option>
+                                            <option value="" selected>Forma de pagamento * </option>
                                             <option v-for="(payment, index) in formPayments" :key="index" :value="payment.id">
                                                 {{payment.name}}
                                             </option>
                                         </select>
                                     </div>
 
-                                    <div class="input-group col-md-6">
+                                    <div class="input-group col-md-5">
                                         <div class="input-group-prepend">
                                             <button class="btn btn-outline-secondary" type="button">
                                                 Desconto
@@ -76,7 +84,7 @@
 
                                     <div class="input-group col-md-6">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"> VALOR PAGO </span>
+                                            <span class="input-group-text"> VALOR PAGO * </span>
                                         </div>
                                         <money v-model="order.total_paid" v-bind="money" class="form-control col-12 input-group-append"></money>
                                     </div>
@@ -193,7 +201,11 @@
                             <button type="button" class="col-md-3 btn btn-secondary mr-1" data-dismiss="modal">
                                 <i class="fas fa-chevron-circle-left"></i> Voltar
                             </button>
-                            <button @click="confirmOrder" type="button" class="col-md-8 btn btn-success btn-block float-right">
+
+                            <button v-if="validateFields" @click="confirmOrder" type="button" class="col-md-8 btn btn-success btn-block float-right">
+                                <i class="far fa-credit-card"></i> Finalizar Venda
+                            </button>
+                            <button v-else disabled type="button" class="col-md-8 btn btn-success btn-block float-right">
                                 <i class="far fa-credit-card"></i> Finalizar Venda
                             </button>
                         </div>
@@ -203,11 +215,15 @@
             </div>
         </div>
     </div>
+
+    <add-payment @formPaymentSaved="formPaymentSaved"></add-payment>
+
 </div>
 </template>
 
 <script>
 import Autocomplete from '@trevoreyre/autocomplete-vue'
+import AddPayment from './AddPayment.vue'
 import { Money } from 'v-money'
 export default {
     props: {
@@ -238,12 +254,27 @@ export default {
             let totalChange = this.order.total_paid - this.total
             return this.order.total_change = this.round(totalChange, 2)
         },
+        validateFields () {
+            if (this.address == '' ||
+                this.order.form_payment_id == 0 ||
+                this.order.total_paid == 0
+            ) {
+                return false
+            }
+
+            console.log('deliv', this.order.deliveryman, 'tab', this.order.table)
+
+            if (this.delivery) {
+                return this.order.deliveryman == '' ? false : true
+            } else {
+                return this.order.table == '' ? false : true
+            }
+        },
     },
 
     data() {
         return {
             address: '',
-            formPayment: '',
             formPayments: '',
             delivery: false,
             titleDelivery: 'Taxa',
@@ -261,7 +292,31 @@ export default {
 
     methods: {
         confirmOrder () {
-            console.log('confirmOrder', this.order)
+            axios.post(`/api/v1/orders`, this.order)
+                .then(res => {
+                    console.log('res', res)
+                    this.$emit('costumerSavedOrder')
+                    this.closeModaBootstrap()
+                    // this.resetOrder()
+                    // this.$vToastify.success('Pedido feito.', 'Uhuuu!')
+                })
+                .catch(error => {
+                    const errorResponse = error.response
+
+                    console.log('errorResponse', errorResponse)
+
+                    if (errorResponse.status === 422) {
+                        this.errors = Object.assign(this.errors, errorResponse.data.errors)
+
+                        this.$vToastify.error('Dados inválidos, verifique novamente', 'Ooops!')
+
+                        setTimeout(() => this.resetClient(), 4000)
+
+                        return;
+                    }
+                    this.$vToastify.error('Falha ao Registrar o cliente', 'Ooops!')
+                })
+                // .finally(this.loading = false)
         },
 
         getFormPayments() {
@@ -325,7 +380,11 @@ export default {
         },
 
         confirmAddress () {
-            this.order.address = this.address 
+            this.order.address = this.address
+        },
+
+        formPaymentSaved () {
+            this.getFormPayments()
         },
 
         amountPaid() {
@@ -336,9 +395,9 @@ export default {
             this.delivery = this.delivery == true ? false : true
             this.titleDelivery = this.delivery ? 'Entrega' : 'Taxa'
             if (this.delivery)
-                this.order.table = ''
+                this.order.table = null
             else
-                this.order.deliveryman = ''
+                this.order.deliveryman = null
         },
 
         sumSubtotal(product) {
@@ -367,11 +426,19 @@ export default {
                 this.address = address.street.concat(notes, ', ', address.street_extra, ' - ', address.city, '/', address.state, '. ', address.post_code)
             }
             this.confirmAddress()
-        }
+        },
+
+        closeModaBootstrap () {
+            $('.modal-backdrop').hide(); // for black background
+            $('body').removeClass('modal-open'); // For scroll run
+            $('#modal').modal('hide');
+            $('#staticBackdropSale').css('display', 'none');
+        },
     },
 
-    components: { 
+    components: {
         Money,
+        AddPayment,
         Autocomplete
     },
 }

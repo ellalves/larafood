@@ -9,6 +9,8 @@ class FormPayment extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description', 'tenant_id'];
+
     public function tenant()
     {
         return $this->belongsTo(Tenant::class);

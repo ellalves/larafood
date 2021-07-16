@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Events\OrderCreated;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
-use App\Http\Controllers\ApiController;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\OrderResource;
-use App\Http\Resources\ProductResource;
 use App\Services\ProductService;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Api\StoreOrder;
+use App\Http\Resources\OrderResource;
+use App\Http\Controllers\ApiController;
+use App\Http\Resources\ProductResource;
 
 class OrderTenantController extends ApiController
 {
@@ -31,6 +33,21 @@ class OrderTenantController extends ApiController
         return OrderResource::collection($orders);
     }
 
+    public function store(StoreOrder $request)
+    {
+        $tenant = Auth::guard('web')->user()->tenant;
+
+        try {
+             $order = $this->orderService->newOrder($request->all(), $tenant->uuid);
+ 
+             broadcast(new OrderCreated($order)); //Enviar notificação push
+ 
+             return $this->successResponse(new OrderResource($order), null, 201);
+         } catch (\Throwable $e) {
+            return $this->errorResponse($e->getMessage());
+         }
+    }    
+
     public function update(Request $request)
     {
         $order = $this->orderService->updateStatusOrder($request->identify, $request->status);
@@ -50,8 +67,6 @@ class OrderTenantController extends ApiController
         } catch (\Throwable $e) {
             return $this->errorResponse($e->getMessage());
         }
-
-        // return OrderResource::collection($orders);
     }
 
     public function product($flag)
@@ -65,4 +80,5 @@ class OrderTenantController extends ApiController
             return $this->errorResponse($e->getMessage());
         }
     }
+    
 }

@@ -19,7 +19,7 @@ class CreateFormPaymentsTable extends Migration
             $table->unsignedBigInteger('tenant_id');
             $table->string('name');
             $table->string('url');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
 
             $table->foreign('tenant_id')

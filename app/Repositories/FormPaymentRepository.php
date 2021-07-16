@@ -4,7 +4,7 @@ namespace App\Repositories;
 use App\Models\FormPayment;
 use App\Repositories\Contracts\FormPaymentRepositoryInterface;
 
-class FormPaymentRepository implements FormPaymentRepositoryInterface 
+class FormPaymentRepository implements FormPaymentRepositoryInterface
 {
     protected $entity;
 
@@ -18,14 +18,14 @@ class FormPaymentRepository implements FormPaymentRepositoryInterface
         $formPayments = $this->entity
                             ->where('tenant_id', $idTenant)
                             ->paginate();
-        
+
         return $formPayments;
     }
 
     public function createFormPaymentTenantId(int $idTenant, array $data)
     {
         $data['tenant_id'] = $idTenant;
-        return $this->entity->create($data);
+        return $this->entity->withoutGlobalScope(TenantScope::class)->create($data);
     }
 
     public function updateFormPaymentUrlByTenantId(int $idTenant, string $flagFormPayment, array $data)
@@ -33,6 +33,7 @@ class FormPaymentRepository implements FormPaymentRepositoryInterface
         $formPayment = $this->entity
                             ->where('url', $flagFormPayment)
                             ->where('tenant_id', $idTenant)
+                            ->withoutGlobalScope(TenantScope::class)
                             ->first();
 
         $formPayment->update($data);

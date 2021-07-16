@@ -15,6 +15,7 @@ Route::group([
         // 'middleware' => 'auth'
     ], function () {
         Route::get('/my-orders', 'OrderTenantController@index');
+        Route::post('/orders', 'OrderTenantController@store');
         Route::patch('/my-orders', 'OrderTenantController@update');
  
         Route::get('/products/{flag}', 'OrderTenantController@product');

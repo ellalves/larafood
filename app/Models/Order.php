@@ -18,10 +18,14 @@ class Order extends Model
         'table_id', 
         'total', 
         'total_paid', 
-        'total_discount', 
+        'total_discount',
+        'total_change',
         'status', 
         'address',
         'comment',
+        'shipping',
+        'deliveryman',
+        'seller',
     ];
 
     /**
@@ -49,6 +53,14 @@ class Order extends Model
     public function client()
     {
         return $this->belongsTo(Client::class)->withDefault();
+    }
+
+    public function deliverymen()
+    {
+        return $this->belongsTo(User::class, 'deliveryman', 'id', 'orders')
+                    ->withDefault(function ($user, $role) {
+                        $role->name = "Entregador";
+                    });
     }
 
     public function table()

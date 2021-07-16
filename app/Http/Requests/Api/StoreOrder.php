@@ -15,10 +15,14 @@ class StoreOrder extends FormRequest
      */
     public function authorize()
     {
-        if(!app(TenantRepository::class)->getTenantByUuid($this->segment(4))) {
+        $user = auth('web')->user();
+
+        $uuidTenant = isset($user) ? $user->tenant->uuid : $this->segment(4);
+
+        if(!app(TenantRepository::class)->getTenantByUuid($uuidTenant)) {
             return false; // 404
         }
-        
+
         return true;
     }
 
@@ -32,7 +36,13 @@ class StoreOrder extends FormRequest
         return [
             'table' => [
                 'nullable',
+                // "required_unless:deliveryman,null",
                 'exists:tables,uuid',
+            ],
+            'deliveryman' => [
+                'nullable',
+                // 'required_unless:table,null',
+                'exists:users,uuid',
             ],
             'address' => [
                 'required',
@@ -43,6 +53,10 @@ class StoreOrder extends FormRequest
                 'nullable',
                 'min:3',
                 'max:1000',
+            ],
+            'form_payment_id' => [
+                'required',
+                'exists:form_payments,id',
             ],
             'products' => ['required'],
             'products.*.identify' => ['required','exists:products,uuid'],
