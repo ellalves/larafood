@@ -12,6 +12,7 @@ class Client extends Authenticatable
 {
     use HasFactory, HasApiTokens, HasAddresses;
 
+
     protected $fillable = [
         'tenant_id',
         'uuid',
