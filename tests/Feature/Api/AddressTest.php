@@ -33,7 +33,7 @@ class AddressTest extends TestCase
 
         $addressFactory = new AddressFactory();
 
-        Countries::create($countryFactory->definition());
+        Countries::insert($countryFactory->definition());
 
         $address = $client->addAddress($addressFactory->definition());
 
@@ -44,6 +44,8 @@ class AddressTest extends TestCase
         ];
 
         $response = $this->getJson("{$this->url}/addresses/{$uuidAddress}/show", $header);
+
+        $response->dump();
 
         $response->assertStatus(404);
     }
@@ -71,6 +73,8 @@ class AddressTest extends TestCase
         ];
 
         $response = $this->getJson("{$this->url}/addresses/{$uuidAddress}", $header);
+
+        $response->dump();
 
         $response->assertStatus(200);
     }
