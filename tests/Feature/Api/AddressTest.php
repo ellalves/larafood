@@ -5,7 +5,7 @@ namespace Tests\Feature\Api;
 use Tests\TestCase;
 use App\Models\Client;
 use Illuminate\Support\Str;
-use App\Models\Countries;
+use Webpatser\Countries\Countries;
 use Database\Factories\AddressFactory;
 use Database\Factories\CountryFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -43,7 +43,7 @@ class AddressTest extends TestCase
 
         $response = $this->getJson("{$this->url}/addresses/{$uuidAddress}/show", $header);
 
-        $response->dump();
+        // $response->dump();
 
         $response->assertStatus(404);
     }
