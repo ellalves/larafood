@@ -53622,9 +53622,7 @@ var render = function() {
               _vm._v(" Nova venda\n            ")
             ]
           )
-        ]),
-        _vm._v(" "),
-        _vm._m(0)
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
@@ -53646,7 +53644,7 @@ var render = function() {
                   on: { submit: _vm.handleSubmit }
                 }),
                 _vm._v(" "),
-                _vm._m(1)
+                _vm._m(0)
               ],
               1
             ),
@@ -53665,7 +53663,7 @@ var render = function() {
                       "table table-condensed table-dark table-striped table-hover table-borderless align-middle table-head-fixed"
                   },
                   [
-                    _vm._m(2),
+                    _vm._m(1),
                     _vm._v(" "),
                     _c(
                       "tbody",
@@ -53806,7 +53804,7 @@ var render = function() {
                           "data-target": "#staticBackdropSale"
                         }
                       },
-                      [_vm._m(3)]
+                      [_vm._m(2)]
                     )
                   : _c(
                       "button",
@@ -53817,7 +53815,7 @@ var render = function() {
                           title: "Escolha o cliente e os produtos pimeiro!"
                         }
                       },
-                      [_vm._m(4)]
+                      [_vm._m(3)]
                     )
               ])
             ])
@@ -53961,23 +53959,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-tools" }, [
-      _c("div", { staticClass: "btn-group" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-light", attrs: { type: "button" } },
-          [
-            _c("i", { staticClass: "fas fa-wrench" }),
-            _vm._v(" Configuração\n                ")
-          ]
-        )
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

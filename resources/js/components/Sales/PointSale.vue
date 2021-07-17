@@ -6,13 +6,13 @@
                 <i class="fas fa-cash-register"></i> Nova venda
             </button>
         </h5>
-        <div class="card-tools">
+        <!-- <div class="card-tools">
             <div class="btn-group">
                 <button type="button" class="btn btn-light">
                     <i class="fas fa-wrench"></i> Configuração
                 </button>
             </div>
-        </div>
+        </div> -->
     </div>
     <!-- /.card-header -->
     <div class="card-body">
