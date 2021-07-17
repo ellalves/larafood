@@ -16,7 +16,7 @@ jobs:
     - uses: shogo82148/actions-setup-mysql@v1
       with:
         mysql-version: '8.0'
-    - run: mysql -uroot -h127.0.0.1 -e 'SELECT version()'
+    - run: mysql -h127.0.0.1 -uroot -e 'SELECT version()'
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.0'
