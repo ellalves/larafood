@@ -26,7 +26,7 @@ jobs:
         mysql database: 'laravel_voed_test' # Optional, default value is "test". The specified database which will be create
         mysql root password: 'root' # Required if "mysql user" is empty, default is empty. The root superuser password
         # mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
-        # mysql password: ${{ secrets.DatabasePassword }} # Required if "mysql user" exists. The password for the "mysql user"
+        mysql password: 'root' # Required if "mysql user" exists. The password for the "mysql user"
 
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
