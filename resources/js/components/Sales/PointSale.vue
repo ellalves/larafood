@@ -8,6 +8,7 @@
         </h5>
         <!-- <div class="card-tools">
             <div class="btn-group">
+
                 <button type="button" class="btn btn-light">
                     <i class="fas fa-wrench"></i> Configuração
                 </button>
